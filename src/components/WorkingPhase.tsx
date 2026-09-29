@@ -103,7 +103,7 @@ export function WorkingPhase() {
     const step = 50;
     let progress = 0;
     
-    audioManager.audioManager.playSizzleSFX();
+    audioManager.playSizzleSFX();
 
     if (craftTimerRef.current) clearInterval(craftTimerRef.current);
     craftTimerRef.current = setInterval(() => {
@@ -114,7 +114,7 @@ export function WorkingPhase() {
         store.finishCraft(itemId);
         setCraftProgress(0);
         setCraftingItemId(null);
-        audioManager.audioManager.playBlipSFX();
+        audioManager.playBlipSFX();
         spawnFloat("+1 SP", "#22c55e", 200, 200);
       }
     }, step);
@@ -142,14 +142,14 @@ export function WorkingPhase() {
     if (price < item.ingredientCost) store.markBelowCostDay();
 
     setCustomerWaiting(false);
-    audioManager.audioManager.playCoinSFX();
+    audioManager.playCoinSFX();
     spawnFloat(`+${formatVND(price)}`, "#22c55e", 200, 100);
   };
 
   const endShift = () => {
     if (shiftEndedRef.current) return;
     shiftEndedRef.current = true;
-    audioManager.audioManager.playBlipSFX();
+    audioManager.playBlipSFX();
     store.setStage('NIGHT_SETTLEMENT');
   };
 
@@ -200,7 +200,7 @@ export function WorkingPhase() {
           {PRICING_OPTIONS.map((opt) => (
             <button
               key={opt.tier}
-              onClick={() => { store.setPricing(opt.tier); audioManager.audioManager.playBlipSFX(); }}
+              onClick={() => { store.setPricing(opt.tier); audioManager.playBlipSFX(); }}
               className={`flex-1 p-2 font-pixel text-lg transition-all border-2 ${
                 store.selectedPricing === opt.tier
                   ? 'bg-[#d4a637] text-[#3c2415] border-[#fdf6e2] shadow-[2px_2px_0px_#000]'
@@ -242,7 +242,7 @@ export function WorkingPhase() {
 
                 <div className="flex gap-2">
                    <button
-                     onClick={() => { store.buyIngredients(item.id, 1, item.ingredientCost); audioManager.audioManager.playCoinSFX(); spawnFloat(`-${formatVND(item.ingredientCost)}`, "#ef4444", 100, 200); }}
+                     onClick={() => { store.buyIngredients(item.id, 1, item.ingredientCost); audioManager.playCoinSFX(); spawnFloat(`-${formatVND(item.ingredientCost)}`, "#ef4444", 100, 200); }}
                      disabled={store.cash < item.ingredientCost}
                      className="flex-1 bg-[#facc15] text-[#3c2415] font-pixel text-xl py-2 border-2 border-[#3c2415] shadow-[2px_2px_0px_#000] active:translate-y-1 active:shadow-none disabled:opacity-50"
                    >

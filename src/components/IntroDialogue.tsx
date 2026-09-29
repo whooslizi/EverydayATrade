@@ -15,13 +15,7 @@ export function IntroDialogue() {
   let text = dialogue;
   let speakerId = 'unknown';
 
-  if (typeof dialogue !== 'string') {
-    speakerName = dialogue.speaker || 'Nhật Ký';
-    text = dialogue.text || '';
-    speakerId = speakerName === 'Ông Đào' ? 'ong_dao' : speakerName === 'Bạn' ? 'hero' : 'unknown';
-  } else {
-    text = dialogue;
-  }
+  text = dialogue;
 
   return (
     <div className="absolute inset-0 bg-[#0c0a09] font-game">

@@ -1,6 +1,6 @@
 export type GameStage = 'DISCLAIMER' | 'TITLE' | 'INTRO_DIALOGUE' | 'MORNING_PHASE' | 'JOB_SELECT' | 'WORKING' | 'SELLING' | 'NIGHT_SETTLEMENT' | 'JAIL_CELL' | 'WEDDING_CUTSCENE' | 'ENDING' | 'GAME_OVER' | 'DISCLAIMER_POST_GAME' | 'MEMORIAL';
-export type EndingId = 'ENDING_1A' | 'ENDING_1B' | 'ENDING_2' | 'ENDING_3' | 'ENDING_4' | 'ENDING_5' | 'ENDING_6';
-export type JobId = 'REPAIR' | 'FOOD' | 'MECHANIC' | 'CODER';
+export type EndingId = 'ENDING_1A_PRISON' | 'ENDING_1B_FUGITIVE' | 'ENDING_2_ROMANCE' | 'ENDING_3_UNDERCOVER' | 'ENDING_4_HOSPITAL' | 'ENDING_5_DUNG_BETRAYAL' | 'ENDING_6_TRUE_MEMORIAL';
+export type JobId = 'VE_CHAI' | 'BUN_LONG' | 'SUA_KHOA' | 'LAP_TRINH';
 export type PricingTier = 'BINH_DAN' | 'HOP_LY' | 'CHAT_CHEM';
 export type JailChoice = 'INTERVENE' | 'SLEEP' | 'ESCAPE' | null;
 export type TrackId = 'TRACK_1' | 'TRACK_2' | 'TRACK_3';
@@ -8,6 +8,7 @@ export type TrackId = 'TRACK_1' | 'TRACK_2' | 'TRACK_3';
 export interface Vec2 { x: number; y: number; }
 
 export interface JobItem {
+  icon?: string;
   id: string;
   name: string;
   ingredientCost: number;
@@ -16,6 +17,8 @@ export interface JobItem {
 }
 
 export interface Job {
+  craftTime?: number;
+  icon?: string;
   id: JobId;
   name: string;
   description: string;
@@ -26,6 +29,7 @@ export interface Job {
 }
 
 export interface FoodItem {
+  icon?: string;
   id: string;
   name: string;
   cost: number;
@@ -125,4 +129,24 @@ export interface GameState {
   setStage: (s: GameStage) => void;
   setPricing: (p: PricingTier) => void;
   setTrack: (t: TrackId) => void;
+}
+
+export interface PricingOption {
+  description?: string;
+  tier: PricingTier;
+  label: string;
+  marginMultiplier: number;
+  salesSpeedMultiplier: number;
+  suspicionIncrease: number;
+  angerIncrease: number;
+}
+
+export interface NPC {
+  icon?: string;
+  id: string;
+  name: string;
+  role: string;
+  avatar?: string;
+  color?: string;
+  dialogues: (string | { text: string; condition?: (state: any) => boolean })[];
 }

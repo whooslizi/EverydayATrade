@@ -12,8 +12,9 @@ export function NightSettlement() {
   const triggerNPC = () => {
     const friendlyNPCs = NPCS.filter((n) => ['tra', 'ngoc', 'bang', 'nhung'].includes(n.id));
     const npc = friendlyNPCs[Math.floor(Math.random() * friendlyNPCs.length)];
-    const dialogue = npc.dialogues[Math.floor(Math.random() * npc.dialogues.length)];
-    setNpcDialogue({ name: npc.name, text: dialogue, color: npc.color });
+    const d = npc.dialogues[Math.floor(Math.random() * npc.dialogues.length)];
+    const text = typeof d === 'string' ? d : d.text;
+    setNpcDialogue({ name: npc.name, text: text, color: npc.color || '#fff' });
 
     // Trà feeds Dũng sometimes
     if (npc.id === 'tra' && store.dog.hunger < 40) {
