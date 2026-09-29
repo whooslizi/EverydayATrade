@@ -11,11 +11,6 @@ export function CharacterCanvas({ customerWaiting }: { customerWaiting?: boolean
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const heroImg = new Image();
-    heroImg.src = '/sprites/hero_walk.png';
-    const dogImg = new Image();
-    dogImg.src = '/sprites/dog_dung.png';
-
     let pX = 220, pY = 150;
     let dX = 180, dY = 150;
     let targetX = 220, targetY = 150;
@@ -42,8 +37,6 @@ export function CharacterCanvas({ customerWaiting }: { customerWaiting?: boolean
     canvas.addEventListener('pointerdown', handlePointerDown);
     canvas.addEventListener('pointermove', handlePointerMove);
 
-    let frame = 0;
-    let direction = 0;
     let animFrameId: number;
     let tick = 0;
 
@@ -75,11 +68,6 @@ export function CharacterCanvas({ customerWaiting }: { customerWaiting?: boolean
         isMoving = true;
         pX += dx * speed;
         pY += dy * speed;
-        if (Math.abs(dx) > Math.abs(dy)) {
-          direction = dx > 0 ? 3 : 2;
-        } else {
-          direction = dy > 0 ? 0 : 1;
-        }
       }
 
       pX = Math.max(16, Math.min(canvas.width - 16, pX));
@@ -93,26 +81,7 @@ export function CharacterCanvas({ customerWaiting }: { customerWaiting?: boolean
         }
       }
 
-      if (isMoving && tick % 8 === 0) {
-        frame = (frame + 1) % 4;
-      } else if (!isMoving) {
-        frame = 0;
-      }
-
-      if (dogImg.complete && dogImg.naturalWidth > 0) {
-         const dogFrame = dogLoyalty < 30 ? 3 : (distDog > 32 && tick % 10 < 5 ? 1 : 0);
-         ctx.drawImage(dogImg, dogFrame * 16, 0, 16, 16, dX - 16, dY - 16, 32, 32);
-      } else {
-         ctx.fillStyle = '#eab308';
-         ctx.fillRect(dX - 10, dY - 8, 20, 16);
-         if (dogLoyalty < 30) {
-             ctx.fillStyle = '#000';
-             ctx.font = '10px "VT323"';
-             ctx.fillText('Zzz', dX, dY - 10);
-         }
-      }
-
-      // Draw customer if waiting
+      // Draw Customer
       if (customerWaiting) {
          ctx.fillStyle = '#10b981'; // Green generic NPC
          ctx.fillRect(300 - 10, 160 - 20, 20, 40);
@@ -120,14 +89,23 @@ export function CharacterCanvas({ customerWaiting }: { customerWaiting?: boolean
          ctx.fillRect(300 - 6, 160 - 30, 12, 10);
       }
 
-      if (heroImg.complete && heroImg.naturalWidth > 0) {
-         ctx.drawImage(heroImg, frame * 16, direction * 24, 16, 24, pX - 16, pY - 24, 32, 48);
-      } else {
-         ctx.fillStyle = '#1e3a8a';
-         ctx.fillRect(pX - 10, pY - 20, 20, 40);
-         ctx.fillStyle = '#fca5a5';
-         ctx.fillRect(pX - 6, pY - 30, 12, 10);
+      // Draw Dog (Flat shapes)
+      ctx.fillStyle = '#eab308';
+      ctx.fillRect(dX - 10, dY - 8, 20, 16); // Body
+      ctx.fillStyle = '#ca8a04';
+      ctx.fillRect(dX - 10 + (dx < 0 ? -4 : 16), dY - 12, 8, 8); // Head
+      
+      if (dogLoyalty < 30) {
+          ctx.fillStyle = '#000';
+          ctx.font = '12px sans-serif';
+          ctx.fillText('Zzz', dX, dY - 14);
       }
+
+      // Draw Hero (Flat shapes)
+      ctx.fillStyle = '#1e3a8a';
+      ctx.fillRect(pX - 10, pY - 20, 20, 40); // Body
+      ctx.fillStyle = '#fca5a5';
+      ctx.fillRect(pX - 6, pY - 30, 12, 10); // Head
 
       animFrameId = requestAnimationFrame(draw);
     };
@@ -140,7 +118,7 @@ export function CharacterCanvas({ customerWaiting }: { customerWaiting?: boolean
       canvas.removeEventListener('pointermove', handlePointerMove);
       cancelAnimationFrame(animFrameId);
     };
-  }, [dogLoyalty]);
+  }, [dogLoyalty, customerWaiting]);
 
   return (
     <canvas

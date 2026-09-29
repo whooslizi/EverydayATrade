@@ -38,9 +38,9 @@ export function NightSettlement() {
 
       <div className="flex-1 overflow-y-auto px-3 pb-2 space-y-2">
         {/* Daily summary */}
-        <div className="parchment-card">
-          <div className="text-sm font-pixel text-dark-brown mb-2"> Kết Toán Ngày {store.day}</div>
-          <div className="grid grid-cols-2 gap-1 text-[9px] font-game text-dark-brown/80">
+        <div className="bg-[#1a1414] border-2 border-[#3e3030] rounded-[16px] p-4 text-[#e8dcdc] shadow-lg">
+          <div className="text-sm font-pixel text-[#e8dcdc] mb-2"> Kết Toán Ngày {store.day}</div>
+          <div className="grid grid-cols-2 gap-1 text-[9px] font-game text-[#e8dcdc]/80">
             <div> Đã bán:</div>
             <div className="text-right">{store.soldToday} món</div>
             <div> Doanh thu:</div>
@@ -58,12 +58,12 @@ export function NightSettlement() {
         </div>
 
         {/* Dog check */}
-        <div className="parchment-card">
+        <div className="bg-[#1a1414] border-2 border-[#3e3030] rounded-[16px] p-4 text-[#e8dcdc] shadow-lg">
           <div className="flex items-center gap-2">
             <span className="text-xl">{store.dog.hunger > 30 ? '' : ''}</span>
             <div>
-              <div className="text-[9px] font-pixel text-dark-brown">Dũng</div>
-              <div className="text-sm text-dark-brown/60 font-game">
+              <div className="text-[9px] font-pixel text-[#e8dcdc]">Dũng</div>
+              <div className="text-sm text-[#e8dcdc]/60 font-game">
                 Bụng: {store.dog.hunger}% | Trung thành: {store.dog.loyalty}%
               </div>
             </div>
@@ -84,16 +84,16 @@ export function NightSettlement() {
         {!npcDialogue && (
           <button
             onClick={triggerNPC}
-            className="parchment-card w-full text-center hover:bg-amber-50 transition-colors"
+            className="bg-[#1a1414] border-2 border-[#3e3030] rounded-[16px] p-4 text-[#e8dcdc] shadow-lg w-full text-center hover:bg-amber-50 transition-colors"
           >
-            <span className="text-[9px] font-pixel text-dark-brown">
+            <span className="text-[9px] font-pixel text-[#e8dcdc]">
                Tán gẫu với hàng xóm...
             </span>
           </button>
         )}
 
         {npcDialogue && (
-          <div className="parchment-card animate-slide-up">
+          <div className="bg-[#1a1414] border-2 border-[#3e3030] rounded-[16px] p-4 text-[#e8dcdc] shadow-lg animate-slide-up">
             <div className="flex items-center gap-2 mb-1">
               <div
                 className="w-6 h-6 rounded-full flex items-center justify-center text-base font-bold"
@@ -105,7 +105,7 @@ export function NightSettlement() {
                 {npcDialogue.name}
               </span>
             </div>
-            <p className="text-[9px] text-dark-brown font-game italic">
+            <p className="text-[9px] text-[#e8dcdc] font-game italic">
               {npcDialogue.text}
             </p>
           </div>
@@ -113,14 +113,14 @@ export function NightSettlement() {
 
         {/* Danger warnings */}
         {store.taxSuspicion > 60 && (
-          <div className="parchment-card border-red-accent/50">
+          <div className="bg-[#1a1414] border-2 border-[#3e3030] rounded-[16px] p-4 text-[#e8dcdc] shadow-lg border-red-accent/50">
             <p className="text-sm text-red-accent font-game">
                Thuế vụ: {store.taxSuspicion}% — Nguy hiểm! Bán bình dân để giảm.
             </p>
           </div>
         )}
         {store.mobAnger > 60 && (
-          <div className="parchment-card border-orange-500/50">
+          <div className="bg-[#1a1414] border-2 border-[#3e3030] rounded-[16px] p-4 text-[#e8dcdc] shadow-lg border-orange-500/50">
             <p className="text-sm text-orange-600 font-game">
                Phẫn nộ tổ dân phố: {store.mobAnger}% — Coi chừng bị đập!
             </p>
@@ -129,10 +129,10 @@ export function NightSettlement() {
 
         {/* Log */}
         {store.log.length > 0 && (
-          <div className="parchment-card max-h-[80px] overflow-y-auto">
-            <div className="text-sm font-pixel text-dark-brown/50 mb-0.5"> Sự kiện</div>
+          <div className="bg-[#1a1414] border-2 border-[#3e3030] rounded-[16px] p-4 text-[#e8dcdc] shadow-lg max-h-[80px] overflow-y-auto">
+            <div className="text-sm font-pixel text-[#e8dcdc]/50 mb-0.5"> Sự kiện</div>
             {store.log.slice(-6).map((entry, i) => (
-              <p key={i} className="text-sm text-dark-brown/70 font-game">{entry}</p>
+              <p key={i} className="text-sm text-[#e8dcdc]/70 font-game">{entry}</p>
             ))}
           </div>
         )}
@@ -149,14 +149,14 @@ export function NightSettlement() {
                 if (store.isSoundOn) audioManager.playCoinSFX();
               }
             }}
-            className="pixel-btn text-[9px] px-3 py-1.5 w-full"
+            className="bg-[#2d2222] text-[#fdf6e2] font-bold py-3 px-4 rounded-[12px] border-2 border-[#3e3030] hover:bg-[#3e3030] transition-all text-[9px] px-3 py-1.5 w-full"
           >
              Trả nợ Cụ Bá (giữ lại 30k)
           </button>
         )}
         <button
           onClick={handleEndDay}
-          className="pixel-btn-gold text-sm px-4 py-2.5 w-full tracking-wide"
+          className="bg-[#fcc419] text-[#1a1414] font-bold py-3 px-4 rounded-[12px] shadow-[0_4px_0_#e67700] hover:bg-[#fab005] active:translate-y-1 active:shadow-none transition-all w-full text-sm px-4 py-2.5 w-full tracking-wide"
         >
            Ngủ — Chuyển Sang Ngày Mới
         </button>

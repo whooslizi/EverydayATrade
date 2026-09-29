@@ -5,7 +5,7 @@ function MeterBar({ value, max, color, label }: { value: number; max: number; co
   return (
     <div className="flex items-center gap-2">
       <span className="text-sm font-pixel text-parchment/80 w-12 shrink-0 truncate">{label}</span>
-      <div className="h-4 flex-1 border-2 border-dark-brown overflow-hidden bg-[#2a1a0a]">
+      <div className="h-4 flex-1 border-2 border-[#3e3030] overflow-hidden bg-[#2a1a0a]">
         <div className="h-full transition-all duration-500 ease-out" style={{ width: `${pct}%`, backgroundColor: color }} />
       </div>
       <span className="text-sm font-pixel text-parchment/80 w-8 text-right">{Math.round(value)}</span>
@@ -25,7 +25,7 @@ export function GameHUD() {
   const mobAnger = useGameStore((s) => s.mobAnger);
 
   return (
-    <div className="bg-[#1a120b]/95 px-3 py-3 border-b-4 border-gold-accent/40 shrink-0 select-none z-40 relative">
+    <div className="bg-[#1a1414]/95 px-3 py-3 border-b-4 border-gold-accent/40 shrink-0 select-none z-40 relative">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-br from-[#d4a637] to-[#f0c850] text-[#3c2415] border-2 border-[#8a6d1b] shadow-[2px_2px_0px_#000] text-base font-pixel">
@@ -51,7 +51,7 @@ export function GameHUD() {
       </div>
 
       {(taxSuspicion > 0 || mobAnger > 0) && (
-        <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2 pt-2 border-t-2 border-dashed border-dark-brown/50">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2 pt-2 border-t-2 border-dashed border-[#3e3030]/50">
           {taxSuspicion > 0 && <MeterBar value={taxSuspicion} max={100} color="#ef4444" label="Thuế" />}
           {mobAnger > 0 && <MeterBar value={mobAnger} max={100} color="#f97316" label="Dân" />}
         </div>

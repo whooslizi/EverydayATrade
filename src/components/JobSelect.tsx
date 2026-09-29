@@ -69,9 +69,9 @@ export function JobSelect() {
             {isRolling ? (
               <div className="space-y-1">
                 {availableJobs.map((job, i) => (
-                  <div key={`rolling-${i}`} className="parchment-card text-center py-1 animate-slide-up">
+                  <div key={`rolling-${i}`} className="bg-[#1a1414] border-2 border-[#3e3030] rounded-[16px] p-4 text-[#e8dcdc] shadow-lg text-center py-1 animate-slide-up">
                     <span className="text-lg">{job.icon}</span>
-                    <span className="text-[9px] font-pixel text-dark-brown ml-2">
+                    <span className="text-[9px] font-pixel text-[#e8dcdc] ml-2">
                       {job.name}
                     </span>
                   </div>
@@ -80,7 +80,7 @@ export function JobSelect() {
             ) : (
               <button
                 onClick={rollJobs}
-                className="pixel-btn-gold text-sm px-8 py-3"
+                className="bg-[#fcc419] text-[#1a1414] font-bold py-3 px-4 rounded-[12px] shadow-[0_4px_0_#e67700] hover:bg-[#fab005] active:translate-y-1 active:shadow-none transition-all w-full text-sm px-8 py-3"
               >
                  BỐC VÉ!
               </button>
@@ -98,16 +98,16 @@ export function JobSelect() {
               <button
                 key={job.id}
                 onClick={() => selectJob(job)}
-                className="parchment-card w-full text-left hover:bg-amber-50 transition-colors"
+                className="bg-[#1a1414] border-2 border-[#3e3030] rounded-[16px] p-4 text-[#e8dcdc] shadow-lg w-full text-left hover:bg-amber-50 transition-colors"
               >
                 <div className="flex items-start gap-2">
                   <span className="text-2xl">{job.icon}</span>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-pixel text-dark-brown">{job.name}</div>
-                    <p className="text-sm text-dark-brown/70 font-game mt-0.5">
+                    <div className="text-sm font-pixel text-[#e8dcdc]">{job.name}</div>
+                    <p className="text-sm text-[#e8dcdc]/70 font-game mt-0.5">
                       {job.description}
                     </p>
-                    <p className="text-sm text-dark-brown/50 font-game italic mt-0.5">
+                    <p className="text-sm text-[#e8dcdc]/50 font-game italic mt-0.5">
                       {job.flavorText}
                     </p>
                     <div className="flex gap-3 mt-1 text-sm font-pixel">

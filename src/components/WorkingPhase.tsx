@@ -12,6 +12,7 @@ export function WorkingPhase() {
   const [customerTimer, setCustomerTimer] = useState(0);
   const [shiftTime, setShiftTime] = useState(180);
   const [craftingItemId, setCraftingItemId] = useState<string | null>(null);
+  const [vipSpeed, setVipSpeed] = useState(1);
   
   // Effects
   const [shake, setShake] = useState(false);
@@ -100,7 +101,7 @@ export function WorkingPhase() {
 
     const item = job.items.find((i) => i.id === itemId);
     const craftMs = item?.craftTimeMs || 2000;
-    const step = 50;
+    const step = 50 * vipSpeed;
     let progress = 0;
     
     audioManager.playSizzleSFX();
@@ -164,7 +165,7 @@ export function WorkingPhase() {
   return (
     <div className={`absolute inset-0 flex flex-col font-game bg-[#2d1b11] ${shake ? 'animate-shake' : ''}`}>
       {floatingTexts.map(t => (
-        <div key={t.id} className="absolute z-50 pointer-events-none text-2xl font-pixel drop-shadow-[2px_2px_0px_#000] animate-float-up"
+        <div key={t.id} className="absolute z-50 pointer-events-none text-2xl font-pixel drop-shadow-md animate-float-up"
              style={{ left: t.x, top: t.y, color: t.color }}>
           {t.text}
         </div>
@@ -185,7 +186,7 @@ export function WorkingPhase() {
         <div className="flex-1 relative flex items-center justify-center pointer-events-none">
             {customerWaiting && (
                 <div className="absolute right-12 bottom-8 flex flex-col items-center animate-slide-up">
-                   <div className="bg-white border-2 border-[#3c2415] p-2 mb-2 rounded-sm text-base shadow-[2px_2px_0px_#000] relative max-w-[120px] text-center text-black">
+                   <div className="bg-white border-2 border-[#3c2415] p-2 mb-2 rounded-sm text-base shadow-md relative max-w-[120px] text-center text-black">
                        Mua hang!<br/>({customerTimer}s)
                        <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white border-b-2 border-r-2 border-[#3c2415] transform rotate-45"></div>
                    </div>
@@ -201,9 +202,9 @@ export function WorkingPhase() {
             <button
               key={opt.tier}
               onClick={() => { store.setPricing(opt.tier); audioManager.playBlipSFX(); }}
-              className={`flex-1 p-2 font-pixel text-lg transition-all border-2 ${
+              className={`flex-1 p-2 font-bold text-sm rounded-xl transition-all border-2 ${
                 store.selectedPricing === opt.tier
-                  ? 'bg-[#d4a637] text-[#3c2415] border-[#fdf6e2] shadow-[2px_2px_0px_#000]'
+                  ? 'bg-[#d4a637] text-[#3c2415] border-[#fdf6e2] shadow-md'
                   : 'bg-[#2d2222] text-[#fdf6e2]/70 border-[#3c2415]/50'
               }`}
             >
@@ -244,14 +245,14 @@ export function WorkingPhase() {
                    <button
                      onClick={() => { store.buyIngredients(item.id, 1, item.ingredientCost); audioManager.playCoinSFX(); spawnFloat(`-${formatVND(item.ingredientCost)}`, "#ef4444", 100, 200); }}
                      disabled={store.cash < item.ingredientCost}
-                     className="flex-1 bg-[#facc15] text-[#3c2415] font-pixel text-xl py-2 border-2 border-[#3c2415] shadow-[2px_2px_0px_#000] active:translate-y-1 active:shadow-none disabled:opacity-50"
+                     className="flex-1 bg-[#facc15] text-[#3c2415] font-pixel text-xl py-2 border-2 border-[#3c2415] shadow-md active:translate-y-1 active:shadow-none disabled:opacity-50"
                    >
                      MUA NL
                    </button>
                    <button
                      onClick={() => startCrafting(item.id)}
                      disabled={rawQty <= 0 || (craftingItemId !== null) || store.playerEnergy <= 0}
-                     className="flex-1 bg-[#16a34a] text-[#fdf6e2] font-pixel text-xl py-2 border-2 border-[#3c2415] shadow-[2px_2px_0px_#000] active:translate-y-1 active:shadow-none disabled:opacity-50"
+                     className="flex-1 bg-[#16a34a] text-[#fdf6e2] font-pixel text-xl py-2 border-2 border-[#3c2415] shadow-md active:translate-y-1 active:shadow-none disabled:opacity-50"
                    >
                      CHE TAO
                    </button>
@@ -265,7 +266,7 @@ export function WorkingPhase() {
           <button
             onClick={sellToCustomer}
             disabled={!customerWaiting || totalCrafted <= 0}
-            className={`w-full font-pixel text-2xl py-4 border-4 shadow-[4px_4px_0px_#000] transition-all ${
+            className={`w-full font-black text-xl rounded-2xl py-4 border-4 shadow-lg transition-all ${
                customerWaiting && totalCrafted > 0 
                ? 'bg-[#2563eb] text-white border-[#1e3a8a] active:translate-y-1 active:shadow-none animate-pulse'
                : 'bg-[#374151] text-[#9ca3af] border-[#111827] opacity-60'

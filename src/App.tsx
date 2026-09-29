@@ -153,7 +153,7 @@ export default function App() {
     <div className="w-full h-[100dvh] bg-[#1a1414] flex items-center justify-center gap-8 p-0 md:p-6 overflow-hidden select-none font-sans">
       <LeftWing />
       
-      <div className="relative w-full h-full max-h-[100dvh] xl:max-h-[800px] aspect-[9/16] max-w-[440px] bg-[#2d2222] border-0 xl:border-8 border-[#3e3030] xl:rounded-[32px] shadow-[0_0_80px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden z-20">
+      <div className="relative w-full h-[100dvh] xl:h-[800px] xl:w-[450px] bg-[#221919] border-0 xl:border-4 border-[#3e3030] xl:rounded-[32px] shadow-[0_0_80px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden z-20 shrink-0">
         {/* CRT Scanline Overlay applied only to the mobile canvas */}
         <div className="pointer-events-none absolute inset-0 z-50 bg-[linear-gradient(rgba(26,20,20,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[length:100%_4px]" />
         
