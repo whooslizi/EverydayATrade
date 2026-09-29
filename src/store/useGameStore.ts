@@ -28,6 +28,7 @@ const initialState: Omit<GameState, 'acceptDisclaimer' | 'resetGame' | 'startGam
   revenueTodayGross: 0,
   dialogueIndex: 0,
   log: [],
+  endingsUnlocked: [],
   timesArrested: 0,
   jailNightsRemaining: 0,
   jailChoice: null,
@@ -53,7 +54,7 @@ export const useGameStore = create<GameState>()(
       setPricing: (p) => set({ selectedPricing: p }),
       setTrack: (t) => set({ currentTrack: t }),
       acceptDisclaimer: () => set({ stage: 'TITLE' }),
-      resetGame: () => set({ ...initialState, isSoundOn: get().isSoundOn, stage: 'TITLE' }),
+      resetGame: () => set({ ...initialState, isSoundOn: get().isSoundOn, stage: 'TITLE', endingsUnlocked: get().endingsUnlocked }),
       startGame: () => set({ stage: 'INTRO_DIALOGUE', dialogueIndex: 0 }),
       advanceDialogue: () => {
         set((state) => {

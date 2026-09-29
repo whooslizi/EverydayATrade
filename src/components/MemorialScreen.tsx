@@ -1,21 +1,36 @@
 import { useGameStore } from '../store/useGameStore';
 
 export function MemorialScreen() {
+  const setStage = useGameStore(s => s.setStage);
   return (
-    <div className="absolute inset-0 bg-black text-parchment p-6 flex flex-col items-center justify-center font-pixel animate-fade-in-up">
-      <div className="text-3xl text-gold-accent mb-8 drop-shadow-[2px_2px_0px_#000] text-center">
-        HOÀN THÀNH TRÒ CHƠI
-      </div>
-      <div className="text-lg space-y-4 text-center">
-        <p className="text-xl">Ghi Công:</p>
-        <p>Kịch Bản & Lập Trình: Bạn</p>
-        <p>Kiến Trúc Âm Thanh & Pixel Art: Thực hiện bằng trọn vẹn tâm huyết</p>
-      </div>
-      <div className="mt-12 text-center text-red-400 text-xl">
-        Kính tặng và tưởng nhớ Ông nội yêu quý
-      </div>
-      <div className="mt-8 text-center text-sm text-gray-500">
-        (Bấm tải lại trang để chơi lại)
+    <div className="absolute inset-0 bg-[#120e0e] text-[#fdf6e2] p-6 flex flex-col items-center justify-center font-sans animate-fade-in-up select-none">
+      <div className="max-w-[400px] w-full border-4 border-[#3e3030] bg-[#1a1414] rounded-2xl p-6 shadow-2xl relative">
+        <pre className="text-[12px] md:text-sm font-mono text-center text-[#ff6b6b] mb-6 leading-relaxed whitespace-pre-wrap">
+========================================
+           HOÀN THÀNH TRÒ CHƠI
+========================================
+        </pre>
+        
+        <div className="text-center space-y-3 font-medium text-[#e8dcdc] mb-8">
+          <p className="text-[#fcc419] font-bold text-lg mb-2">Ghi Công:</p>
+          <p>Kịch Bản & Lập Trình: Bạn</p>
+          <p>Kiến Trúc Âm Thanh & Pixel Art:<br/>Thực hiện bằng trọn vẹn tâm huyết</p>
+        </div>
+
+        <div className="text-center text-[#ff6b6b] font-bold text-lg italic mt-8 mb-6">
+          Kính tặng và tưởng nhớ Ông nội yêu quý
+        </div>
+        
+        <pre className="text-[12px] md:text-sm font-mono text-center text-[#ff6b6b] mb-8 leading-relaxed whitespace-pre-wrap">
+========================================
+        </pre>
+
+        <button 
+          onClick={() => setStage('TITLE')}
+          className="w-full bg-[#4a3939] text-[#fdf6e2] py-3 rounded-xl font-bold border-2 border-[#3e3030] hover:bg-[#5a4646] transition-colors"
+        >
+          Trở Về Màn Hình Chính
+        </button>
       </div>
     </div>
   );

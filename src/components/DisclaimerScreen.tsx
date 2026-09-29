@@ -2,40 +2,45 @@ import { useGameStore } from '../store/useGameStore';
 import { audioManager } from '../audio/AudioManager';
 
 export function DisclaimerScreen() {
-  const acceptDisclaimer = useGameStore((s) => s.acceptDisclaimer);
+  const setStage = useGameStore((s) => s.setStage);
   const isSoundOn = useGameStore((s) => s.isSoundOn);
+
+  const agree = () => {
+    if (isSoundOn) audioManager.playBlipSFX();
+    setStage('MEMORIAL');
+  };
+
+  const disagree = () => {
+    if (isSoundOn) audioManager.playBlipSFX();
+    setStage('TITLE');
+  };
 
   return (
     <div className="absolute inset-0 flex items-center justify-center bg-[#1a1414]/90 z-50 p-4 font-sans select-none">
       <div className="bg-[#2d2222] text-[#fdf6e2] max-w-[420px] w-full rounded-[24px] p-8 shadow-2xl border-4 border-[#3e3030] flex flex-col items-center animate-slide-up">
         
-        {/* Miễn trừ trách nhiệm */}
-        <h1 className="text-[26px] font-black mb-4 text-center text-[#ff6b6b] uppercase tracking-wide">
-          Miễn Trừ Trách Nhiệm
+        <h1 className="text-[20px] font-black mb-4 text-center text-[#ff6b6b] uppercase tracking-wide">
+          THÔNG BÁO MIỄN TRỪ TRÁCH NHIỆM & ĐÍNH CHÍNH
         </h1>
-        <p className="text-center font-medium mb-6 text-[15px] leading-relaxed text-[#e8dcdc]">
-          Tất cả các nhân vật và tình huống trong game hoàn toàn là hư cấu. Bất kỳ sự trùng hợp nào với người thật hay sự việc ngoài đời đều chỉ là... sự cố ngẫu nhiên của vũ trụ. Chúng tôi không cố ý đánh đồng hay "đá xéo" ai đâu nhé!
+        <p className="text-center font-medium mb-6 text-[14px] leading-relaxed text-[#e8dcdc] text-justify">
+          Trò chơi 'Mỗi Ngày Một Nghề' là sản phẩm hư cấu phục vụ mục đích giải trí và trải nghiệm sinh tồn vỉa hè. Mọi danh xưng nhân vật xuất hiện trong game hoàn toàn chỉ mang tính chất định vị bối cảnh để người chơi dễ theo dõi. Trò chơi tuyệt đối KHÔNG có ý định ám chỉ, bôi nhọ, đánh đồng hay đại diện cho bất kỳ cá nhân, tổ chức hay nguyên mẫu ngoài đời thực nào. Mọi sự trùng hợp về tên gọi hoàn toàn là ngẫu nhiên.
         </p>
-        
-        {/* Cảnh báo AI */}
-        <div className="bg-[#221919] rounded-[16px] p-5 w-full mb-8 border-2 border-[#ff6b6b]/30">
-          <h2 className="text-xl font-bold text-[#ff6b6b] mb-2 flex items-center gap-2">
-            <span>🤖</span> Thú tội mỏng:
-          </h2>
-          <p className="text-[14px] text-[#c7baba] leading-relaxed">
-            Để tiết kiệm chi phí (vì quỹ thuê hoạ sĩ đang âm vô cực), game buộc phải sử dụng một số hình ảnh được generate từ AI. Biết là hơi "cringe" một chút, nhưng mong các đồng âm giơ cao đánh khẽ và tập trung vào gameplay nhé! 🥲
-          </p>
-        </div>
 
-        <button
-          onClick={() => {
-            if (isSoundOn) audioManager.playBlipSFX();
-            acceptDisclaimer();
-          }}
-          className="w-full bg-[#ff6b6b] text-white font-bold text-xl py-4 rounded-[16px] hover:bg-[#fa5252] transition-colors shadow-[0_4px_0_#c92a2a] active:translate-y-1 active:shadow-none"
-        >
-          Đã hiểu & Bắt đầu
-        </button>
+        <div className="flex gap-3 w-full">
+          <button
+            onClick={agree}
+            className="flex-1 bg-[#ff6b6b] text-white font-bold text-sm py-4 rounded-[16px] hover:bg-[#fa5252] transition-colors shadow-[0_4px_0_#c92a2a] active:translate-y-1 active:shadow-none"
+          >
+            Tôi đồng tình
+          </button>
+          
+          <button
+            onClick={disagree}
+            className="flex-1 bg-[#4a3939] text-[#e8dcdc] font-bold text-sm py-4 rounded-[16px] border-2 border-[#3e3030] hover:bg-[#5a4646] transition-colors active:translate-y-1"
+          >
+            Tôi không đồng tình
+          </button>
+        </div>
       </div>
     </div>
   );

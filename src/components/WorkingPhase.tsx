@@ -175,8 +175,8 @@ export function WorkingPhase() {
         <BackgroundCanvas />
         <CharacterCanvas customerWaiting={customerWaiting} />
         <div className="relative z-10 p-2 flex justify-between pointer-events-none">
-           <span className="bg-[#3c2415] text-[#fde68a] px-3 py-1 font-pixel text-xl border-2 border-[#d4a637]">{job.name}</span>
-           <span className={`bg-[#3c2415] px-3 py-1 font-pixel text-xl border-2 border-[#d4a637] ${shiftTime < 30 ? 'text-[#ef4444] animate-pixel-blink' : 'text-[#fde68a]'}`}>
+           <span className="bg-[#2d2222] text-white px-3 py-1 font-pixel text-xl border-2 border-[#3e3030]">{job.name}</span>
+           <span className={`bg-[#2d2222] px-3 py-1 font-pixel text-xl border-2 border-[#3e3030] ${shiftTime < 30 ? 'text-[#ef4444] animate-pixel-blink' : 'text-white'}`}>
              {formatTime(shiftTime)}
            </span>
         </div>
@@ -195,7 +195,7 @@ export function WorkingPhase() {
       </div>
 
       {/* Bottom 60%: Workshop / Kitchen */}
-      <div className="h-[60%] bg-[#1a0f0a] p-3 flex flex-col relative z-20">
+      <div className="h-[60%] bg-[#1a1414] p-3 flex flex-col relative z-20">
         <div className="flex gap-2 mb-3">
           {PRICING_OPTIONS.map((opt) => (
             <button
@@ -204,7 +204,7 @@ export function WorkingPhase() {
               className={`flex-1 p-2 font-pixel text-lg transition-all border-2 ${
                 store.selectedPricing === opt.tier
                   ? 'bg-[#d4a637] text-[#3c2415] border-[#fdf6e2] shadow-[2px_2px_0px_#000]'
-                  : 'bg-[#3c2415] text-[#fdf6e2]/70 border-[#3c2415]/50'
+                  : 'bg-[#2d2222] text-[#fdf6e2]/70 border-[#3c2415]/50'
               }`}
             >
               {opt.label}
@@ -235,7 +235,7 @@ export function WorkingPhase() {
                 </div>
 
                 {craftProgress > 0 && craftingItemId === item.id && (
-                  <div className="h-4 w-full bg-[#3c2415] border-2 border-black mb-2">
+                  <div className="h-4 w-full bg-[#2d2222] border-2 border-black mb-2">
                     <div className="h-full bg-[#22c55e] transition-all" style={{ width: `${craftProgress}%` }}></div>
                   </div>
                 )}

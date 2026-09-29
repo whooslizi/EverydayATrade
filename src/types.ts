@@ -49,6 +49,7 @@ export interface EndingData {
 }
 
 export interface GameState {
+  endingsUnlocked: string[];
   stage: GameStage;
   isSoundOn: boolean;
   currentTrack: TrackId;
