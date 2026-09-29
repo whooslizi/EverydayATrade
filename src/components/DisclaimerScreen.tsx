@@ -17,7 +17,7 @@ export function DisclaimerScreen() {
 
   return (
     <div className="absolute inset-0 flex items-center justify-center bg-[#1a1414]/90 z-50 p-4 font-sans select-none">
-      <div className="bg-[#2d2222] text-[#fdf6e2] max-w-[420px] w-full rounded-[24px] p-8 shadow-2xl border-4 border-[#3e3030] flex flex-col items-center animate-slide-up">
+      <div className="pixel-panel w-full max-w-[380px] h-[80%] flex flex-col animate-slide-up relative flex flex-col items-center animate-slide-up">
         
         <h1 className="text-[20px] font-black mb-4 text-center text-[#ff6b6b] uppercase tracking-wide">
           THÔNG BÁO MIỄN TRỪ TRÁCH NHIỆM & ĐÍNH CHÍNH
@@ -29,14 +29,14 @@ export function DisclaimerScreen() {
         <div className="flex gap-3 w-full">
           <button
             onClick={agree}
-            className="flex-1 bg-[#ff6b6b] text-white font-bold text-sm py-4 rounded-[16px] hover:bg-[#fa5252] transition-colors shadow-[0_4px_0_#c92a2a] active:translate-y-1 active:shadow-none"
+            className="flex-1 pixel-btn-red text-lg"
           >
             Tôi đồng tình
           </button>
           
           <button
             onClick={disagree}
-            className="flex-1 bg-[#4a3939] text-[#e8dcdc] font-bold text-sm py-4 rounded-[16px] border-2 border-[#3e3030] hover:bg-[#5a4646] transition-colors active:translate-y-1"
+            className="flex-1 pixel-btn-gray text-lg"
           >
             Tôi không đồng tình
           </button>

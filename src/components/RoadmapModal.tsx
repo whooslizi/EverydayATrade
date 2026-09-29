@@ -12,7 +12,7 @@ export function RoadmapModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center p-6 z-50 overflow-hidden font-sans">
-      <div className="bg-[#2d2222] text-[#fdf6e2] w-full max-w-[380px] h-[80%] rounded-[24px] p-6 shadow-2xl border-4 border-[#3e3030] flex flex-col animate-slide-up relative">
+      <div className="pixel-panel w-full max-w-[380px] h-[80%] flex flex-col animate-slide-up relative flex flex-col animate-slide-up relative">
         <h2 className="text-2xl font-black text-center text-[#fcc419] mb-4 uppercase tracking-wider">
           Nhật Ký Số Phận
         </h2>
@@ -57,7 +57,7 @@ export function RoadmapModal({ onClose }: { onClose: () => void }) {
 
         <button 
           onClick={handleClose}
-          className="w-full mt-4 bg-[#4a3939] text-[#fdf6e2] font-bold text-lg py-3 rounded-xl border-2 border-[#3e3030] hover:bg-[#5a4646] transition-colors active:translate-y-1"
+          className="w-full mt-4 pixel-btn-gray text-lg"
         >
           Đóng
         </button>

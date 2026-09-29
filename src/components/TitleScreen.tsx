@@ -22,26 +22,35 @@ export function TitleScreen() {
 
   return (
     <div className="absolute inset-0 flex flex-col items-center font-game select-none bg-[#0a0a0a]">
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="/sprites/title_bg.jpg" 
-          alt="Background" 
-          className="w-full h-full object-cover object-[center_center]"
-        />
-        {/* We remove the heavy gradient so the image pops */}
+      <div className="absolute inset-0 z-0 bg-[#1e1e24] overflow-hidden">
+        {/* Simple Pixel Art Stars */}
+        <div className="absolute top-10 left-10 w-1 h-1 bg-white opacity-50 shadow-[20px_40px_0_white,100px_10px_0_white,150px_60px_0_white,250px_20px_0_white,320px_80px_0_white]" />
+        {/* Distant City Silhouette (Flat Pixel Art) */}
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-[#111115]">
+          <div className="absolute bottom-16 left-4 w-12 h-20 bg-[#111115]" />
+          <div className="absolute bottom-16 left-20 w-8 h-12 bg-[#111115]" />
+          <div className="absolute bottom-16 left-32 w-16 h-24 bg-[#111115]" />
+          <div className="absolute bottom-16 left-60 w-10 h-16 bg-[#111115]" />
+          <div className="absolute bottom-16 left-80 w-14 h-28 bg-[#111115]" />
+        </div>
+      </div>
+      
+      <div className="relative z-10 w-full mt-24 flex flex-col items-center">
+         <h1 className="text-4xl text-[#fcc419] font-black pixel-text-shadow text-center leading-tight">MỖI NGÀY<br/>MỘT NGHỀ</h1>
+         <p className="text-white mt-2 text-sm pixel-text-shadow">Sinh Tồn Vỉa Hè (16-bit)</p>
       </div>
 
       <div className="relative z-10 w-full max-w-[280px] mt-auto pb-8 animate-fade-in-up space-y-3">
         <button
           onClick={handleStart}
-          className="w-full bg-[#b91c1c] text-[#fdf6e2] font-pixel text-2xl py-3 border-4 border-[#3c2415] hover:bg-[#991b1b] transition-colors drop-shadow-[4px_4px_0px_#1a0f0a] active:translate-y-1 active:shadow-none"
+          className="w-full pixel-btn-red text-2xl"
         >
           {day > 1 ? 'TIẾP TỤC' : 'BẮT ĐẦU'}
         </button>
 
         <button
           onClick={() => { audioManager.playBlipSFX(); setShowRoadmap(true); }}
-          className="w-full bg-[#3c2415] text-[#fde68a] font-pixel text-xl py-2 border-4 border-[#d4a637] hover:bg-[#2d1b11] transition-colors drop-shadow-[4px_4px_0px_#1a0f0a] active:translate-y-1 active:shadow-none"
+          className="w-full pixel-btn-gold text-lg"
         >
           NHẬT KÝ SỐ PHẬN
         </button>
