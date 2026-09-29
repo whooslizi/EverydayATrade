@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useGameStore } from '../store/useGameStore';
 
-export function CharacterCanvas() {
+export function CharacterCanvas({ customerWaiting }: { customerWaiting?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dogLoyalty = useGameStore(s => s.dog.loyalty);
 
@@ -110,6 +110,14 @@ export function CharacterCanvas() {
              ctx.font = '10px "VT323"';
              ctx.fillText('Zzz', dX, dY - 10);
          }
+      }
+
+      // Draw customer if waiting
+      if (customerWaiting) {
+         ctx.fillStyle = '#10b981'; // Green generic NPC
+         ctx.fillRect(300 - 10, 160 - 20, 20, 40);
+         ctx.fillStyle = '#fca5a5';
+         ctx.fillRect(300 - 6, 160 - 30, 12, 10);
       }
 
       if (heroImg.complete && heroImg.naturalWidth > 0) {

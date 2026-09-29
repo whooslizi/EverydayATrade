@@ -173,7 +173,7 @@ export function WorkingPhase() {
       {/* Top 40%: Street View Canvas Simulator */}
       <div className="h-[40%] border-b-4 border-dark-brown relative overflow-hidden flex flex-col">
         <BackgroundCanvas />
-        <CharacterCanvas />
+        <CharacterCanvas customerWaiting={customerWaiting} />
         <div className="relative z-10 p-2 flex justify-between pointer-events-none">
            <span className="bg-[#3c2415] text-[#fde68a] px-3 py-1 font-pixel text-xl border-2 border-[#d4a637]">{job.name}</span>
            <span className={`bg-[#3c2415] px-3 py-1 font-pixel text-xl border-2 border-[#d4a637] ${shiftTime < 30 ? 'text-[#ef4444] animate-pixel-blink' : 'text-[#fde68a]'}`}>
