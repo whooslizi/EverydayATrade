@@ -48,10 +48,10 @@ export function JobSelect() {
       }}
     >
       <div className="text-center py-3">
-        <span className="font-pixel text-parchment text-xs tracking-wider">
+        <span className="font-pixel text-parchment text-base tracking-wider">
            VÉ NHẬT KÝ — NGÀY {store.day}
         </span>
-        <p className="text-[8px] text-parchment/60 font-game mt-1">
+        <p className="text-sm text-parchment/60 font-game mt-1">
           Bốc vé xem hôm nay làm nghề gì!
         </p>
       </div>
@@ -103,14 +103,14 @@ export function JobSelect() {
                 <div className="flex items-start gap-2">
                   <span className="text-2xl">{job.icon}</span>
                   <div className="flex-1 min-w-0">
-                    <div className="text-[10px] font-pixel text-dark-brown">{job.name}</div>
-                    <p className="text-[8px] text-dark-brown/70 font-game mt-0.5">
+                    <div className="text-sm font-pixel text-dark-brown">{job.name}</div>
+                    <p className="text-sm text-dark-brown/70 font-game mt-0.5">
                       {job.description}
                     </p>
-                    <p className="text-[8px] text-dark-brown/50 font-game italic mt-0.5">
+                    <p className="text-sm text-dark-brown/50 font-game italic mt-0.5">
                       {job.flavorText}
                     </p>
-                    <div className="flex gap-3 mt-1 text-[8px] font-pixel">
+                    <div className="flex gap-3 mt-1 text-sm font-pixel">
                       <span className="text-red-accent">
                         Vốn: {formatVND(job.baseCost)}
                       </span>

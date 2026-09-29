@@ -84,11 +84,11 @@ export function TopDownCanvas() {
       {/* Mobile controls overlay */}
       <div className="absolute bottom-2 left-2 flex gap-1 opacity-50">
         <div className="flex flex-col items-center">
-          <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center font-pixel text-[8px] mb-1 text-white">W</div>
+          <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center font-pixel text-sm mb-1 text-white">W</div>
           <div className="flex gap-1">
-            <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center font-pixel text-[8px] text-white">A</div>
-            <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center font-pixel text-[8px] text-white">S</div>
-            <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center font-pixel text-[8px] text-white">D</div>
+            <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center font-pixel text-sm text-white">A</div>
+            <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center font-pixel text-sm text-white">S</div>
+            <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center font-pixel text-sm text-white">D</div>
           </div>
         </div>
       </div>

@@ -30,7 +30,7 @@ export function NightSettlement() {
   return (
     <div className="absolute inset-0 night-gradient flex flex-col">
       <div className="text-center py-3">
-        <span className="font-pixel text-parchment text-xs tracking-wider">
+        <span className="font-pixel text-parchment text-base tracking-wider">
            ĐÊM NGÀY {store.day}
         </span>
       </div>
@@ -38,7 +38,7 @@ export function NightSettlement() {
       <div className="flex-1 overflow-y-auto px-3 pb-2 space-y-2">
         {/* Daily summary */}
         <div className="parchment-card">
-          <div className="text-[10px] font-pixel text-dark-brown mb-2"> Kết Toán Ngày {store.day}</div>
+          <div className="text-sm font-pixel text-dark-brown mb-2"> Kết Toán Ngày {store.day}</div>
           <div className="grid grid-cols-2 gap-1 text-[9px] font-game text-dark-brown/80">
             <div> Đã bán:</div>
             <div className="text-right">{store.soldToday} món</div>
@@ -62,18 +62,18 @@ export function NightSettlement() {
             <span className="text-xl">{store.dog.hunger > 30 ? '' : ''}</span>
             <div>
               <div className="text-[9px] font-pixel text-dark-brown">Dũng</div>
-              <div className="text-[8px] text-dark-brown/60 font-game">
+              <div className="text-sm text-dark-brown/60 font-game">
                 Bụng: {store.dog.hunger}% | Trung thành: {store.dog.loyalty}%
               </div>
             </div>
           </div>
           {store.dog.hunger < 25 && (
-            <p className="text-[8px] text-red-accent font-game mt-1 italic">
+            <p className="text-sm text-red-accent font-game mt-1 italic">
               ️ Dũng rên rỉ đói... Loyalty -12 mỗi đêm nếu không cho ăn!
             </p>
           )}
           {store.dog.loyalty <= 15 && store.dog.hunger < 20 && (
-            <p className="text-[8px] text-red-accent font-pixel mt-1 animate-pixel-blink">
+            <p className="text-sm text-red-accent font-pixel mt-1 animate-pixel-blink">
                CẢNH BÁO: Dũng sắp bỏ đi về với Cụ Bá!
             </p>
           )}
@@ -95,7 +95,7 @@ export function NightSettlement() {
           <div className="parchment-card animate-slide-up">
             <div className="flex items-center gap-2 mb-1">
               <div
-                className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+                className="w-6 h-6 rounded-full flex items-center justify-center text-base font-bold"
                 style={{ backgroundColor: npcDialogue.color + '30', color: npcDialogue.color }}
               >
                 {npcDialogue.name[0]}
@@ -113,14 +113,14 @@ export function NightSettlement() {
         {/* Danger warnings */}
         {store.taxSuspicion > 60 && (
           <div className="parchment-card border-red-accent/50">
-            <p className="text-[8px] text-red-accent font-game">
+            <p className="text-sm text-red-accent font-game">
                Thuế vụ: {store.taxSuspicion}% — Nguy hiểm! Bán bình dân để giảm.
             </p>
           </div>
         )}
         {store.mobAnger > 60 && (
           <div className="parchment-card border-orange-500/50">
-            <p className="text-[8px] text-orange-600 font-game">
+            <p className="text-sm text-orange-600 font-game">
                Phẫn nộ tổ dân phố: {store.mobAnger}% — Coi chừng bị đập!
             </p>
           </div>
@@ -129,9 +129,9 @@ export function NightSettlement() {
         {/* Log */}
         {store.log.length > 0 && (
           <div className="parchment-card max-h-[80px] overflow-y-auto">
-            <div className="text-[8px] font-pixel text-dark-brown/50 mb-0.5"> Sự kiện</div>
+            <div className="text-sm font-pixel text-dark-brown/50 mb-0.5"> Sự kiện</div>
             {store.log.slice(-6).map((entry, i) => (
-              <p key={i} className="text-[8px] text-dark-brown/70 font-game">{entry}</p>
+              <p key={i} className="text-sm text-dark-brown/70 font-game">{entry}</p>
             ))}
           </div>
         )}
@@ -155,7 +155,7 @@ export function NightSettlement() {
         )}
         <button
           onClick={handleEndDay}
-          className="pixel-btn-gold text-[10px] px-4 py-2.5 w-full tracking-wide"
+          className="pixel-btn-gold text-sm px-4 py-2.5 w-full tracking-wide"
         >
            Ngủ — Chuyển Sang Ngày Mới
         </button>

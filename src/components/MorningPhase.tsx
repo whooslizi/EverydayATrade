@@ -29,10 +29,10 @@ export function MorningPhase() {
       <div className="absolute inset-0 night-gradient flex items-center justify-center p-4">
         <div className="dialog-box max-w-[330px] w-full animate-slide-up text-center">
           <div className="text-2xl mb-3"></div>
-          <p className="text-dark-brown/40 text-[8px] font-pixel mb-2">
+          <p className="text-dark-brown/40 text-sm font-pixel mb-2">
             Giọng Ông Đào vọng về trong đêm...
           </p>
-          <p className="text-dark-brown text-[11px] leading-relaxed font-game italic mb-4">
+          <p className="text-dark-brown text-base leading-relaxed font-game italic mb-4">
             {nightVoice}
           </p>
           <button
@@ -57,11 +57,11 @@ export function MorningPhase() {
     >
       {/* Header */}
       <div className="text-center py-2">
-        <span className="font-pixel text-dark-brown text-xs tracking-wider">
+        <span className="font-pixel text-dark-brown text-base tracking-wider">
           ️ SÁNG NGÀY {store.day}
         </span>
         {store.isFugitive && (
-          <div className="text-[8px] text-red-700 font-pixel animate-pixel-blink mt-1">
+          <div className="text-sm text-red-700 font-pixel animate-pixel-blink mt-1">
             ️ Nhớ đeo khẩu trang — bạn đang bị truy nã!
           </div>
         )}
@@ -93,7 +93,7 @@ export function MorningPhase() {
           <div className="space-y-2">
             {/* Daily report */}
             <div className="parchment-card">
-              <div className="text-[10px] font-pixel text-dark-brown mb-2"> Báo Cáo Sáng</div>
+              <div className="text-sm font-pixel text-dark-brown mb-2"> Báo Cáo Sáng</div>
               <div className="grid grid-cols-2 gap-1 text-[9px] font-game text-dark-brown/80">
                 <div> Tiền mặt:</div>
                 <div className="text-right font-bold">{formatVND(store.cash)}</div>
@@ -110,7 +110,7 @@ export function MorningPhase() {
 
             {/* Dog status */}
             <div className="parchment-card">
-              <div className="text-[10px] font-pixel text-dark-brown mb-1">
+              <div className="text-sm font-pixel text-dark-brown mb-1">
                  Dũng {store.dog.isKidnapped ? '(BỊ BẮT CÓC!)' : ''}
               </div>
               <div className="grid grid-cols-2 gap-1 text-[9px] font-game text-dark-brown/80">
@@ -120,7 +120,7 @@ export function MorningPhase() {
                 <div className="text-right">{store.dog.loyalty}%</div>
               </div>
               {store.dog.hunger < 30 && (
-                <p className="text-[8px] text-red-accent mt-1 font-game italic">
+                <p className="text-sm text-red-accent mt-1 font-game italic">
                   ️ Dũng đang đói lả... nhớ cho ăn kẻo nó bỏ đi!
                 </p>
               )}
@@ -130,7 +130,7 @@ export function MorningPhase() {
                     store.ransomDog();
                     if (store.isSoundOn) audioManager.playCoinSFX();
                   }}
-                  className="pixel-btn-red text-[8px] px-3 py-1 mt-1 w-full"
+                  className="pixel-btn-red text-sm px-3 py-1 mt-1 w-full"
                 >
                    Chuộc Dũng (30.000đ)
                 </button>
@@ -158,7 +158,7 @@ export function MorningPhase() {
               <div className="parchment-card max-h-[100px] overflow-y-auto">
                 <div className="text-[9px] font-pixel text-dark-brown mb-1"> Nhật ký</div>
                 {store.log.map((entry, i) => (
-                  <p key={i} className="text-[8px] text-dark-brown/70 font-game">{entry}</p>
+                  <p key={i} className="text-sm text-dark-brown/70 font-game">{entry}</p>
                 ))}
               </div>
             )}
@@ -173,7 +173,7 @@ export function MorningPhase() {
                 <span className="text-lg">{food.icon}</span>
                 <div className="flex-1 min-w-0">
                   <div className="text-[9px] font-pixel text-dark-brown truncate">{food.name}</div>
-                  <div className="text-[8px] text-dark-brown/60 font-game">
+                  <div className="text-sm text-dark-brown/60 font-game">
                     {food.forDog ? ` Dũng +${food.hungerRestore}` : `+${food.hungerRestore} +${food.energyRestore}`}
                   </div>
                 </div>
@@ -183,7 +183,7 @@ export function MorningPhase() {
                     if (store.isSoundOn) audioManager.playCoinSFX();
                   }}
                   disabled={store.cash < food.cost}
-                  className="pixel-btn text-[8px] px-2 py-1 shrink-0 disabled:opacity-40"
+                  className="pixel-btn text-sm px-2 py-1 shrink-0 disabled:opacity-40"
                 >
                   {formatVND(food.cost)}
                 </button>
@@ -212,7 +212,7 @@ export function MorningPhase() {
         )}
         <button
           onClick={handleProceed}
-          className="pixel-btn-gold text-[10px] px-4 py-2.5 w-full tracking-wide"
+          className="pixel-btn-gold text-sm px-4 py-2.5 w-full tracking-wide"
         >
           {ending ? ' Xem kết cục...' : ' Bốc Vé Đi Làm'}
         </button>

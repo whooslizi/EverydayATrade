@@ -24,7 +24,7 @@ export function GameOverScreen() {
       >
         GAME OVER
       </h2>
-      <p className="text-[10px] text-red-300/70 font-pixel mb-4">
+      <p className="text-sm text-red-300/70 font-pixel mb-4">
         CỤ BÁ ĐÃ ĐẾN XIẾT TÀI SẢN
       </p>
 
@@ -46,16 +46,16 @@ export function GameOverScreen() {
       <div className="space-y-2 w-full max-w-[300px]">
         {store.log.length > 0 && (
           <div className="parchment-card max-h-[80px] overflow-y-auto">
-            <div className="text-[8px] font-pixel text-dark-brown/50 mb-0.5"> Nhật ký cuối</div>
+            <div className="text-sm font-pixel text-dark-brown/50 mb-0.5"> Nhật ký cuối</div>
             {store.log.slice(-4).map((entry, i) => (
-              <p key={i} className="text-[8px] text-dark-brown/70 font-game">{entry}</p>
+              <p key={i} className="text-sm text-dark-brown/70 font-game">{entry}</p>
             ))}
           </div>
         )}
 
         <button
           onClick={() => store.resetGame()}
-          className="pixel-btn-red text-[10px] px-6 py-2.5 w-full tracking-wide"
+          className="pixel-btn-red text-sm px-6 py-2.5 w-full tracking-wide"
         >
            Chơi Lại
         </button>

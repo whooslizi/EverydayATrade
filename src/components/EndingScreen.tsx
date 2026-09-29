@@ -69,13 +69,13 @@ export function EndingScreen() {
       <div className="dialog-box max-w-[330px] w-full animate-slide-up">
         {!allShown ? (
           <>
-            <p className="text-dark-brown text-[10px] leading-relaxed font-game text-center min-h-[50px] flex items-center justify-center">
+            <p className="text-dark-brown text-sm leading-relaxed font-game text-center min-h-[50px] flex items-center justify-center">
               {ending.story[lineIdx]}
             </p>
             <div className="mt-3 flex justify-center">
               <button
                 onClick={advance}
-                className={`${isLast ? 'pixel-btn-gold' : 'pixel-btn'} text-[10px] px-6 py-2`}
+                className={`${isLast ? 'pixel-btn-gold' : 'pixel-btn'} text-sm px-6 py-2`}
               >
                 {isLast ? ' Kết' : ' Tiếp...'}
               </button>
@@ -97,7 +97,7 @@ export function EndingScreen() {
         <div className="mt-4 space-y-2 animate-slide-up w-full max-w-[330px]">
           <div className="parchment-card">
             <div className="text-[9px] font-pixel text-dark-brown mb-1"> Thống Kê</div>
-            <div className="grid grid-cols-2 gap-1 text-[8px] font-game text-dark-brown/70">
+            <div className="grid grid-cols-2 gap-1 text-sm font-game text-dark-brown/70">
               <div>Ngày sinh tồn:</div>
               <div className="text-right">{store.day}/{store.maxDays}</div>
               <div>Lần bị bắt:</div>
@@ -111,7 +111,7 @@ export function EndingScreen() {
 
           <button
             onClick={() => setShowCredits(true)}
-            className="pixel-btn-gold text-[10px] px-6 py-2.5 w-full tracking-wide"
+            className="pixel-btn-gold text-sm px-6 py-2.5 w-full tracking-wide"
           >
              Xem Credits & Đính Chính
           </button>
@@ -127,25 +127,25 @@ export function EndingScreen() {
             </div>
             
             <div className="space-y-2">
-              <div className="font-pixel text-parchment text-[10px]">Credits:</div>
-              <div className="font-game text-parchment/80 text-[10px]">Lead Developer & Story: You</div>
-              <div className="font-game text-parchment/80 text-[10px]">Pixel Art & Sound Architecture: Built with ️</div>
+              <div className="font-pixel text-parchment text-sm">Credits:</div>
+              <div className="font-game text-parchment/80 text-sm">Lead Developer & Story: You</div>
+              <div className="font-game text-parchment/80 text-sm">Pixel Art & Sound Architecture: Built with ️</div>
             </div>
 
-            <div className="font-game text-red-accent/90 text-[11px] italic mt-8">
+            <div className="font-game text-red-accent/90 text-base italic mt-8">
               In loving memorial for grandpa ️
             </div>
             
             <div className="mt-8 pt-6 border-t-2 border-dark-brown/50">
               <div className="text-[9px] font-pixel text-red-accent mb-2">️ THÔNG BÁO MIỄN TRỪ TRÁCH NHIỆM & ĐÍNH CHÍNH:</div>
-              <p className="text-[8px] font-game text-parchment/60 text-justify leading-relaxed">
+              <p className="text-sm font-game text-parchment/60 text-justify leading-relaxed">
                 {DISCLAIMER_TEXT}
               </p>
             </div>
 
             <button
               onClick={() => store.resetGame()}
-              className="pixel-btn-gold text-[10px] px-6 py-2.5 w-full tracking-wide mt-8 mb-10"
+              className="pixel-btn-gold text-sm px-6 py-2.5 w-full tracking-wide mt-8 mb-10"
             >
                Chơi Lại Từ Đầu
             </button>

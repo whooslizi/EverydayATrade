@@ -39,7 +39,7 @@
   }
 
   .pixel-btn {
-    @apply font-pixel text-xs px-3 py-2 border-2 border-dark-brown bg-parchment text-dark-brown cursor-pointer select-none transition-all;
+    @apply font-pixel text-base px-3 py-2 border-2 border-dark-brown bg-parchment text-dark-brown cursor-pointer select-none transition-all;
     box-shadow: 2px 2px 0 0 #3c2415;
     image-rendering: pixelated;
   }
@@ -52,7 +52,7 @@
   }
 
   .pixel-btn-red {
-    @apply font-pixel text-xs px-3 py-2 border-2 border-red-900 bg-red-accent text-parchment cursor-pointer select-none transition-all;
+    @apply font-pixel text-base px-3 py-2 border-2 border-red-900 bg-red-accent text-parchment cursor-pointer select-none transition-all;
     box-shadow: 2px 2px 0 0 #5a1010;
   }
   .pixel-btn-red:hover {
@@ -64,7 +64,7 @@
   }
 
   .pixel-btn-gold {
-    @apply font-pixel text-xs px-3 py-2 border-2 border-yellow-800 bg-gold-accent text-dark-brown cursor-pointer select-none transition-all;
+    @apply font-pixel text-base px-3 py-2 border-2 border-yellow-800 bg-gold-accent text-dark-brown cursor-pointer select-none transition-all;
     box-shadow: 2px 2px 0 0 #8a6d1b;
   }
 
@@ -132,7 +132,7 @@
   }
 
   .gold-pill {
-    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-pixel;
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-base font-pixel;
     background: linear-gradient(135deg, #d4a637, #f0c850);
     color: #3c2415;
     border: 1px solid #8a6d1b;
@@ -140,7 +140,7 @@
   }
 
   .debt-pill {
-    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-pixel;
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-base font-pixel;
     background: linear-gradient(135deg, #a83232, #cc4444);
     color: #fdf6e2;
     border: 1px solid #5a1010;

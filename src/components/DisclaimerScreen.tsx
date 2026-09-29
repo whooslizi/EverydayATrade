@@ -22,10 +22,10 @@ export function DisclaimerScreen() {
         >
           {/* Title ribbon */}
           <div className="text-center mb-3">
-            <div className="text-[10px] tracking-[0.15em] text-red-accent font-bold uppercase">
+            <div className="text-sm tracking-[0.15em] text-red-accent font-bold uppercase">
               ️ THÔNG BÁO ️
             </div>
-            <div className="text-[11px] text-dark-brown font-bold mt-1">
+            <div className="text-base text-dark-brown font-bold mt-1">
               MIỄN TRỪ TRÁCH NHIỆM & ĐÍNH CHÍNH
             </div>
           </div>
@@ -33,7 +33,7 @@ export function DisclaimerScreen() {
           {/* Decorative line */}
           <div className="flex items-center gap-2 mb-3">
             <div className="flex-1 h-px bg-dark-brown/30" />
-            <span className="text-[8px] text-dark-brown/50"></span>
+            <span className="text-sm text-dark-brown/50"></span>
             <div className="flex-1 h-px bg-dark-brown/30" />
           </div>
 
@@ -57,7 +57,7 @@ export function DisclaimerScreen() {
               if (isSoundOn) audioManager.playBlipSFX();
               acceptDisclaimer();
             }}
-            className="pixel-btn-gold w-full text-center text-[10px] py-3 tracking-wide"
+            className="pixel-btn-gold w-full text-center text-sm py-3 tracking-wide"
           >
             Tôi Đã Hiểu & Bắt Đầu Bươn Chải
           </button>
