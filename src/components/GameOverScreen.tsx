@@ -1,64 +1,46 @@
-// ====== GAME OVER SCREEN ======
-import { useGameStore } from '../store/useGameStore';
-import { formatVND } from '../data/gameData';
-import { audioManager } from '../audio/AudioManager';;
-import { useEffect } from 'react';
+import useGameStore from '../store/useGameStore';
 
-export function GameOverScreen() {
-  const store = useGameStore();
+export default function GameOverScreen() {
+  const setStage = useGameStore((s) => s.setStage);
+  const resetGame = useGameStore((s) => s.resetGame);
+  const gameLog = useGameStore((s) => s.gameLog);
 
-  useEffect(() => {
-    if (store.isSoundOn) audioManager.playErrorSFX();
-  }, []);
+  const recentEntries = gameLog.slice(-3);
 
   return (
-    <div
-      className="absolute inset-0 flex flex-col items-center justify-center p-4"
-      style={{ background: 'linear-gradient(180deg, #1a0a0a 0%, #3a0a0a 40%, #1a0a0a 100%)' }}
-    >
-      {/* Skull */}
-      <div className="text-5xl mb-4 animate-shake"></div>
+    <div className="w-full h-full flex items-center justify-center bg-[#0c0a09] p-4">
+      <div className="pixel-panel-dark max-w-lg w-full animate-slide-up">
+        <h1 className="font-[VT323] text-4xl text-[#d32f2f] text-center mb-4">
+          KẾT THÚC
+        </h1>
 
-      <h2 className="font-pixel text-red-400 text-lg tracking-wider mb-1"
-        style={{ textShadow: '2px 2px 0 #000' }}
-      >
-        GAME OVER
-      </h2>
-      <p className="text-sm text-red-300/70 font-pixel mb-4">
-        CỤ BÁ ĐÃ ĐẾN XIẾT TÀI SẢN
-      </p>
-
-      <div className="dialog-box max-w-[300px] w-full mb-4">
-        <div className="grid grid-cols-2 gap-1 text-[9px] font-game text-dark-brown/80">
-          <div> Ngày cuối:</div>
-          <div className="text-right">{store.day}/{store.maxDays}</div>
-          <div> Tiền còn:</div>
-          <div className="text-right">{formatVND(Math.max(0, store.cash))}</div>
-          <div> Nợ còn:</div>
-          <div className="text-right text-red-accent">{formatVND(store.debt)}</div>
-          <div> Dũng:</div>
-          <div className="text-right">
-            {store.dog.loyalty > 30 ? 'Vẫn đợi bạn...' : 'Đã bỏ đi '}
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-2 w-full max-w-[300px]">
-        {store.log.length > 0 && (
-          <div className="parchment-card max-h-[80px] overflow-y-auto">
-            <div className="text-sm font-pixel text-dark-brown/50 mb-0.5"> Nhật ký cuối</div>
-            {store.log.slice(-4).map((entry, i) => (
-              <p key={i} className="text-sm text-dark-brown/70 font-game">{entry}</p>
+        {recentEntries.length > 0 && (
+          <div className="mb-6 space-y-1">
+            {recentEntries.map((entry, i) => (
+              <p
+                key={i}
+                className="font-[Share_Tech_Mono] text-xs text-[#a09080] leading-relaxed"
+              >
+                {entry}
+              </p>
             ))}
           </div>
         )}
 
-        <button
-          onClick={() => store.resetGame()}
-          className="pixel-btn-red text-sm px-6 py-2.5 w-full tracking-wide"
-        >
-           Chơi Lại
-        </button>
+        <div className="flex flex-col gap-3">
+          <button
+            className="pixel-btn-gold w-full"
+            onClick={() => setStage('DISCLAIMER_POST_GAME')}
+          >
+            DOC TIEP NHẬT KÝ
+          </button>
+          <button
+            className="pixel-btn-gray w-full"
+            onClick={() => resetGame()}
+          >
+            VỀ MÀN HÌNH CHÍNH
+          </button>
+        </div>
       </div>
     </div>
   );

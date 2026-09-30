@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { audioManager } from '../audio/AudioManager';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import audioManager from '../audio/AudioManager';
 
 export interface Choice {
   label: string;
@@ -7,7 +7,7 @@ export interface Choice {
   disabled?: boolean;
 }
 
-interface Props {
+interface DialogueModalProps {
   speakerId: string;
   speakerName: string;
   text: string;
@@ -15,74 +15,88 @@ interface Props {
   choices?: Choice[];
 }
 
-export function DialogueModal({ speakerName, text, onComplete, choices }: Props) {
-  const [displayed, setDisplayed] = useState('');
-  const [isDone, setIsDone] = useState(false);
+export default function DialogueModal({
+  speakerId,
+  speakerName,
+  text,
+  onComplete,
+  choices,
+}: DialogueModalProps) {
+  const [displayedLen, setDisplayedLen] = useState(0);
+  const [finished, setFinished] = useState(false);
+  const charIndex = useRef(0);
 
   useEffect(() => {
-    setDisplayed('');
-    setIsDone(false);
-    let i = 0;
-    const t = setInterval(() => {
-      if (i < text.length) {
-        setDisplayed(text.substring(0, i + 1));
-        if (i % 3 === 0) audioManager.playBlipSFX();
-        i++;
-      } else {
-        setIsDone(true);
-        clearInterval(t);
+    charIndex.current = 0;
+    setDisplayedLen(0);
+    setFinished(false);
+  }, [text, speakerId]);
+
+  useEffect(() => {
+    if (finished) return;
+
+    const interval = setInterval(() => {
+      charIndex.current += 1;
+      if (charIndex.current % 3 === 0) {
+        audioManager.playBlipSFX();
+      }
+      setDisplayedLen(charIndex.current);
+      if (charIndex.current >= text.length) {
+        setFinished(true);
+        clearInterval(interval);
       }
     }, 25);
-    return () => clearInterval(t);
-  }, [text]);
+
+    return () => clearInterval(interval);
+  }, [text, finished]);
+
+  const handleAdvance = useCallback(() => {
+    if (!finished) {
+      charIndex.current = text.length;
+      setDisplayedLen(text.length);
+      setFinished(true);
+      return;
+    }
+    if (!choices && onComplete) {
+      onComplete();
+    }
+  }, [finished, text, choices, onComplete]);
 
   useEffect(() => {
-    if (choices && choices.length > 0) return; // Wait for choice click
-
-    const handleKey = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.code === 'Space') {
-        if (isDone) {
-          audioManager.playBlipSFX();
-          if (onComplete) onComplete();
-        } else {
-          setDisplayed(text);
-          setIsDone(true);
-        }
+        e.preventDefault();
+        handleAdvance();
       }
     };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [isDone, text, onComplete, choices]);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [handleAdvance]);
 
   return (
-    <div className="absolute inset-x-4 bottom-8 pixel-panel shadow-2xl flex flex-col z-50 animate-slide-up" 
-      onClick={() => {
-        if (choices && choices.length > 0) return;
-        if (isDone) {
-          audioManager.playBlipSFX();
-          if (onComplete) onComplete();
-        } else {
-          setDisplayed(text);
-          setIsDone(true);
-        }
-    }}>
-      <h3 className="text-[#fcc419] font-black text-lg mb-2 uppercase tracking-wide">{speakerName}</h3>
-      <p className="text-[#e8dcdc] text-base leading-relaxed min-h-[60px]">{displayed}</p>
-      
-      {isDone && choices && choices.length > 0 && (
-        <div className="mt-4 flex flex-col gap-2">
-          {choices.map((c, idx) => (
+    <div
+      className="pixel-panel absolute inset-x-4 bottom-6 z-50 cursor-pointer select-none"
+      onClick={handleAdvance}
+    >
+      <p className="font-[VT323] text-[#fbc02d] uppercase text-lg mb-1">
+        {speakerName}
+      </p>
+      <p className="font-[Share_Tech_Mono] text-sm text-[#e0d6c2] leading-relaxed min-h-[3rem] whitespace-pre-wrap">
+        {text.slice(0, displayedLen)}
+        {!finished && <span className="animate-pulse">|</span>}
+      </p>
+
+      {finished && choices && choices.length > 0 && (
+        <div className="flex flex-wrap gap-2 mt-3">
+          {choices.map((c, i) => (
             <button
-              key={idx}
+              key={i}
+              className="pixel-btn-gray text-xs"
               disabled={c.disabled}
               onClick={(e) => {
                 e.stopPropagation();
-                if (!c.disabled) {
-                  audioManager.playBlipSFX();
-                  c.action();
-                }
+                c.action();
               }}
-              className="pixel-btn-gray text-left"
             >
               {c.label}
             </button>
@@ -90,10 +104,10 @@ export function DialogueModal({ speakerName, text, onComplete, choices }: Props)
         </div>
       )}
 
-      {isDone && (!choices || choices.length === 0) && (
-        <div className="text-right mt-2 text-[#ff6b6b] text-sm font-bold animate-pulse">
+      {finished && !choices && (
+        <p className="font-[Share_Tech_Mono] text-xs text-[#a09080] mt-2 animate-pulse text-center">
           [ Nhấn Space hoặc Click ]
-        </div>
+        </p>
       )}
     </div>
   );

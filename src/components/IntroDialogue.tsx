@@ -1,29 +1,20 @@
-import { useGameStore } from '../store/useGameStore';
-import { DialogueModal } from './DialogueModal';
+import useGameStore from '../store/useGameStore';
 import { INTRO_DIALOGUES } from '../data/gameData';
+import DialogueModal from './DialogueModal';
 
-export function IntroDialogue() {
-  const store = useGameStore();
-  const dialogue = INTRO_DIALOGUES[store.dialogueIndex];
+export default function IntroDialogue() {
+  const dialogueIndex = useGameStore((s) => s.dialogueIndex);
+  const advanceDialogue = useGameStore((s) => s.advanceDialogue);
 
-  if (!dialogue) {
-    store.advanceDialogue();
-    return null;
-  }
-  
-  let speakerName = 'Nhật Ký';
-  let text = dialogue;
-  let speakerId = 'unknown';
-
-  text = dialogue;
+  const currentText = INTRO_DIALOGUES[dialogueIndex] ?? '';
 
   return (
-    <div className="absolute inset-0 bg-[#0c0a09] font-game">
-      <DialogueModal 
-        speakerId={speakerId}
-        speakerName={speakerName}
-        text={text}
-        onComplete={() => store.advanceDialogue()}
+    <div className="relative w-full h-full bg-[#0c0a09]">
+      <DialogueModal
+        speakerId="narrator"
+        speakerName="Nhật Ký"
+        text={currentText}
+        onComplete={advanceDialogue}
       />
     </div>
   );

@@ -1,6 +1,7 @@
+import { useState, useEffect } from 'react';
 import { useGameStore } from './store/useGameStore';
 import { audioManager } from './audio/AudioManager';
-import { DisclaimerScreen } from './components/DisclaimerScreen';
+import { PreGameDisclaimerModal } from './components/PreGameDisclaimerModal';
 import { TitleScreen } from './components/TitleScreen';
 import { IntroDialogue } from './components/IntroDialogue';
 import { MorningPhase } from './components/MorningPhase';
@@ -11,156 +12,178 @@ import { JailCell } from './components/JailCell';
 import { WeddingCutscene } from './components/WeddingCutscene';
 import { EndingScreen } from './components/EndingScreen';
 import { GameOverScreen } from './components/GameOverScreen';
-import { GameHUD } from './components/GameHUD';
+import { DisclaimerScreen } from './components/DisclaimerScreen';
 import { MemorialScreen } from './components/MemorialScreen';
+import { GameHUD } from './components/GameHUD';
+import { WastedTransition } from './components/WastedTransition';
 
-function LeftWing() {
+function formatVND(n: number): string {
+  return n.toLocaleString('vi-VN') + 'd';
+}
+
+// Desktop side panel: Finance + Audio
+function LeftPanel() {
   const debt = useGameStore(s => s.debt);
   const interest = useGameStore(s => s.dailyInterest);
-  const playerEnergy = useGameStore(s => s.playerEnergy);
+  const energy = useGameStore(s => s.playerEnergy);
+  const hunger = useGameStore(s => s.playerHunger);
   const dog = useGameStore(s => s.dog);
   const isSoundOn = useGameStore(s => s.isSoundOn);
   const toggleSound = useGameStore(s => s.toggleSound);
-  
+
   return (
-    <div className="hidden xl:flex flex-col w-[300px] h-full max-h-[800px] bg-[#1e1e24] border-4 border-[#3e3030]  p-6 text-[#fdf6e2] shadow-2xl relative z-10">
-      <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#ff6b6b] text-white font-black px-4 py-1  text-lg tracking-wider shadow-md">TRẠM ĐIỀU KHIỂN</div>
-      
-      <h2 className="font-bold text-xl mb-3 text-[#ff6b6b] mt-4">Bảng Tài Chính</h2>
-      <div className="bg-[#111115] p-4  mb-6 border-2 border-[#3e3030] shadow-inner">
-        <p className="text-lg text-gray-400 font-bold mb-1">Nợ Cụ Bá:</p>
-        <p className="text-3xl font-black text-[#fa5252]">{debt.toLocaleString('vi-VN')}đ</p>
-        <div className="mt-2 bg-[#fa5252]/10 p-2  flex items-center justify-between">
-          <span className="text-base text-[#ff6b6b] font-bold">Lãi suất đêm:</span>
-          <span className="text-lg text-[#ff6b6b] font-black">-{interest.toLocaleString('vi-VN')}đ</span>
+    <div className="hidden xl:flex flex-col w-[280px] pixel-panel-dark gap-4 h-full max-h-[800px] overflow-y-auto">
+      <h2 className="font-[VT323] text-xl text-[#fbc02d] pixel-text-shadow uppercase">BẢNG TÀI CHÍNH</h2>
+      <div className="pixel-panel p-3">
+        <p className="font-[Share_Tech_Mono] text-xs text-[#78716c]">Nợ Cụ Bá:</p>
+        <p className="font-[VT323] text-3xl text-[#d32f2f]">{formatVND(debt)}</p>
+        <p className="font-[Share_Tech_Mono] text-xs text-[#991b1b] mt-1">Lãi đêm: -{formatVND(interest)}</p>
+      </div>
+
+      <h2 className="font-[VT323] text-xl text-[#fbc02d] pixel-text-shadow uppercase">SINH TỒN</h2>
+      <div className="space-y-2">
+        <div>
+          <div className="flex justify-between font-[VT323] text-base"><span>Năng Lượng</span><span>{energy}%</span></div>
+          <div className="retro-gauge"><div className="retro-gauge-fill bg-blue-500" style={{width:`${energy}%`}} /></div>
+        </div>
+        <div>
+          <div className="flex justify-between font-[VT323] text-base"><span>Độ No</span><span>{hunger}%</span></div>
+          <div className="retro-gauge"><div className="retro-gauge-fill bg-green-500" style={{width:`${hunger}%`}} /></div>
+        </div>
+        <div>
+          <div className="flex justify-between font-[VT323] text-base"><span>Dung (Độ No)</span><span>{dog.hunger}%</span></div>
+          <div className="retro-gauge"><div className="retro-gauge-fill bg-yellow-500" style={{width:`${dog.hunger}%`}} /></div>
         </div>
       </div>
-      
-      <h2 className="font-bold text-xl mb-3 text-[#ff6b6b]">Sinh Tồn</h2>
-      <div className="bg-[#111115] p-4  mb-6 border-2 border-[#3e3030] shadow-inner space-y-4">
-         <div>
-           <div className="flex justify-between text-lg font-bold mb-1"><span className="text-blue-300">Năng Lượng</span><span>{playerEnergy}%</span></div>
-           <div className="h-3 bg-gray-900  overflow-hidden border border-[#3e3030]"><div className="h-full bg-blue-500" style={{width: `${playerEnergy}%`}}></div></div>
-         </div>
-         <div>
-           <div className="flex justify-between text-lg font-bold mb-1"><span className="text-yellow-400">Độ No (Dũng)</span><span>{dog.hunger}%</span></div>
-           <div className="h-3 bg-gray-900  overflow-hidden border border-[#3e3030]"><div className="h-full bg-yellow-400" style={{width: `${dog.hunger}%`}}></div></div>
-         </div>
-      </div>
-      
+
       <div className="mt-auto">
-        <h2 className="font-bold text-xl mb-3 text-[#ff6b6b]">Âm Thanh</h2>
-        <button onClick={() => { toggleSound(); audioManager.setMute(!isSoundOn); }} className="w-full bg-[#4a3939] text-[#fdf6e2] py-3  font-bold border-2 border-[#3e3030] hover:bg-[#5a4646] transition-colors">
-          {isSoundOn ? '🔊 Đang Bật' : '🔇 Đã Tắt'}
+        <h2 className="font-[VT323] text-lg text-[#fbc02d] pixel-text-shadow uppercase mb-2">ÂM THANH</h2>
+        <button
+          onClick={() => { toggleSound(); audioManager.setMute(!isSoundOn); }}
+          className="pixel-btn pixel-btn-gray w-full font-[VT323] text-lg"
+        >
+          {isSoundOn ? 'ĐANG BẬT' : 'ĐÃ TẮT'}
         </button>
       </div>
     </div>
   );
 }
 
-function RightWing() {
+// Desktop side panel: Controls + Info
+function RightPanel() {
+  const setStage = useGameStore(s => s.setStage);
+  const stage = useGameStore(s => s.stage);
+  const showPause = stage !== 'TITLE' && stage !== 'INTRO_DIALOGUE' && stage !== 'ENDING' && stage !== 'GAME_OVER' && stage !== 'MEMORIAL' && stage !== 'DISCLAIMER_POST_GAME';
+
   return (
-    <div className="hidden xl:flex flex-col w-[300px] h-full max-h-[800px] bg-[#1e1e24] border-4 border-[#3e3030]  p-6 text-[#fdf6e2] shadow-2xl relative z-10">
-      <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#4dabf7] text-white font-black px-4 py-1  text-lg tracking-wider shadow-md">HƯỚNG DẪN</div>
-      
-      <h2 className="font-bold text-xl mb-4 text-[#4dabf7] mt-4">Điều Khiển</h2>
-      <div className="bg-[#111115] p-4  mb-6 border-2 border-[#3e3030] space-y-4">
-         <div className="flex items-center gap-3">
-           <kbd className="bg-[#3e3030] border-b-2 border-[#1a1414] text-white px-2 py-1  font-bold text-lg min-w-[36px] text-center">W</kbd>
-           <kbd className="bg-[#3e3030] border-b-2 border-[#1a1414] text-white px-2 py-1  font-bold text-lg min-w-[36px] text-center">A</kbd>
-           <kbd className="bg-[#3e3030] border-b-2 border-[#1a1414] text-white px-2 py-1  font-bold text-lg min-w-[36px] text-center">S</kbd>
-           <kbd className="bg-[#3e3030] border-b-2 border-[#1a1414] text-white px-2 py-1  font-bold text-lg min-w-[36px] text-center">D</kbd>
-           <span className="text-lg font-medium text-gray-300 ml-2">Di chuyển</span>
-         </div>
-         <div className="flex items-center gap-3">
-           <kbd className="bg-[#3e3030] border-b-2 border-[#1a1414] text-white px-4 py-1  font-bold text-lg text-center w-[120px]">Space</kbd>
-           <span className="text-lg font-medium text-gray-300">Tương tác</span>
-         </div>
-         <div className="flex items-center gap-3">
-           <kbd className="bg-[#3e3030] border-b-2 border-[#1a1414] text-white px-4 py-1  font-bold text-lg text-center w-[120px]">Chuột</kbd>
-           <span className="text-lg font-medium text-gray-300">Kéo thả đồ</span>
-         </div>
+    <div className="hidden xl:flex flex-col w-[280px] pixel-panel-dark gap-4 h-full max-h-[800px]">
+      <h2 className="font-[VT323] text-xl text-[#4dabf7] pixel-text-shadow uppercase">ĐIỀU KHIỂN</h2>
+      <div className="pixel-panel p-3 space-y-2">
+        <div className="flex items-center gap-2">
+          <div className="flex gap-1">
+            {['W','A','S','D'].map(k => (
+              <kbd key={k} className="bg-[#3e2723] text-[#f4ecd8] font-[VT323] text-lg px-2 py-0.5 border-b-2 border-[#1a1414] min-w-[28px] text-center">{k}</kbd>
+            ))}
+          </div>
+          <span className="font-[Share_Tech_Mono] text-sm">Di chuyển</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <kbd className="bg-[#3e2723] text-[#f4ecd8] font-[VT323] text-lg px-3 py-0.5 border-b-2 border-[#1a1414]">Space</kbd>
+          <span className="font-[Share_Tech_Mono] text-sm">Tương tác</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <kbd className="bg-[#3e2723] text-[#f4ecd8] font-[VT323] text-lg px-3 py-0.5 border-b-2 border-[#1a1414]">Click</kbd>
+          <span className="font-[Share_Tech_Mono] text-sm">Kéo thả</span>
+        </div>
       </div>
-      
-      <div className="mt-auto opacity-70">
-        <p className="text-base text-center text-gray-400">
-          Mỗi Ngày Một Nghề<br/>
-          (Everyday A Trade)<br/>
-          Phiên bản 1.0.0
-        </p>
+
+      {showPause && (
+        <button
+          onClick={() => { audioManager.playBlipSFX(); setStage('TITLE'); }}
+          className="pixel-btn pixel-btn-red font-[VT323] text-lg w-full"
+        >
+          VỀ MÀN HÌNH CHÍNH
+        </button>
+      )}
+
+      <div className="mt-auto text-center font-[Share_Tech_Mono] text-xs text-[#78716c]">
+        <p>Moi Ngay Mot Nghe</p>
+        <p>(Everyday A Trade)</p>
+        <p>Phien ban 1.0.0</p>
       </div>
     </div>
   );
 }
 
 function GameCanvas() {
-  const stage = useGameStore((s) => s.stage);
+  const stage = useGameStore(s => s.stage);
+
+  const showHUD = !['TITLE','INTRO_DIALOGUE','GAME_OVER','ENDING','DISCLAIMER_POST_GAME','MEMORIAL'].includes(stage);
 
   const renderStage = () => {
     switch (stage) {
-      case 'TITLE':
-        return <TitleScreen />;
-      case 'INTRO_DIALOGUE':
-        return <IntroDialogue />;
-      case 'MORNING_PHASE':
-        return <MorningPhase />;
-      case 'JOB_SELECT':
-        return <JobSelect />;
-      case 'WORKING':
-      case 'SELLING':
-        return <WorkingPhase />;
-      case 'NIGHT_SETTLEMENT':
-        return <NightSettlement />;
-      case 'JAIL_CELL':
-        return <JailCell />;
-      case 'WEDDING_CUTSCENE':
-        return <WeddingCutscene />;
-      case 'ENDING':
-        return <EndingScreen />;
-      case 'GAME_OVER':
-        return <GameOverScreen />;
-      case 'DISCLAIMER_POST_GAME':
-        return <DisclaimerScreen />;
-      case 'MEMORIAL':
-        return <MemorialScreen />;
-      default:
-        return <TitleScreen />;
+      case 'TITLE': return <TitleScreen />;
+      case 'INTRO_DIALOGUE': return <IntroDialogue />;
+      case 'MORNING_PHASE': return <MorningPhase />;
+      case 'JOB_SELECT': return <JobSelect />;
+      case 'WORKING': case 'SELLING': return <WorkingPhase />;
+      case 'NIGHT_SETTLEMENT': return <NightSettlement />;
+      case 'JAIL_CELL': return <JailCell />;
+      case 'WEDDING_CUTSCENE': return <WeddingCutscene />;
+      case 'ENDING': return <EndingScreen />;
+      case 'GAME_OVER': return <GameOverScreen />;
+      case 'DISCLAIMER_POST_GAME': return <DisclaimerScreen />;
+      case 'MEMORIAL': return <MemorialScreen />;
+      default: return <TitleScreen />;
     }
   };
 
-  const showHUD =
-    stage !== 'TITLE' &&
-    stage !== 'INTRO_DIALOGUE' &&
-    stage !== 'GAME_OVER' &&
-    stage !== 'ENDING' &&
-    stage !== 'DISCLAIMER_POST_GAME' &&
-    stage !== 'MEMORIAL';
-
   return (
-    <>
-      <div className="relative w-full h-full flex flex-col overflow-hidden">
-        {showHUD && <GameHUD />}
-        <div className="flex-1 overflow-hidden relative">
-          {renderStage()}
-        </div>
+    <div className="relative w-full h-full flex flex-col overflow-hidden">
+      {showHUD && <GameHUD />}
+      <div className="flex-1 overflow-hidden relative">
+        {renderStage()}
       </div>
-    </>
+    </div>
   );
 }
 
 export default function App() {
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState(() => {
+    return localStorage.getItem('disclaimer_accepted') === 'true';
+  });
+
+  // Global first-click audio unlocker
+  useEffect(() => {
+    const unlock = () => {
+      audioManager.init();
+      window.removeEventListener('click', unlock);
+      window.removeEventListener('touchstart', unlock);
+    };
+    window.addEventListener('click', unlock, { once: true });
+    window.addEventListener('touchstart', unlock, { once: true });
+    return () => {
+      window.removeEventListener('click', unlock);
+      window.removeEventListener('touchstart', unlock);
+    };
+  }, []);
+
+  if (!disclaimerAccepted) {
+    return <PreGameDisclaimerModal onAccept={() => setDisclaimerAccepted(true)} />;
+  }
+
   return (
-    <div className="w-full h-[100dvh] bg-[#111115] flex items-center justify-center gap-8 p-0 md:p-6 overflow-hidden select-none ">
-      <LeftWing />
-      
-      <div className="relative w-full h-[100dvh] xl:h-[800px] xl:w-[450px] bg-[#221919] border-[#3e2723] xl:border-4 border-[#3e3030] xl: shadow-[0_0_80px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden z-20 shrink-0">
-        {/* CRT Scanline Overlay applied only to the mobile canvas */}
-        <div className="pointer-events-none absolute inset-0 z-50 bg-[linear-gradient(rgba(26,20,20,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[length:100%_4px]" />
-        
+    <div className="w-full h-[100dvh] bg-[#111115] flex items-center justify-center gap-4 p-0 xl:p-4 overflow-hidden select-none">
+      <LeftPanel />
+
+      <div className="relative w-full h-full max-h-[100dvh] xl:max-h-[800px] aspect-[9/16] max-w-[440px] bg-[#1e1e24] border-0 xl:border-4 xl:border-[#78471c] shadow-[0_0_40px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden z-20">
+        {/* CRT scanline overlay */}
+        <div className="pointer-events-none absolute inset-0 z-50 bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.12)_50%)] bg-[length:100%_4px]" />
         <GameCanvas />
+        <WastedTransition />
       </div>
 
-      <RightWing />
+      <RightPanel />
     </div>
   );
 }

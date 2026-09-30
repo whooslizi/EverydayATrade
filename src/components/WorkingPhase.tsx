@@ -1,278 +1,220 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useGameStore } from '../store/useGameStore';
-import { PRICING_OPTIONS, formatVND } from '../data/gameData';
 import { audioManager } from '../audio/AudioManager';
-import { BackgroundCanvas } from './BackgroundCanvas';
+import { PRICING_OPTIONS } from '../data/gameData';
 import { CharacterCanvas } from './CharacterCanvas';
+
+function formatVND(n: number): string {
+  return n.toLocaleString('vi-VN') + 'd';
+}
+
+type Tab = 'NGUYEN_LIEU' | 'DINH_GIA' | 'SO_NO' | 'NHAT_KY';
 
 export function WorkingPhase() {
   const store = useGameStore();
+  const job = store.currentJob;
+  const [activeTab, setActiveTab] = useState<Tab>('NGUYEN_LIEU');
+  const [craftingItemId, setCraftingItemId] = useState<string | null>(null);
   const [craftProgress, setCraftProgress] = useState(0);
   const [customerWaiting, setCustomerWaiting] = useState(false);
-  const [customerTimer, setCustomerTimer] = useState(0);
-  const [shiftTime, setShiftTime] = useState(180);
-  const [craftingItemId, setCraftingItemId] = useState<string | null>(null);
-  const [vipSpeed, setVipSpeed] = useState(1);
-  
-  // Effects
-  const [shake, setShake] = useState(false);
-  const [floatingTexts, setFloatingTexts] = useState<{id: number, text: string, color: string, x: number, y: number}[]>([]);
-  const floatIdRef = useRef(0);
-  
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const craftTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const shiftEndedRef = useRef(false);
+  const [floats, setFloats] = useState<{ id: number; text: string; color: string; x: number; y: number }[]>([]);
+  const floatId = useRef(0);
 
-  const job = store.currentJob;
-  if (!job) return null;
-
-  const currentPricing = PRICING_OPTIONS.find((p) => p.tier === store.selectedPricing) || PRICING_OPTIONS[0];
-  const totalCrafted = store.inventory.reduce((sum, inv) => sum + inv.craftedQty, 0);
-
-  const spawnFloat = (text: string, color: string, x: number, y: number) => {
-    const id = floatIdRef.current++;
-    setFloatingTexts(prev => [...prev, { id, text, color, x, y }]);
-    setTimeout(() => {
-      setFloatingTexts(prev => prev.filter(t => t.id !== id));
-    }, 1500);
-  };
-
-  const triggerShake = () => {
-    setShake(true);
-    setTimeout(() => setShake(false), 300);
-  };
-
-  useEffect(() => {
-    timerRef.current = setInterval(() => {
-      setShiftTime((prev) => {
-        if (prev <= 1) {
-          if (timerRef.current) clearInterval(timerRef.current);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
+  const spawnFloat = useCallback((text: string, color: string) => {
+    const id = floatId.current++;
+    setFloats(prev => [...prev, { id, text, color, x: 180 + Math.random() * 80, y: 40 }]);
+    setTimeout(() => setFloats(prev => prev.filter(f => f.id !== id)), 1200);
   }, []);
 
+  // Customer arrival timer
   useEffect(() => {
-    if (totalCrafted <= 0 || shiftTime <= 0) return;
-    const spawnRate = 3000 / (currentPricing.salesSpeedMultiplier || 1);
-    const interval = setInterval(() => {
-      if (Math.random() < 0.6 && totalCrafted > 0 && !customerWaiting) {
+    const timer = setInterval(() => {
+      if (!customerWaiting && Math.random() > 0.5) {
         setCustomerWaiting(true);
-        setCustomerTimer(8);
+        audioManager.playBlipSFX();
       }
-    }, spawnRate);
-    return () => clearInterval(interval);
-  }, [totalCrafted, currentPricing.salesSpeedMultiplier, shiftTime, customerWaiting]);
-
-  useEffect(() => {
-    if (!customerWaiting) return;
-    const t = setInterval(() => {
-      setCustomerTimer((prev) => {
-        if (prev <= 1) {
-          setCustomerWaiting(false);
-          spawnFloat("Khách bỏ đi!", "#ef4444", 200, 50);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(t);
+    }, 5000);
+    return () => clearInterval(timer);
   }, [customerWaiting]);
 
-  const startCrafting = (itemId: string) => {
-    const inv = store.inventory.find((i) => i.itemId === itemId);
-    if (!inv || inv.rawQty <= 0) {
-      spawnFloat("Hết nguyên liệu!", "#ef4444", 200, 200);
-      return;
-    }
-    if (store.playerEnergy <= 0) {
-      spawnFloat("Hết sức!", "#ef4444", 200, 200);
-      return;
-    }
-
-    store.startCraft(itemId);
+  // Crafting timer
+  useEffect(() => {
+    if (!craftingItemId) return;
     setCraftProgress(0);
-    setCraftingItemId(itemId);
+    const interval = setInterval(() => {
+      setCraftProgress(prev => {
+        if (prev >= 100) {
+          store.finishCraft(craftingItemId);
+          setCraftingItemId(null);
+          audioManager.playSizzleSFX();
+          spawnFloat('+1', '#10b981');
+          return 0;
+        }
+        return prev + 5;
+      });
+    }, 100);
+    return () => clearInterval(interval);
+  }, [craftingItemId]);
 
-    const item = job.items.find((i) => i.id === itemId);
-    const craftMs = item?.craftTimeMs || 2000;
-    const step = 50 * vipSpeed;
-    let progress = 0;
-    
-    audioManager.playSizzleSFX();
+  if (!job) return null;
 
-    if (craftTimerRef.current) clearInterval(craftTimerRef.current);
-    craftTimerRef.current = setInterval(() => {
-      progress += (step / craftMs) * 100;
-      setCraftProgress(Math.min(100, progress));
-      if (progress >= 100) {
-        if (craftTimerRef.current) clearInterval(craftTimerRef.current);
-        store.finishCraft(itemId);
-        setCraftProgress(0);
-        setCraftingItemId(null);
-        audioManager.playBlipSFX();
-        spawnFloat("+1 SP", "#22c55e", 200, 200);
-      }
-    }, step);
-  };
+  const totalCrafted = store.inventory.reduce((s, i) => s + i.craftedQty, 0);
+  const pricing = PRICING_OPTIONS.find(p => p.tier === store.selectedPricing) || PRICING_OPTIONS[0];
 
   const sellToCustomer = () => {
-    if (!customerWaiting) return;
-    const craftedSlot = store.inventory.find((inv) => inv.craftedQty > 0);
-    if (!craftedSlot) return;
-    const item = job.items.find((i) => i.id === craftedSlot.itemId);
-    if (!item) return;
-
-    const price = Math.round(item.basePrice * currentPricing.marginMultiplier);
-    store.sellBatch(1, price);
-
-    const newInv = store.inventory.map((inv) =>
-      inv.itemId === craftedSlot.itemId
-        ? { ...inv, craftedQty: inv.craftedQty - 1 }
-        : inv,
-    );
-    useGameStore.setState({ inventory: newInv });
-
-    if (currentPricing.suspicionIncrease > 0) store.addSuspicion(currentPricing.suspicionIncrease);
-    if (currentPricing.angerIncrease > 0) store.addMobAnger(currentPricing.angerIncrease);
-    if (price < item.ingredientCost) store.markBelowCostDay();
-
+    if (!customerWaiting || totalCrafted <= 0) return;
+    const item = job.items[0];
+    const price = Math.round(item.basePrice * pricing.marginMultiplier);
+    const revenue = price * totalCrafted;
+    store.sellBatch(totalCrafted, revenue);
+    store.addSuspicion(pricing.suspicionIncrease);
+    store.addMobAnger(pricing.angerIncrease);
+    store.depleteEnergy(10);
+    audioManager.playRegisterSFX();
+    spawnFloat('+' + formatVND(revenue), '#10b981');
     setCustomerWaiting(false);
-    audioManager.playCoinSFX();
-    spawnFloat(`+${formatVND(price)}`, "#22c55e", 200, 100);
+    // Clear crafted inventory
+    store.inventory.forEach(inv => {
+      if (inv.craftedQty > 0) {
+        for (let i = 0; i < inv.craftedQty; i++) store.finishCraft(inv.itemId);
+      }
+    });
   };
 
-  const endShift = () => {
-    if (shiftEndedRef.current) return;
-    shiftEndedRef.current = true;
-    audioManager.playBlipSFX();
-    store.setStage('NIGHT_SETTLEMENT');
-  };
-
-  useEffect(() => {
-    if (shiftTime <= 0 && !shiftEndedRef.current) {
-      endShift();
-    }
-  }, [shiftTime]);
-
-  const formatTime = (s: number) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
+  const tabs: { id: Tab; label: string }[] = [
+    { id: 'NGUYEN_LIEU', label: 'NGUYÊN LIỆU' },
+    { id: 'DINH_GIA', label: 'ĐỊNH GIÁ' },
+    { id: 'SO_NO', label: 'SỔ NỢ' },
+    { id: 'NHAT_KY', label: 'NHẬT KÝ' },
+  ];
 
   return (
-    <div className={`absolute inset-0 flex flex-col font-game bg-[#2d1b11] ${shake ? 'animate-shake' : ''}`}>
-      {floatingTexts.map(t => (
-        <div key={t.id} className="absolute z-50 pointer-events-none text-2xl font-pixel drop-shadow-md animate-float-up"
-             style={{ left: t.x, top: t.y, color: t.color }}>
-          {t.text}
-        </div>
-      ))}
-
-      {/* Top 40%: Street View Canvas Simulator */}
-      <div className="h-[40%] border-b-4 border-dark-brown relative overflow-hidden flex flex-col">
-        <BackgroundCanvas />
+    <div className="absolute inset-0 flex flex-col bg-[#231812]">
+      {/* Top: Canvas (42%) */}
+      <div className="h-[42%] relative bg-[#1e1e24] border-b-4 border-[#78471c] overflow-hidden">
         <CharacterCanvas customerWaiting={customerWaiting} />
-        <div className="relative z-10 p-2 flex justify-between pointer-events-none">
-           <span className="bg-[#2d2222] text-white px-3 py-1 font-pixel text-xl border-2 border-[#3e3030]">{job.name}</span>
-           <span className={`bg-[#2d2222] px-3 py-1 font-pixel text-xl border-2 border-[#3e3030] ${shiftTime < 30 ? 'text-[#ef4444] animate-pixel-blink' : 'text-white'}`}>
-             {formatTime(shiftTime)}
-           </span>
-        </div>
-        
-        {/* Customer simulation area */}
-        <div className="flex-1 relative flex items-center justify-center pointer-events-none">
-            {customerWaiting && (
-                <div className="absolute right-12 bottom-8 flex flex-col items-center animate-slide-up">
-                   <div className="bg-white border-2 border-[#3c2415] p-2 mb-2 rounded-sm text-base shadow-md relative max-w-[120px] text-center text-black">
-                       Mua hang!<br/>({customerTimer}s)
-                       <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white border-b-2 border-r-2 border-[#3c2415] transform rotate-45"></div>
-                   </div>
-                </div>
-            )}
+        {/* Floating text */}
+        {floats.map(f => (
+          <div key={f.id} className="absolute font-[VT323] text-xl pixel-text-shadow animate-fade-in pointer-events-none"
+            style={{ color: f.color, left: f.x, top: f.y, animation: 'slide-up 1s ease-out forwards' }}
+          >{f.text}</div>
+        ))}
+
+        {/* Job title badge */}
+        <div className="absolute top-2 left-2 bg-[#231812]/90 border-2 border-[#78471c] px-2 py-0.5">
+          <span className="font-[VT323] text-base text-[#fbc02d]">{job.name}</span>
         </div>
       </div>
 
-      {/* Bottom 60%: Workshop / Kitchen */}
-      <div className="h-[60%] bg-[#1a1414] p-3 flex flex-col relative z-20">
-        <div className="flex gap-2 mb-3">
-          {PRICING_OPTIONS.map((opt) => (
+      {/* Bottom: Tabs (58%) */}
+      <div className="h-[58%] flex flex-col">
+        {/* Tab bar */}
+        <div className="flex border-b-3 border-[#78471c]">
+          {tabs.map(t => (
             <button
-              key={opt.tier}
-              onClick={() => { store.setPricing(opt.tier); audioManager.playBlipSFX(); }}
-              className={`flex-1 p-2 font-bold text-sm rounded-xl transition-all border-2 ${
-                store.selectedPricing === opt.tier
-                  ? 'bg-[#d4a637] text-[#3c2415] border-[#fdf6e2] shadow-md'
-                  : 'bg-[#2d2222] text-[#fdf6e2]/70 border-[#3c2415]/50'
+              key={t.id}
+              onClick={() => { setActiveTab(t.id); audioManager.playTabSFX(); }}
+              className={`flex-1 py-2 font-[VT323] text-base text-center border-r border-[#78471c] last:border-r-0 transition-colors min-h-[44px] ${
+                activeTab === t.id ? 'bg-[#f4ecd8] text-[#3e2723]' : 'bg-[#231812] text-[#78716c] hover:bg-[#3c2415]'
               }`}
             >
-              {opt.label}
+              {t.label}
             </button>
           ))}
         </div>
 
-        <div className="flex-1 overflow-y-auto space-y-3 pr-2">
-          {job.items.map((item) => {
-            const inv = store.inventory.find((i) => i.itemId === item.id);
-            const rawQty = inv?.rawQty || 0;
-            const craftedQty = inv?.craftedQty || 0;
-
-            return (
-              <div key={item.id} className="bg-[#fdf6e2] border-4 border-[#3c2415] p-3 shadow-[4px_4px_0px_rgba(0,0,0,0.5)] flex flex-col">
-                <div className="flex justify-between items-center mb-2">
-                   <div className="font-pixel text-xl text-[#3c2415] truncate max-w-[60%]">{item.name}</div>
-                   <div className="text-base font-bold text-[#7f1d1d]">Von: {formatVND(item.ingredientCost)}</div>
-                </div>
-                
-                <div className="flex gap-2 mb-2 items-center text-lg">
-                   <div className="flex-1 bg-[#fef3c7] p-2 border-2 border-[#3c2415]/50 text-center text-[#3c2415]">
-                     NL: {rawQty}
-                   </div>
-                   <div className="flex-1 bg-[#dcfce7] p-2 border-2 border-[#3c2415]/50 text-center text-[#3c2415]">
-                     TP: {craftedQty}
-                   </div>
-                </div>
-
-                {craftProgress > 0 && craftingItemId === item.id && (
-                  <div className="h-4 w-full bg-[#2d2222] border-2 border-black mb-2">
-                    <div className="h-full bg-[#22c55e] transition-all" style={{ width: `${craftProgress}%` }}></div>
+        {/* Tab content */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-3">
+          {activeTab === 'NGUYEN_LIEU' && (
+            <div className="space-y-2">
+              {job.items.map(item => {
+                const inv = store.inventory.find(i => i.itemId === item.id);
+                const rawQty = inv?.rawQty || 0;
+                const craftedQty = inv?.craftedQty || 0;
+                return (
+                  <div key={item.id} className="pixel-panel p-2">
+                    <div className="flex justify-between font-[VT323] text-lg text-[#3e2723]">
+                      <span>{item.name}</span>
+                      <span className="text-[#78350f]">Vốn: {formatVND(item.ingredientCost)}</span>
+                    </div>
+                    <div className="flex gap-2 font-[Share_Tech_Mono] text-sm text-[#78716c] my-1">
+                      <span>NL: {rawQty}</span>
+                      <span>TP: {craftedQty}</span>
+                    </div>
+                    {craftingItemId === item.id && (
+                      <div className="retro-gauge mb-2"><div className="retro-gauge-fill bg-green-500" style={{width:`${craftProgress}%`}} /></div>
+                    )}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => { store.buyIngredients(item.id, 1, item.ingredientCost); audioManager.playGearSFX(); spawnFloat('-' + formatVND(item.ingredientCost), '#ef4444'); }}
+                        disabled={store.cash < item.ingredientCost}
+                        className="pixel-btn pixel-btn-gold flex-1 font-[VT323] text-lg"
+                      >MUA NL</button>
+                      <button
+                        onClick={() => { if (rawQty > 0 && !craftingItemId) { store.startCraft(item.id); setCraftingItemId(item.id); } }}
+                        disabled={rawQty <= 0 || craftingItemId !== null || store.playerEnergy <= 0}
+                        className="pixel-btn pixel-btn-green flex-1 font-[VT323] text-lg"
+                      >CHẾ TẠO</button>
+                    </div>
                   </div>
-                )}
+                );
+              })}
+            </div>
+          )}
 
-                <div className="flex gap-2">
-                   <button
-                     onClick={() => { store.buyIngredients(item.id, 1, item.ingredientCost); audioManager.playCoinSFX(); spawnFloat(`-${formatVND(item.ingredientCost)}`, "#ef4444", 100, 200); }}
-                     disabled={store.cash < item.ingredientCost}
-                     className="flex-1 bg-[#facc15] text-[#3c2415] font-pixel text-xl py-2 border-2 border-[#3c2415] shadow-md active:translate-y-1 active:shadow-none disabled:opacity-50"
-                   >
-                     MUA NL
-                   </button>
-                   <button
-                     onClick={() => startCrafting(item.id)}
-                     disabled={rawQty <= 0 || (craftingItemId !== null) || store.playerEnergy <= 0}
-                     className="flex-1 bg-[#16a34a] text-[#fdf6e2] font-pixel text-xl py-2 border-2 border-[#3c2415] shadow-md active:translate-y-1 active:shadow-none disabled:opacity-50"
-                   >
-                     CHE TAO
-                   </button>
-                </div>
-              </div>
-            );
-          })}
+          {activeTab === 'DINH_GIA' && (
+            <div className="space-y-2">
+              {PRICING_OPTIONS.map(p => (
+                <button
+                  key={p.tier}
+                  onClick={() => { store.setPricing(p.tier); audioManager.playBlipSFX(); }}
+                  className={`pixel-panel w-full p-3 text-left cursor-pointer ${
+                    store.selectedPricing === p.tier ? 'border-[#fbc02d] border-4' : ''
+                  }`}
+                >
+                  <h3 className="font-[VT323] text-xl text-[#3e2723]">{p.label}</h3>
+                  <p className="font-[Share_Tech_Mono] text-sm text-[#78716c]">
+                    Lãi x{p.marginMultiplier} | Nghi ngờ +{p.suspicionIncrease}% | Giận +{p.angerIncrease}%
+                  </p>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {activeTab === 'SO_NO' && (
+            <div className="pixel-panel p-3">
+              <table className="w-full font-[Share_Tech_Mono] text-sm text-[#3e2723]">
+                <tbody>
+                  <tr><td>Nợ hiện tại:</td><td className="text-right font-bold text-[#d32f2f]">{formatVND(store.debt)}</td></tr>
+                  <tr><td>Lãi/ngày:</td><td className="text-right">-{formatVND(store.dailyInterest)}</td></tr>
+                  <tr><td>Nghi ngờ thuế:</td><td className="text-right">{store.taxSuspicion}%</td></tr>
+                  <tr><td>Giận của mob:</td><td className="text-right">{store.mobAnger}%</td></tr>
+                  <tr><td>Số lần bị bắt:</td><td className="text-right">{store.timesArrested}</td></tr>
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {activeTab === 'NHAT_KY' && (
+            <div className="pixel-panel p-3 font-[Share_Tech_Mono] text-sm text-[#3e2723] space-y-1">
+              {store.log.length === 0 && <p className="text-[#78716c] italic">Chưa có ghi chép.</p>}
+              {store.log.slice(-15).map((entry, i) => (
+                <p key={i}>{entry}</p>
+              ))}
+            </div>
+          )}
         </div>
 
-        <div className="pt-3 mt-auto">
+        {/* Bottom action: Sell */}
+        <div className="p-3 border-t-4 border-[#78471c]">
           <button
             onClick={sellToCustomer}
             disabled={!customerWaiting || totalCrafted <= 0}
-            className={`w-full font-black text-xl rounded-2xl py-4 border-4 shadow-lg transition-all ${
-               customerWaiting && totalCrafted > 0 
-               ? 'bg-[#2563eb] text-white border-[#1e3a8a] active:translate-y-1 active:shadow-none animate-pulse'
-               : 'bg-[#374151] text-[#9ca3af] border-[#111827] opacity-60'
+            className={`pixel-btn w-full font-[VT323] text-2xl py-3 ${
+              customerWaiting && totalCrafted > 0 ? 'pixel-btn-red animate-pulse' : 'pixel-btn-gray'
             }`}
           >
-            GIAO MON & TINH TIEN
+            GIAO MÓN & TÍNH TIỀN
           </button>
         </div>
       </div>
