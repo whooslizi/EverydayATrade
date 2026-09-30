@@ -54,14 +54,17 @@ export function DisclaimerScreen() {
             </div>
             <div className="text-[15px] leading-relaxed text-[#fef3c7] space-y-3 font-['Share_Tech_Mono']">
               <p>
-                Chào bạn! Trò chơi bạn vừa trải nghiệm là một phần trong dự án nghiên cứu của nhóm chúng mình. Bức ảnh banner ngoài màn hình chính là tác phẩm của AI, và những hình ảnh trong game đều được nhóm code bằng Python Art.
+                Trước hết, tụi mình xin gửi lời cảm ơn chân thành nhất vì bạn đã dành thời gian trải nghiệm tựa game này! Hy vọng bạn đã có những giây phút sinh tồn hè phố thật thú vị và đáng nhớ.
               </p>
               <p>
-                Mong bạn dành chút thời gian điền bảng <strong>"Khảo sát cảm nhận người chơi giữa tranh AI và nghệ thuật lập trình"</strong> <a href="https://forms.gle/5yWWoib1NpDqdP6fA" target="_blank" rel="noopener noreferrer" className="text-[#facc15] underline decoration-2 underline-offset-2 hover:text-white">tại đây</a> nhé. Đóng góp của bạn cực kỳ quý giá đối với nghiên cứu của nhóm.
+                Trò chơi này là một phần trong dự án nghiên cứu của nhóm. Rất mong bạn nán lại chút xíu để giúp nhóm điền bảng <strong>"Khảo sát cảm nhận người chơi giữa tranh AI và nghệ thuật lập trình"</strong> <a href="https://forms.gle/5yWWoib1NpDqdP6fA" target="_blank" rel="noopener noreferrer" className="text-[#facc15] underline decoration-2 underline-offset-2 hover:text-white">tại đây</a> nhé. Mọi ý kiến của bạn đều cực kỳ quý giá!
               </p>
               <p>
-                Ngoài ra, trò chơi này là dự án mã nguồn mở (opensource). Bạn có thể truy cập mã nguồn qua <a href="https://github.com/whooslizi/EverydayaTrade" target="_blank" rel="noopener noreferrer" className="text-[#facc15] underline decoration-2 underline-offset-2 hover:text-white">link Github này</a>, và nếu được, bạn có thể đóng góp (contribute) hay tặng tụi mình một sao (star) nhé :))
+                Ngoài ra, dự án này được public mã nguồn mở (opensource). Bạn có thể truy cập toàn bộ code qua <a href="https://github.com/whooslizi/EverydayaTrade" target="_blank" rel="noopener noreferrer" className="text-[#facc15] underline decoration-2 underline-offset-2 hover:text-white">link Github này</a>. Nếu thấy hay, đừng ngại đóng góp (contribute) hoặc tặng nhóm một sao (star) nha :))
               </p>
+              <div className="border-t border-[#4a2424] pt-3 mt-4 text-center italic text-[#ff6b6b]">
+                A grand game made in loving memory of the author's grandfather.
+              </div>
             </div>
           </div>
         </div>

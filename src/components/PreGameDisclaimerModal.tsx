@@ -65,10 +65,7 @@ export function PreGameDisclaimerModal({ onAccept }: { onAccept: () => void }) {
               Chào bạn! Trò chơi bạn đang trải nghiệm là một phần trong dự án nghiên cứu của nhóm chúng mình. Bức ảnh banner ngoài màn hình chính là tác phẩm của AI, và trong quá trình chơi, bạn sẽ bắt gặp các bức tranh pixel do nhóm tự code bằng Python Art.
             </p>
             <p>
-              Sau khi chơi xong, mong bạn dành chút thời gian điền bảng <strong>"Khảo sát cảm nhận người chơi giữa tranh AI và nghệ thuật lập trình"</strong> <a href="https://forms.gle/5yWWoib1NpDqdP6fA" target="_blank" rel="noopener noreferrer" className="text-[#facc15] underline decoration-2 underline-offset-2 hover:text-white">tại đây</a> nhé.
-            </p>
-            <p>
-              Ngoài ra, trò chơi này là dự án mã nguồn mở (opensource). Bạn có thể truy cập mã nguồn qua <a href="https://github.com/whooslizi/EverydayaTrade" target="_blank" rel="noopener noreferrer" className="text-[#facc15] underline decoration-2 underline-offset-2 hover:text-white">link Github này</a>, và nếu được, bạn có thể đóng góp (contribute) hay tặng tụi mình một sao (star) nhé :))
+              Sau khi trải nghiệm xong, mong bạn dành chút thời gian điền bảng <strong>"Khảo sát cảm nhận người chơi giữa tranh AI và nghệ thuật lập trình"</strong> <a href="https://forms.gle/5yWWoib1NpDqdP6fA" target="_blank" rel="noopener noreferrer" className="text-[#facc15] underline decoration-2 underline-offset-2 hover:text-white">tại đây</a> nhé.
             </p>
           </div>
         </div>
