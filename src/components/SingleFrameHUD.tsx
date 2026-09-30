@@ -275,9 +275,15 @@ export function SingleFrameHUD() {
         )}
       </div>
 
-      <button onClick={() => { audioManager.playBlipSFX(); spawnCustomer(); }} className="w-full h-[40px] shrink-0 bg-[#991b1b] hover:bg-[#b91c1c] text-white font-[VT323] text-xl border-t-4 border-[#450a0a] drop-shadow-md">
-        BẮT ĐẦU CA MƯU SINH
-      </button>
+      {!shiftActiveRef.current && shiftTimeRef.current > 0 ? (
+        <button onClick={() => { audioManager.playBlipSFX(); setShiftActive(true); shiftActiveRef.current = true; }} className="w-full h-[40px] shrink-0 bg-[#991b1b] hover:bg-[#b91c1c] text-white font-[VT323] text-xl border-t-4 border-[#450a0a] drop-shadow-md">
+          BẮT ĐẦU CA MƯU SINH
+        </button>
+      ) : (
+        <div className="w-full h-[40px] shrink-0 bg-[#0c0a09] text-[#facc15] font-[VT323] text-xl border-t-4 border-[#450a0a] drop-shadow-md flex items-center justify-center">
+          {shiftTimeRef.current <= 0 ? 'KẾT THÚC CA LÀM VIỆC' : `CA LÀM VIỆC: 00:${Math.ceil(shiftTimeRef.current).toString().padStart(2, '0')}`}
+        </div>
+      )}
     </div>
   );
 
