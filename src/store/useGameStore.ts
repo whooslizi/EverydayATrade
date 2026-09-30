@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { GameState, Job, PricingTier, JailChoice } from '../types';
 
-const initialState: Omit<GameState, 'acceptDisclaimer' | 'resetGame' | 'startGame' | 'advanceDialogue' | 'selectJob' | 'buyIngredients' | 'startCraft' | 'finishCraft' | 'sellBatch' | 'buyFood' | 'depleteEnergy' | 'payDebt' | 'addCash' | 'removeCash' | 'addSuspicion' | 'addMobAnger' | 'triggerArrest' | 'setJailChoice' | 'resolveJail' | 'endDay' | 'attendWedding' | 'receiveNguyenGift' | 'triggerEnding' | 'setMiniGame' | 'addMiniGameScore' | 'toggleSound' | 'addLog' | 'setNightVoiceShown' | 'markBelowCostDay' | 'setDogKidnapped' | 'ransomDog' | 'setStage' | 'setPricing' | 'setTrack' | 'sellDog'> = {
+const initialState: Omit<GameState, 'acceptDisclaimer' | 'resetGame' | 'startGame' | 'advanceDialogue' | 'selectJob' | 'buyIngredients' | 'startCraft' | 'finishCraft' | 'sellBatch' | 'buyFood' | 'depleteEnergy' | 'payDebt' | 'addCash' | 'removeCash' | 'addSuspicion' | 'addMobAnger' | 'triggerArrest' | 'setJailChoice' | 'resolveJail' | 'endDay' | 'attendWedding' | 'receiveNguyenGift' | 'triggerEnding' | 'setMiniGame' | 'addMiniGameScore' | 'toggleSound' | 'addLog' | 'setNightVoiceShown' | 'markBelowCostDay' | 'setDogKidnapped' | 'ransomDog' | 'setStage' | 'setPricing' | 'setTrack' | 'sellDog' | 'buyDogBack'> = {
   stage: 'TITLE',
   isSoundOn: true,
   currentTrack: 'TRACK_1',
@@ -192,6 +192,7 @@ export const useGameStore = create<GameState>()(
       markBelowCostDay: () => set({ belowCostDays: get().belowCostDays + 1 }),
       setDogKidnapped: (k) => set({ dog: { ...get().dog, isKidnapped: k } }),
       sellDog: () => { set({ cash: get().cash + 363636, soldDog: true, stage: 'WASTED', endingId: 'ENDING_7_SOLD_DOG', log: [...get().log, "Ban cho Dung: +363,636d"] }); },
+      buyDogBack: () => { set({ cash: get().cash - 1000000, soldDog: false, log: [...get().log, "Chuoc lai Dung: -1,000,000d"] }); },
       ransomDog: () => {
         if (get().cash >= 30000) set({ cash: get().cash - 30000, dog: { ...get().dog, isKidnapped: false, loyalty: Math.max(0, get().dog.loyalty - 10) } });
       },

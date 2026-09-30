@@ -258,19 +258,7 @@ export function SingleFrameHUD() {
             <div className="flex justify-between border-b border-[#d4d4d8] pb-1"><span>Nợ hiện tại:</span><span className="text-[#991b1b] font-bold">{formatVND(store.debt)}</span></div>
             <div className="flex justify-between border-b border-[#d4d4d8] pb-1"><span>Nghi ngờ thuế:</span><span>{store.taxSuspicion}/100</span></div>
             <div className="flex justify-between border-b border-[#d4d4d8] pb-1"><span>Giận của khách:</span><span>{store.mobAnger}/100</span></div>
-            {!store.soldDog && (
-              <button 
-                onClick={() => {
-                  if (confirm("Bạn có chắc chắn muốn bán chó Dũng không? Hành động này không thể hoàn tác.")) {
-                    store.sellDog();
-                    audioManager.playBlipSFX();
-                  }
-                }}
-                className="w-full mt-2 bg-[#991b1b] text-white py-1 font-['VT323'] text-lg border-2 border-[#450a0a] animate-pulse"
-              >
-                BÁN CHÓ DŨNG - NHẬN 363.636đ
-              </button>
-            )}
+            
           </div>
         )}
         {activeTab === 'LOG' && (

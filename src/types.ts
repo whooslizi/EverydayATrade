@@ -128,6 +128,7 @@ export interface GameState {
   setDogKidnapped: (k: boolean) => void;
   ransomDog: () => void;
   sellDog: () => void;
+  buyDogBack: () => void;
   setStage: (s: GameStage) => void;
   setPricing: (p: PricingTier) => void;
   setTrack: (t: TrackId) => void;
