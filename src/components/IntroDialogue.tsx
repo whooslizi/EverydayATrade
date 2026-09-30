@@ -13,14 +13,13 @@ export function IntroDialogue() {
   }
   
   return (
-    <div className="absolute inset-0 bg-[#0c0a09]">
+    <div className="absolute inset-0 bg-[#0c0a09] font-game">
       <button 
         onClick={() => store.setStage('MORNING_PHASE')}
         className="absolute top-4 right-4 z-50 text-[#fef3c7] font-['VT323'] text-xl underline opacity-70 hover:opacity-100"
       >
         [ BỎ QUA GIỚI THIỆU ]
       </button>
-    <div className="absolute inset-0 bg-[#0c0a09] font-game">
       <DialogueModal 
         speakerId="unknown"
         speakerName="Nhật Ký"

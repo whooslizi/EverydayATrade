@@ -21,8 +21,8 @@ export function SingleFrameHUD() {
   const [shiftActive, setShiftActive] = useState(false);
   const [playerReply, setPlayerReply] = useState<string | null>(null);
   
-  const [customer, setCustomer] = useState<{active: boolean, patience: number, order: string | null, state: 'waiting'|'happy'|'angry'|'replying'}>({
-    active: false, patience: 12000, order: null, state: 'waiting'
+  const [customer, setCustomer] = useState<{active: boolean, patience: number, order: string | null, state: 'waiting'|'happy'|'angry'|'replying', scenarioIdx: number}>({
+    active: false, patience: 12000, order: null, state: 'waiting', scenarioIdx: 0
   });
   
   const job = store.currentJob || JOBS[0];
@@ -143,7 +143,7 @@ export function SingleFrameHUD() {
       store.sellBatch(1, rev);
       store.addMobAnger(currentPricing.angerIncrease);
       // Wait for reply before hiding
-      setCustomer(c => ({ ...c, state: 'replying' }));
+      setCustomer(c => ({ ...c, state: 'replying', scenarioIdx: currentPricing.tier === 'CHAT_CHEM' ? 0 : Math.floor(Math.random() * 2) + 1 }));
     } else {
       audioManager.playErrorSFX();
     }
@@ -157,7 +157,7 @@ export function SingleFrameHUD() {
   const spawnCustomer = () => {
     if (customer.active) return;
     const order = items[Math.floor(Math.random() * items.length)].id;
-    setCustomer({ active: true, patience: 12000, order, state: 'waiting' });
+    setCustomer({ active: true, patience: 12000, order, state: 'waiting', scenarioIdx: 0 });
   };
 
   const renderHUD = () => (
@@ -286,22 +286,46 @@ export function SingleFrameHUD() {
     </div>
   );
 
+  
+const SCENARIOS = [
+  {
+    text: '"Ối giời ôi, bát phở đắt thế?! Bò này nuôi bằng sữa tươi à?!"',
+    choices: [
+      { label: '[1] Nhẹ nhàng giải thích', reply: 'Bác ăn thử miếng nước ngọt thanh này xem có đáng đồng tiền không.' },
+      { label: '[2] Bật lại gắt gỏng', reply: 'Chê đắt thì vác bát ra ngã tư mà nuốt bụi cho no!' },
+      { label: '[3] Hề hước', reply: 'Bò này tốt nghiệp Bách khoa ra đấy bác, ăn vào thông minh đột xuất luôn!' }
+    ]
+  },
+  {
+    text: '"Biết tin gì chưa bác chủ? Con bé Hà bán quạt sắp cưới anh IT rồi!"',
+    choices: [
+      { label: '[1] Trải đời', reply: 'Làm nghề gì thì bàn tay cũng phải chạm vào thực tế bác ạ.' },
+      { label: '[2] Cà khịa', reply: 'Bảo anh IT đấy viết prompt nhờ AI sửa quạt hộ xem có chạy được không!' },
+      { label: '[3] Lảng tránh', reply: 'Chuyện nhà người ta bác ơi, bác húp mau bát phở nguội mất ngon!' }
+    ]
+  },
+  {
+    text: '"Anh xem xoá tận gốc PUBG trong máy em chưa đấy? Cả cộng đồng đang xoá game!"',
+    choices: [
+      { label: '[1] Chân thành', reply: 'Trò chơi để mua vui, thấy bất công thì dẹp sang một bên cho nhẹ đầu.' },
+      { label: '[2] Chửi thẳng', reply: 'Bắn gà chết ngoài bo xong đổ thừa cho máy! Trả 50k tiền công đi!' },
+      { label: '[3] Lươn lẹo', reply: 'Xóa rồi nhưng em cài cho anh tool cày clone, vào vote 1 sao cho bõ tức nhé!' }
+    ]
+  }
+];
+
   const handleReply = (choiceIdx: number) => {
     audioManager.playBlipSFX();
+    const scenario = SCENARIOS[customer.scenarioIdx];
     
-    if (choiceIdx === 0) {
-      setPlayerReply("Ông Đào nhà tôi bảo: 'Làm ăn phải lấy chữ Tâm làm đầu'. Bác dùng thử xem có đáng đồng tiền không.");
-      store.addMobAnger(-10);
-    } else if (choiceIdx === 1) {
-      setPlayerReply("Chê đắt thì vác bát ra ngã tư mà nuốt bụi cho no! Không ăn thì đi chỗ khác!");
-      store.addMobAnger(5);
-    } else {
-      setPlayerReply("Xóa game rồi nhưng em cài cho anh tool cày clone, vào vote 1 sao cho bõ tức nhé!");
-    }
+    if (choiceIdx === 0) store.addMobAnger(-10);
+    else if (choiceIdx === 1) store.addMobAnger(5);
+    
+    setPlayerReply(scenario.choices[choiceIdx].reply);
     
     setTimeout(() => {
       setPlayerReply(null);
-      setCustomer({ active: false, patience: 12000, order: null, state: 'waiting' });
+      setCustomer({ active: false, patience: 12000, order: null, state: 'waiting', scenarioIdx: 0 });
     }, 2500);
   };
 
@@ -320,7 +344,7 @@ export function SingleFrameHUD() {
         const itemName = items.find((i: JobItem) => i.id === customer.order)?.name;
         text = `"Cho tôi một ${itemName || 'suất'} nhé, lẹ lên!"`;
       } else if (customer.state === 'replying' || customer.state === 'happy') {
-        text = currentPricing.tier === 'CHAT_CHEM' ? '"Ối giời ôi, bát phở đắt thế?! Bò này nuôi bằng sữa tươi à?!"' : '"Biết tin gì chưa bác chủ? Con bé Hà bán quạt sắp cưới anh IT rồi!"';
+        text = SCENARIOS[customer.scenarioIdx].text;
       } else {
         text = '"Làm ăn lề mề quá, tôi đi quán khác!"';
       }
@@ -338,9 +362,11 @@ export function SingleFrameHUD() {
             
             {customer.state === 'replying' && !playerReply && (
               <div className="flex flex-col gap-1 mt-auto">
-                <button onClick={() => handleReply(0)} className="text-left bg-[#15803d] text-white px-2 py-0.5 font-[Share_Tech_Mono] text-[11px] border border-[#14532d] shadow-sm hover:bg-[#166534]">[1] Nhã nhặn & Lời Ông Đào</button>
-                <button onClick={() => handleReply(1)} className="text-left bg-[#991b1b] text-white px-2 py-0.5 font-[Share_Tech_Mono] text-[11px] border border-[#450a0a] shadow-sm hover:bg-[#b91c1c]">[2] Bật lại gắt gỏng</button>
-                <button onClick={() => handleReply(2)} className="text-left bg-[#ca8a04] text-white px-2 py-0.5 font-[Share_Tech_Mono] text-[11px] border border-[#713f12] shadow-sm hover:bg-[#eab308]">[3] Lươn lẹo hề hước</button>
+                {SCENARIOS[customer.scenarioIdx].choices.map((c, i) => (
+                  <button key={i} onClick={() => handleReply(i)} className={`text-left text-white px-2 py-0.5 font-[Share_Tech_Mono] text-[11px] border shadow-sm ${i === 0 ? 'bg-[#15803d] hover:bg-[#166534] border-[#14532d]' : i === 1 ? 'bg-[#991b1b] hover:bg-[#b91c1c] border-[#450a0a]' : 'bg-[#ca8a04] hover:bg-[#eab308] border-[#713f12]'}`}>
+                    {c.label}
+                  </button>
+                ))}
               </div>
             )}
           </div>
