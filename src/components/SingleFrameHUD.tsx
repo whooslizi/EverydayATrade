@@ -6,6 +6,31 @@ import { PhoneScamModal } from './PhoneScamModal';
 import { StallViewport } from './StallViewport';
 import type { JobItem } from '../types';
 
+
+const RetroBackground = () => (
+  <div className="absolute inset-0 z-0 overflow-hidden bg-gradient-to-b from-[#2d1b36] via-[#63283c] to-[#a34a36]">
+    {/* Sun/Moon glow */}
+    <div className="absolute bottom-[25%] left-1/2 -translate-x-1/2 w-24 h-24 bg-[#fbbf24] rounded-full blur-xl opacity-60"></div>
+    {/* Distant mountains/buildings */}
+    <div className="absolute bottom-[25%] left-0 w-full h-[20%] bg-[#1f1221] opacity-80" style={{ clipPath: 'polygon(0 100%, 0 40%, 10% 20%, 30% 60%, 50% 10%, 70% 50%, 85% 30%, 100% 70%, 100% 100%)' }}></div>
+    {/* Closer traditional buildings */}
+    <div className="absolute bottom-[25%] left-[-5%] w-[30%] h-[40%] bg-[#1a0f12]">
+      <div className="absolute top-0 left-0 w-full h-[15%] bg-[#361719] border-b-2 border-[#0a0507]" style={{ transform: 'skewY(-5deg)' }}></div>
+      {/* Lanterns */}
+      <div className="absolute top-[30%] right-[-10%] w-4 h-6 bg-[#ef4444] rounded-sm shadow-[0_0_10px_#ef4444]"></div>
+    </div>
+    <div className="absolute bottom-[25%] right-[-5%] w-[35%] h-[50%] bg-[#1a0f12]">
+      <div className="absolute top-0 left-0 w-full h-[15%] bg-[#361719] border-b-2 border-[#0a0507]" style={{ transform: 'skewY(5deg)' }}></div>
+      <div className="absolute top-[25%] left-[-5%] w-4 h-6 bg-[#ef4444] rounded-sm shadow-[0_0_10px_#ef4444]"></div>
+    </div>
+    {/* Street / Ground */}
+    <div className="absolute bottom-0 left-0 w-full h-[25%] bg-[#2a1815] border-t-[6px] border-[#120a09]">
+      <div className="w-full h-1 bg-[#120a09] mt-3 opacity-60"></div>
+      <div className="w-full h-1 bg-[#120a09] mt-4 opacity-40"></div>
+    </div>
+  </div>
+);
+
 export function SingleFrameHUD() {
   const store = useGameStore((s: any) => s);
   const [activeTab, setActiveTab] = useState<'ITEMS' | 'PRICING' | 'DEBT' | 'LOG'>('ITEMS');
@@ -368,12 +393,12 @@ const SCENARIOS = [
           </div>
           <div className="flex-1 min-w-0 flex flex-col h-full">
             <h3 className="text-[#d97706] font-bold text-[16px] font-[VT323] uppercase leading-none drop-shadow-[1px_1px_0px_#fef3c7]">{speaker}</h3>
-            <p className="text-[#1c1917] text-[13px] font-[Share_Tech_Mono] leading-tight mt-1 mb-1">{text}</p>
+            <p className="text-[#1c1917] text-[16px] font-[Share_Tech_Mono] leading-tight mt-1 mb-1">{text}</p>
             
             {customer.state === 'replying' && !playerReply && (
               <div className="flex flex-col gap-1 mt-auto">
                 {SCENARIOS[customer.scenarioIdx].choices.map((c, i) => (
-                  <button key={i} onClick={() => handleReply(i)} className={`text-left text-white px-2 py-0.5 font-[Share_Tech_Mono] text-[11px] border shadow-sm ${i === 0 ? 'bg-[#15803d] hover:bg-[#166534] border-[#14532d]' : i === 1 ? 'bg-[#991b1b] hover:bg-[#b91c1c] border-[#450a0a]' : 'bg-[#ca8a04] hover:bg-[#eab308] border-[#713f12]'}`}>
+                  <button key={i} onClick={() => handleReply(i)} className={`text-left text-white px-2 py-0.5 font-[Share_Tech_Mono] text-[15px] border shadow-sm ${i === 0 ? 'bg-[#15803d] hover:bg-[#166534] border-[#14532d]' : i === 1 ? 'bg-[#991b1b] hover:bg-[#b91c1c] border-[#450a0a]' : 'bg-[#ca8a04] hover:bg-[#eab308] border-[#713f12]'}`}>
                     {c.label}
                   </button>
                 ))}

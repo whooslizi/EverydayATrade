@@ -3,17 +3,22 @@ import { useGameStore } from '../store/useGameStore';
 import { audioManager } from '../audio/AudioManager';
 
 export function DisclaimerScreen() {
-  const setStage = useGameStore((s) => s.setStage);
-  const isSoundOn = useGameStore((s) => s.isSoundOn);
+  const store = useGameStore();
+  
 
   const agree = () => {
-    if (isSoundOn) audioManager.playBlipSFX();
-    setStage('MEMORIAL');
+    if (store.isSoundOn) audioManager.playBlipSFX();
+    if (store.endingsUnlocked.length >= 7) {
+      store.setStage('MEMORIAL');
+    } else {
+      alert(`Bạn đã mở khóa ${store.endingsUnlocked.length}/7 kết cục. Hãy thu thập đủ 7 kết cục để mở khóa Ký ức cuối cùng của Ông Nội!`);
+      store.setStage('TITLE');
+    }
   };
 
   const disagree = () => {
-    if (isSoundOn) audioManager.playBlipSFX();
-    setStage('TITLE');
+    if (store.isSoundOn) audioManager.playBlipSFX();
+    store.setStage('TITLE');
   };
 
   return (

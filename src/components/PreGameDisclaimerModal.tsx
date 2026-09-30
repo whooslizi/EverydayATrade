@@ -33,6 +33,9 @@ export function PreGameDisclaimerModal({ onAccept }: { onAccept: () => void }) {
         </h1>
         <div className="text-[15px] space-y-3 mb-6 text-justify leading-relaxed">
           <p>Trò chơi 'Mỗi Ngày Một Nghề' là sản phẩm hư cấu hoàn toàn, phục vụ mục đích giải trí và trải nghiệm mô phỏng sinh tồn hè phố.</p>
+          <p className="text-center font-medium mb-4 text-[15px] leading-relaxed text-[#e8dcdc] bg-[#2a1414] p-2 border border-[#4a2424]">
+            Đây là sản phẩm opensource và có thể được xem source trên: <a href="https://github.com/whooslizi/EverydayaTrade" target="_blank" className="text-yellow-400 underline">Github</a>. Nếu bạn thích có thể tặng mình 1 star nhé :))
+          </p>
           <p>Mọi danh xưng, bối cảnh, nghề nghiệp và tuyến nhân vật (như chú chó Dũng, anh Tôm buôn thực phẩm giả, bạn Hà, Hoàng IT, sinh viên Bách khoa, phong trào xóa game PUBG,...) hoàn toàn mang tính chất xây dựng kịch bản trào phúng.</p>
           <p>Tác phẩm tuyệt đối KHÔNG có ý định ám chỉ, bôi nhọ, xúc phạm, đánh đồng hay đại diện cho bất kỳ cá nhân, tổ chức hay nguyên mẫu ngoài đời thực nào. Mọi sự trùng hợp về danh xưng hay tình huống đều là ngẫu nhiên.</p>
         </div>
