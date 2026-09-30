@@ -628,8 +628,16 @@ export function SingleFrameHUD() {
     return (
       <div className="h-[26%] bg-[#1a0e08] p-2 flex flex-col items-center justify-center shrink-0 border-t-4 border-[#3f2010] relative z-10">
         <div className="bg-[#fef3c7] border-4 border-[#78350f] p-2 flex gap-3 items-start w-full h-full shadow-inner overflow-hidden">
-          <div className="w-[48px] h-[48px] bg-[#d97706] border-2 border-[#78350f] flex-shrink-0 flex items-center justify-center mt-1">
-            <span className={`${FONT_DISPLAY} text-[24px] text-[#fef3c7] ${SHADOW_ON_DARK}`}>{badge}</span>
+          <div className="w-[48px] h-[48px] bg-[#d97706] border-2 border-[#78350f] flex-shrink-0 flex items-center justify-center mt-1 overflow-hidden">
+            {badge === 'CQ' ? (
+              <img src="/sprites/portraits/hero.png" alt="Chủ Quán" className="w-full h-full object-cover" style={{ imageRendering: 'pixelated' }} />
+            ) : badge === 'KH' ? (
+              <img src="/sprites/portraits/tra.png" alt="Khách Hàng" className="w-full h-full object-cover" style={{ imageRendering: 'pixelated' }} />
+            ) : badge === 'NK' ? (
+              <img src="/sprites/portraits/ongdao.png" alt="Nhật Ký" className="w-full h-full object-cover" style={{ imageRendering: 'pixelated' }} />
+            ) : (
+              <span className={`${FONT_DISPLAY} text-[24px] text-[#fef3c7] ${SHADOW_ON_DARK}`}>{badge}</span>
+            )}
           </div>
           <div className="flex-1 min-w-0 flex flex-col h-full overflow-y-auto">
             <h3 className={`text-[#b45309] text-[18px] ${FONT_DISPLAY} uppercase leading-none ${SHADOW_ON_LIGHT}`}>

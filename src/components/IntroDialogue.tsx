@@ -21,7 +21,7 @@ export function IntroDialogue() {
         [ BỎ QUA GIỚI THIỆU ]
       </button>
       <DialogueModal 
-        speakerId="unknown"
+        speakerId="ongdao"
         speakerName="Nhật Ký"
         text={dialogue}
         onComplete={() => store.advanceDialogue()}

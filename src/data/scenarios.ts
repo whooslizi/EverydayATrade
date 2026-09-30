@@ -27,17 +27,17 @@ export const SCENARIOS: readonly Scenario[] = [
     choices: [
       {
         label: 'Giải thích giá cả',
-        comeback: 'Bác ăn thử một miếng xem có xứng đồng tiền không, em không nói điêu đâu.',
+        comeback: 'Bác cứ dùng thử dịch vụ xem có xứng đồng tiền không, em không nói điêu đâu.',
         angerDelta: -10,
       },
       {
         label: 'Bật lại gắt gỏng',
-        comeback: 'Chê đắt thì ra ngã tư húp bụi cho rẻ nhé!',
+        comeback: 'Chê đắt thì ra ngã tư cho rẻ nhé!',
         angerDelta: 5,
       },
       {
         label: 'Đùa cho qua chuyện',
-        comeback: 'Nguyên liệu này tốt nghiệp Bách khoa đấy bác, ăn vào thông minh hẳn ra!',
+        comeback: 'Sản phẩm này tốt nghiệp Bách khoa đấy bác, chất lượng khỏi bàn!',
         angerDelta: 0,
       },
     ],
@@ -54,12 +54,12 @@ export const SCENARIOS: readonly Scenario[] = [
       },
       {
         label: 'Chặn họng luôn',
-        comeback: 'Muốn rẻ thì bác về tự nấu, quán em không phải nhà từ thiện!',
+        comeback: 'Muốn rẻ thì bác về nhà tự làm, quán em không phải hội từ thiện!',
         angerDelta: 5,
       },
       {
         label: 'Trả treo hài hước',
-        comeback: 'Bớt thì được, nhưng em bớt luôn cả muỗng thịt đấy bác nhé!',
+        comeback: 'Bớt thì được, nhưng em bớt luôn cả chất lượng đấy bác nhé!',
         angerDelta: 0,
       },
     ],
@@ -81,7 +81,7 @@ export const SCENARIOS: readonly Scenario[] = [
       },
       {
         label: 'Hỏi chuyện học hành',
-        comeback: 'Ngành gì mà đói thế em, ngồi xuống ăn rồi kể anh nghe xem nào.',
+        comeback: 'Ngành gì mà đói thế em, ngồi đây kể anh nghe xem nào.',
         angerDelta: 0,
       },
     ],
@@ -103,7 +103,7 @@ export const SCENARIOS: readonly Scenario[] = [
       },
       {
         label: 'Lảng sang chuyện khác',
-        comeback: 'Chuyện nhà người ta bác ơi, bác ăn đi kẻo nguội mất ngon!',
+        comeback: 'Chuyện nhà người ta bác ơi, bác lo nhận hàng đi kìa!',
         angerDelta: 0,
       },
     ],
@@ -115,12 +115,12 @@ export const SCENARIOS: readonly Scenario[] = [
     choices: [
       {
         label: 'Báo Dũng đang ngủ',
-        comeback: 'Nó đang ngủ sau quầy đấy bác, ăn no là nó tha cho cả phố.',
+        comeback: 'Nó đang ngủ sau quầy đấy bác, no bụng là nó tha cho cả phố.',
         angerDelta: -10,
       },
       {
         label: 'Gắt vì bị hỏi nhiều',
-        comeback: 'Chó nhà em quý hơn khách hay hỏi, bác ăn đi đừng tò mò!',
+        comeback: 'Chó nhà em quý hơn khách hay hỏi, bác lo việc của bác đi!',
         angerDelta: 5,
       },
       {
@@ -133,16 +133,16 @@ export const SCENARIOS: readonly Scenario[] = [
   {
     id: 'GOSSIP_FAKE_FOOD',
     kind: 'GOSSIP',
-    quote: '"Nghe nói anh Tôm buôn thực phẩm giả bị phường để ý rồi. Quán anh có lấy hàng của hắn không?"',
+    quote: '"Nghe nói anh Tôm buôn hàng giả bị phường để ý rồi. Quán anh có dính dáng gì hắn không?"',
     choices: [
       {
-        label: 'Khẳng định hàng sạch',
-        comeback: 'Quán em nhập hàng rõ nguồn gốc, bác cứ yên tâm thưởng thức.',
+        label: 'Khẳng định uy tín',
+        comeback: 'Quán em làm ăn rõ ràng, bác cứ yên tâm sử dụng dịch vụ.',
         angerDelta: -10,
       },
       {
         label: 'Gắt vì bị đồn thổi',
-        comeback: 'Không có bằng chứng thì đừng đồn đại, ăn xong trả tiền giúp em!',
+        comeback: 'Không có bằng chứng thì đừng đồn đại, dùng xong trả tiền giúp em!',
         angerDelta: 5,
       },
       {
@@ -164,12 +164,12 @@ export const SCENARIOS: readonly Scenario[] = [
       },
       {
         label: 'Mắng thẳng mặt',
-        comeback: 'Bắn gà chết ngoài bo xong đổ thừa cho máy! Trả tiền món đi bác!',
+        comeback: 'Chơi dở đổ thừa hoàn cảnh! Lo thanh toán tiền đi bác!',
         angerDelta: 5,
       },
       {
         label: 'Lươn lẹo cho qua',
-        comeback: 'Em xóa từ sáng rồi, giờ chỉ còn mỗi game trông quán thôi bác ơi!',
+        comeback: 'Em xóa từ sáng rồi, giờ lo cày tiền trả nợ thôi bác ơi!',
         angerDelta: 0,
       },
     ],

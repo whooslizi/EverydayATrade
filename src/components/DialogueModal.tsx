@@ -37,13 +37,29 @@ export function DialogueModal({ speakerId, speakerName, text, onComplete, choice
     return () => clearInterval(t);
   }, [text]);
 
+  const portraitMap: Record<string, string> = {
+    'tra': '/sprites/portraits/tra.png',
+    'tom': '/sprites/portraits/tom.png',
+    'sv_bachkhoa': '/sprites/portraits/sinhvien.png',
+    'ha': '/sprites/portraits/ha.png',
+    'hoang_it': '/sprites/portraits/hoang_it.png',
+    'ongdao': '/sprites/portraits/ongdao.png',
+    'hero': '/sprites/portraits/hero.png'
+  };
+  
+  const avatarUrl = speakerId ? portraitMap[speakerId.toLowerCase()] : null;
+
   return (
     <div className="bg-[#fef3c7] border-4 border-[#78350f] p-3 flex gap-3 items-start shadow-inner w-full h-full relative" onClick={() => { if(!choices || choices.length===0) onComplete?.(); }}>
       {/* 64x64 Portrait */}
       <div className="w-[64px] h-[64px] bg-[#d97706] border-2 border-[#78350f] flex-shrink-0 flex items-center justify-center overflow-hidden">
-        <div className="text-[#fef3c7] font-[VT323] text-2xl text-center leading-none">
-          {speakerId ? speakerId.charAt(0).toUpperCase() : '?'}
-        </div>
+        {avatarUrl ? (
+          <img src={avatarUrl} alt={speakerName} className="w-full h-full object-cover" style={{ imageRendering: 'pixelated' }} />
+        ) : (
+          <div className="text-[#fef3c7] font-[VT323] text-2xl text-center leading-none">
+            {speakerId ? speakerId.charAt(0).toUpperCase() : '?'}
+          </div>
+        )}
       </div>
       
       <div className="flex-1 min-w-0 flex flex-col h-full">

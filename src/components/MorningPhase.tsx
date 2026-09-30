@@ -48,13 +48,26 @@ export function MorningPhase() {
 
         {/* Dog status */}
         <div className="pixel-panel p-3">
-          <h3 className="font-[VT323] text-lg text-[#3e2723] mb-2 uppercase">Dung</h3>
-          <table className="w-full font-[Share_Tech_Mono] text-sm text-[#3e2723]">
+          <h3 className="font-[VT323] text-lg text-[#3e2723] mb-2 uppercase">Dũng</h3>
+          <table className="w-full font-[Share_Tech_Mono] text-sm text-[#3e2723] mb-3">
             <tbody>
               <tr><td>Độ no Dũng:</td><td className="text-right">{store.dog.hunger}%</td></tr>
               <tr><td>Trung thành:</td><td className="text-right">{store.dog.loyalty}%</td></tr>
             </tbody>
           </table>
+          {!store.soldDog && (
+            <button
+              onClick={() => {
+                if (window.confirm("Bán Dũng để lấy 363.636đ? Sẽ không thể quay lại!")) {
+                  audioManager.playBlipSFX();
+                  store.sellDog();
+                }
+              }}
+              className="pixel-btn pixel-btn-red w-full font-[VT323] text-lg"
+            >
+              BÁN DŨNG (363.636đ)
+            </button>
+          )}
         </div>
 
         {/* Food items */}
