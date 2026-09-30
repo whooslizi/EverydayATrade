@@ -33,9 +33,9 @@ export function TomEventModal({ onClose }: { onClose: () => void }) {
                 <img src="/sprites/portraits/tom.png" alt="Anh Tôm" className="w-full h-full object-cover" style={{ imageRendering: 'pixelated' }} />
               </div>
               <div>
-                <h3 className="text-[#d97706] font-bold text-xl font-[VT323] uppercase">Anh Tôm (Chủ tịch rởm)</h3>
+                <h3 className="text-[#d97706] font-bold text-xl font-[VT323] uppercase">Anh Tôm</h3>
                 <p className="font-[Share_Tech_Mono] text-[15px] leading-tight text-[#1c1917]">
-                  "Đấy, trước tao nói có sai đâu, học cái trường này cho lắm rồi rốt cuộc ra vỉa hè bán đệm cho mẹ à? Nhìn tao làm Chủ tịch tập đoàn đi Roll Royce sướng không?!"
+                  "Đấy, trước tao nói có sai đâu, học cái trường này cho lắm rồi rốt cuộc ra vỉa hè làm ba cái lặt vặt à? Nhìn tao đây này, đi tắt đón đầu, tuồn hàng lậu bán giá cắt cổ, một vốn mười lời! Cày cuốc lương thiện như mày thì kiếp nào mới khá?"
                 </p>
               </div>
             </div>
