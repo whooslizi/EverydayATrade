@@ -27,7 +27,8 @@ export function DestinyJournalModal({ onClose }: { onClose: () => void }) {
     { id: 'ENDING_3_UNDERCOVER', label: '3', hint: 'Phía sau lớp mặt nạ...' },
     { id: 'ENDING_4_HOSPITAL', label: '4', hint: 'Chiếc ghế nhựa oan nghiệt...' },
     { id: 'ENDING_5_DUNG_BETRAYAL', label: '5', hint: 'Tiếng sủa xé lòng...' },
-    { id: 'ENDING_6_TRUE_MEMORIAL', label: '6', hint: 'Mùa hoa nở dưới gốc cây cũ...' }
+    { id: 'ENDING_6_TRUE_MEMORIAL', label: '6', hint: 'Mùa hoa nở dưới gốc cây cũ...' },
+    { id: 'ENDING_7_SOLD_DOG', label: '7', hint: 'Tiếng sủa xa xăm...' }
   ];
 
   return (

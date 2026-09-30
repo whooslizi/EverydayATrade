@@ -82,19 +82,9 @@ export function TitleScreen() {
       {showRoadmap && <RoadmapModal onClose={() => setShowRoadmap(false)} />}
       
       {/* Bottom controls */}
-      <div className="absolute bottom-6 left-0 right-0 flex flex-col items-center gap-3 z-10">
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center z-10">
         <button onClick={toggleSound} className="font-[VT323] text-lg text-[#fef3c7] bg-[#78350f] px-4 py-1 rounded-full border-2 border-[#3f2010]">
           {store.isSoundOn ? 'BẬT ÂM' : 'TẮT ÂM'}
-        </button>
-        <button 
-          onClick={() => {
-            audioManager.playBlipSFX();
-            localStorage.removeItem('disclaimer_accepted');
-            window.location.reload();
-          }} 
-          className="font-[VT323] text-sm text-neutral-400 hover:text-white underline decoration-dashed"
-        >
-          [ XEM LẠI CẢNH BÁO ĐÍNH CHÍNH ]
         </button>
       </div>
     </div>

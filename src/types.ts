@@ -1,5 +1,5 @@
 export type GameStage = 'DISCLAIMER' | 'TITLE' | 'INTRO_DIALOGUE' | 'MORNING_PHASE' | 'JOB_SELECT' | 'WORKING' | 'SELLING' | 'NIGHT_SETTLEMENT' | 'JAIL_CELL' | 'WEDDING_CUTSCENE' | 'ENDING' | 'GAME_OVER' | 'DISCLAIMER_POST_GAME' | 'MEMORIAL';
-export type EndingId = 'ENDING_1A_PRISON' | 'ENDING_1B_FUGITIVE' | 'ENDING_2_ROMANCE' | 'ENDING_3_UNDERCOVER' | 'ENDING_4_HOSPITAL' | 'ENDING_5_DUNG_BETRAYAL' | 'ENDING_6_TRUE_MEMORIAL';
+export type EndingId = 'ENDING_1A_PRISON' | 'ENDING_1B_FUGITIVE' | 'ENDING_2_ROMANCE' | 'ENDING_3_UNDERCOVER' | 'ENDING_4_HOSPITAL' | 'ENDING_5_DUNG_BETRAYAL' | 'ENDING_6_TRUE_MEMORIAL' | 'ENDING_7_SOLD_DOG';
 export type JobId = 'VE_CHAI' | 'BUN_LONG' | 'SUA_KHOA' | 'LAP_TRINH';
 export type PricingTier = 'BINH_DAN' | 'HOP_LY' | 'CHAT_CHEM';
 export type JailChoice = 'INTERVENE' | 'SLEEP' | 'ESCAPE' | null;
@@ -90,6 +90,7 @@ export interface GameState {
   nightVoiceShown: boolean;
   isFugitive: boolean;
   isWanted: boolean;
+  soldDog: boolean;
   belowCostDays: number;
   miniGameActive: boolean;
   miniGameTarget: number;
@@ -126,6 +127,7 @@ export interface GameState {
   markBelowCostDay: () => void;
   setDogKidnapped: (k: boolean) => void;
   ransomDog: () => void;
+  sellDog: () => void;
   setStage: (s: GameStage) => void;
   setPricing: (p: PricingTier) => void;
   setTrack: (t: TrackId) => void;

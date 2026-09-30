@@ -20,7 +20,7 @@ export function WastedModal() {
       {phase === 'shake' && (
         <div className="animate-shake w-full bg-[#991b1b] border-y-4 border-[#450a0a] py-6 text-center shadow-[0_0_30px_rgba(153,27,27,0.8)]">
           <h1 className="font-[VT323] text-5xl text-white tracking-widest drop-shadow-[3px_3px_0_#000]">
-            THẤT BẠI THẢM HẠI
+            {store.endingId === 'ENDING_7_SOLD_DOG' ? 'THẤT BẠI THẢM HẠI: BÁN BẠN CẦU VINH' : 'THẤT BẠI THẢM HẠI'}
           </h1>
         </div>
       )}

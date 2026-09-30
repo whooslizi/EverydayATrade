@@ -332,6 +332,17 @@ export const ENDINGS: Record<EndingId, EndingData> = {
       'Bạn trở thành người dắt chó chuyên nghiệp. 10 năm.',
     ],
   },
+  ENDING_7_SOLD_DOG: {
+    id: 'ENDING_7_SOLD_DOG',
+    title: 'Kết cục 7: Vong Ân Bội Nghĩa',
+    subtitle: 'Bán bạn cầu vinh',
+    story: [
+      'Nửa đêm, đám giang hồ chợ đen ập đến phá nát quầy hàng.',
+      'Không còn Dũng báo động sớm, bạn bị đánh gục và cướp sạch mọi thứ.',
+      '"Người không còn giữ được cái nghĩa, thì vỉa hè này cũng chẳng có chỗ dung thân."'
+    ],
+    mood: 'tragic'
+  },
   ENDING_6_TRUE_MEMORIAL: {
     id: 'ENDING_6_TRUE_MEMORIAL',
     title: 'Lời Hẹn Dưới Gốc Đào',
@@ -382,6 +393,7 @@ export function rollRandomEvent(
 }
 
 export function shouldTriggerEnding(state: {
+  soldDog: boolean;
   day: number;
   debt: number;
   cash: number;
@@ -396,6 +408,7 @@ export function shouldTriggerEnding(state: {
 }): EndingId | null {
   // Ending 5: Dũng betrayal - loyalty drops to 0
   if (state.dog.loyalty <= 0 && state.dog.hunger <= 10) {
+  if (state.soldDog) return 'ENDING_7_SOLD_DOG';
     return 'ENDING_5_DUNG_BETRAYAL';
   }
 

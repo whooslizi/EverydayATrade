@@ -1,6 +1,7 @@
 
 import { CraftingStation } from './CraftingStation';
 import { CustomerQueue } from './CustomerQueue';
+import { useGameStore } from '../store/useGameStore';
 
 interface Props {
   cookingSlots: any[];
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export function StallViewport({ cookingSlots, customer, onDeliver, items, phoneRinging, onPhoneClick }: Props) {
+  const store = useGameStore((s: any) => s);
   return (
     <div className="flex-1 relative bg-gradient-to-b from-[#1e1b4b] to-[#b45309] overflow-visible">
       {/* Background Elements */}
@@ -23,11 +25,13 @@ export function StallViewport({ cookingSlots, customer, onDeliver, items, phoneR
       </div>
 
       {/* Dog */}
-      <div className="absolute bottom-4 left-2 flex items-end animate-pulse z-0">
-        <div className="w-[24px] h-[18px] bg-[#ca8a04] border-2 border-[#1c1917]" />
-        <div className="w-[14px] h-[14px] bg-[#ca8a04] border-2 border-[#1c1917] -ml-1 mb-1" />
-        <span className="absolute -top-4 left-2 text-[10px] font-['VT323'] text-white drop-shadow-md">Zzz</span>
-      </div>
+      {!store.soldDog && (
+        <div className="absolute bottom-4 left-2 flex items-end animate-pulse z-0">
+          <div className="w-[24px] h-[18px] bg-[#ca8a04] border-2 border-[#1c1917]" />
+          <div className="w-[14px] h-[14px] bg-[#ca8a04] border-2 border-[#1c1917] -ml-1 mb-1" />
+          <span className="absolute -top-4 left-2 text-[10px] font-['VT323'] text-white drop-shadow-md">Zzz</span>
+        </div>
+      )}
 
       <CraftingStation cookingSlots={cookingSlots} onDeliver={onDeliver} items={items} />
       <CustomerQueue customer={customer} items={items} />

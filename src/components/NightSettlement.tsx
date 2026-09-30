@@ -37,7 +37,11 @@ export function NightSettlement() {
       if (!current.includes(endingId)) {
         useGameStore.setState({ endingsUnlocked: [...current, endingId] });
       }
-      store.triggerEnding(endingId);
+      if (endingId === 'ENDING_7_SOLD_DOG') {
+        useGameStore.setState({ stage: 'WASTED', endingId: 'ENDING_7_SOLD_DOG' });
+      } else {
+        store.triggerEnding(endingId);
+      }
     } else {
       store.endDay();
     }

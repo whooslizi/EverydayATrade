@@ -39,7 +39,7 @@ const initialState: Omit<GameState, 'acceptDisclaimer' | 'resetGame' | 'startGam
   endingId: null,
   nightVoiceShown: false,
   isFugitive: false,
-  isWanted: false,
+  isWanted: false, soldDog: false,
   belowCostDays: 0,
   miniGameActive: false,
   miniGameTarget: 100,
@@ -185,6 +185,7 @@ export const useGameStore = create<GameState>()(
       setNightVoiceShown: (shown) => set({ nightVoiceShown: shown }),
       markBelowCostDay: () => set({ belowCostDays: get().belowCostDays + 1 }),
       setDogKidnapped: (k) => set({ dog: { ...get().dog, isKidnapped: k } }),
+      sellDog: () => { set({ cash: get().cash + 1500000, soldDog: true, log: [...get().log, "Ban cho Dung: +1,500,000d"] }); },
       ransomDog: () => {
         if (get().cash >= 30000) set({ cash: get().cash - 30000, dog: { ...get().dog, isKidnapped: false, loyalty: Math.max(0, get().dog.loyalty - 10) } });
       },
