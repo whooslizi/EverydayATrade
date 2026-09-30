@@ -38,6 +38,16 @@ export function DisclaimerScreen() {
             Trò chơi 'Mỗi Ngày Một Nghề' là sản phẩm hư cấu hoàn toàn, phục vụ mục đích giải trí và trải nghiệm mô phỏng
             sinh tồn hè phố.
           </p>
+          <div className="bg-[#1e3a8a] border-2 border-[#1e40af] border-l-8 border-l-[#60a5fa] p-3 shadow-[0_3px_0_#1e3a8a] my-2">
+            <div className="font-['VT323'] text-[20px] leading-none text-[#60a5fa] mb-2 drop-shadow-[2px_2px_0px_#000]">
+              MỜI KHẢO SÁT NGHIÊN CỨU
+            </div>
+            <p className="text-[15px] leading-relaxed text-[#fef3c7] drop-shadow-[2px_2px_0px_#000]">
+              Chào bạn! Trò chơi bạn vừa trải nghiệm là một phần trong dự án nghiên cứu của nhóm chúng mình. Bức ảnh banner ngoài màn hình chính là tác phẩm của AI, và những hình ảnh trong game đều được nhóm code bằng Python Art.
+              <br/><br/>
+              Mong bạn dành chút thời gian giúp nhóm điền bảng "Khảo sát cảm nhận người chơi giữa tranh AI và nghệ thuật lập trình" <a href="https://forms.gle/5yWWoib1NpDqdP6fA" target="_blank" rel="noopener noreferrer" className="text-[#60a5fa] underline decoration-2 underline-offset-2 hover:text-white">tại đây</a> nhé. Đóng góp của bạn cực kỳ quý giá đối với nghiên cứu của nhóm. Xin chân thành cảm ơn!
+            </p>
+          </div>
           <p>
             Mọi danh xưng, bối cảnh, nghề nghiệp và tuyến nhân vật (như chú chó Dũng, anh Tôm buôn thực phẩm giả, bạn Hà,
             Hoàng IT, sinh viên Bách khoa, phong trào xóa game PUBG,...) hoàn toàn mang tính chất xây dựng kịch bản trào

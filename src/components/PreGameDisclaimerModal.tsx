@@ -45,21 +45,14 @@ export function PreGameDisclaimerModal({ onAccept }: { onAccept: () => void }) {
             sinh tồn hè phố.
           </p>
 
-          <div className="bg-[#2a1414] border-2 border-[#4a2424] border-l-8 border-l-[#facc15] p-3 shadow-[0_3px_0_#1a0a0a]">
-            <div className="font-['VT323'] text-[20px] leading-none text-[#facc15] mb-2 drop-shadow-[2px_2px_0px_#000]">
-              MÃ NGUỒN MỞ
+          <div className="bg-[#1e3a8a] border-2 border-[#1e40af] border-l-8 border-l-[#60a5fa] p-3 shadow-[0_3px_0_#1e3a8a]">
+            <div className="font-['VT323'] text-[20px] leading-none text-[#60a5fa] mb-2 drop-shadow-[2px_2px_0px_#000]">
+              MỜI KHẢO SÁT NGHIÊN CỨU
             </div>
             <p className="text-[15px] leading-relaxed text-[#fef3c7] drop-shadow-[2px_2px_0px_#000]">
-              Đây là sản phẩm opensource và có thể được xem source trên:{' '}
-              <a
-                href={REPO_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#facc15] underline decoration-2 underline-offset-2 hover:text-white"
-              >
-                Github
-              </a>
-              . Nếu bạn thích có thể tặng mình 1 star nhé :))
+              Chào bạn! Trò chơi bạn đang trải nghiệm là một phần trong dự án nghiên cứu của nhóm chúng mình. Bức ảnh banner ngoài màn hình chính là một tác phẩm được tạo ra bởi AI, và trong quá trình chơi, bạn sẽ bắt gặp các bức tranh pixel do nhóm tự code bằng Python Art.
+              <br/><br/>
+              Sau khi chơi xong, mong bạn dành chút thời gian giúp nhóm điền bảng "Khảo sát cảm nhận người chơi giữa tranh AI và nghệ thuật lập trình" <a href="https://forms.gle/5yWWoib1NpDqdP6fA" target="_blank" rel="noopener noreferrer" className="text-[#60a5fa] underline decoration-2 underline-offset-2 hover:text-white">tại đây</a> nhé. Nhóm xin chân thành cảm ơn!
             </p>
           </div>
 

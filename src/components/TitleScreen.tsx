@@ -28,10 +28,9 @@ export function TitleScreen() {
   return (
     <div className="absolute inset-0 bg-[#0c0a09] flex flex-col items-center justify-center p-4">
       {/* Background with CSS fallback if image missing */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1e1b4b] via-[#581c87] to-[#b45309] opacity-90" />
       <div 
-        className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay"
-        style={{ backgroundImage: 'url(/backgrounds/title_bg_clean.png)', imageRendering: 'pixelated' }}
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: 'url(/background_1.png)', imageRendering: 'pixelated' }}
       />
       
       {/* Title */}
@@ -40,28 +39,28 @@ export function TitleScreen() {
           MỖI NGÀY<br/>MỘT NGHỀ
         </h1>
         <p className="font-[VT323] text-xl text-[#fef3c7] tracking-widest mt-2 drop-shadow-[2px_2px_0_#000]">
-          SINH TỒN VỈA HÈ (16-BIT)
+          SINH TỒN VỈA HÈ
         </p>
       </div>
 
       {/* Main Actions */}
       <div className="relative z-10 flex flex-col w-full max-w-[280px] gap-4">
         {store.day > 1 ? (
-          <button onClick={handleStart} className="pixel-btn-gold font-[VT323] text-2xl py-3 border-b-4 border-[#78350f]">
+          <button onClick={handleStart} className="pixel-btn-gold font-[VT323] text-2xl py-3 border-b-4 border-[#78350f] shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
             TIẾP TỤC (NGÀY {store.day})
           </button>
         ) : (
-          <button onClick={handleStart} className="pixel-btn-green font-[VT323] text-2xl py-3 border-b-4 border-[#14532d]">
-            BẮT ĐẦU
+          <button onClick={handleStart} className="pixel-btn-green font-[VT323] text-2xl py-3 border-b-4 border-[#14532d] shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+            BẮT ĐẦU GAME
           </button>
         )}
         
-        <button onClick={() => { audioManager.playBlipSFX(); setShowRoadmap(true); }} className="pixel-btn-gray font-[VT323] text-xl py-2">
-          NHẬT KÝ SỐ PHẬN
+        <button onClick={() => { audioManager.playBlipSFX(); setShowResetConfirm(true); }} className="pixel-btn-red font-[VT323] text-xl py-2 shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+          XÓA TIẾN TRÌNH
         </button>
 
-        <button onClick={() => { audioManager.playBlipSFX(); setShowResetConfirm(true); }} className="pixel-btn-red font-[VT323] text-xl py-2">
-          CHƠI LẠI TỪ ĐẦU
+        <button onClick={() => { audioManager.playBlipSFX(); localStorage.removeItem('disclaimer_accepted'); window.location.reload(); }} className="pixel-btn-gray font-[VT323] text-xl py-2 shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+          ĐỌC ĐIỀU LUẬT
         </button>
       </div>
 
