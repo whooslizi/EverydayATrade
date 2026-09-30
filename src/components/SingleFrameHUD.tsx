@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useGameStore } from '../store/useGameStore';
+import { ChangelogModal } from './ChangelogModal';
 import { audioManager } from '../audio/AudioManager';
 import { formatVND, JOBS, PRICING_OPTIONS } from '../data/gameData';
 import { PhoneScamModal } from './PhoneScamModal';
@@ -20,6 +21,7 @@ export function SingleFrameHUD() {
   const [shiftTime, setShiftTime] = useState(60);
   const [shiftActive, setShiftActive] = useState(false);
   const [playerReply, setPlayerReply] = useState<string | null>(null);
+  const [showChangelog, setShowChangelog] = useState(false);
   
   const [customer, setCustomer] = useState<{active: boolean, patience: number, order: string | null, state: 'waiting'|'happy'|'angry'|'replying', scenarioIdx: number}>({
     active: false, patience: 12000, order: null, state: 'waiting', scenarioIdx: 0
@@ -365,6 +367,7 @@ const SCENARIOS = [
 
   return (
     <div className="flex flex-col h-full w-full">
+      {showChangelog && <ChangelogModal onClose={() => setShowChangelog(false)} />}
       {renderHUD()}
       <StallViewport 
         cookingSlots={cookingSlots} 
