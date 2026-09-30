@@ -1,7 +1,7 @@
 
 import { useGameStore } from '../store/useGameStore';
 import { audioManager } from '../audio/AudioManager';
-import { RoadmapModal } from './RoadmapModal';
+import { DestinyJournalModal } from './DestinyJournalModal';
 import { useState } from 'react';
 
 export function TitleScreen() {
@@ -55,6 +55,10 @@ export function TitleScreen() {
           </button>
         )}
         
+        <button onClick={() => { audioManager.playBlipSFX(); setShowRoadmap(true); }} className="pixel-btn-gold font-[VT323] text-xl py-2 shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+          SỔ TAY SỐ PHẬN
+        </button>
+        
         <button onClick={() => { audioManager.playBlipSFX(); setShowResetConfirm(true); }} className="pixel-btn-red font-[VT323] text-xl py-2 shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
           XÓA TIẾN TRÌNH
         </button>
@@ -78,7 +82,7 @@ export function TitleScreen() {
         </div>
       )}
 
-      {showRoadmap && <RoadmapModal onClose={() => setShowRoadmap(false)} />}
+      {showRoadmap && <DestinyJournalModal onClose={() => setShowRoadmap(false)} />}
       
       {/* Bottom controls */}
       <div className="absolute bottom-6 left-0 right-0 flex justify-center z-10">

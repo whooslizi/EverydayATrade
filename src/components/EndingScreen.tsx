@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { useGameStore } from '../store/useGameStore';
 import { audioManager } from '../audio/AudioManager';
 import { ENDINGS } from '../data/gameData';
+import { DestinyJournalModal } from './DestinyJournalModal';
 
 export function EndingScreen() {
   const store = useGameStore();
   const endingId = store.endingId;
   const ending = endingId ? ENDINGS[endingId] : null;
+  const [showJournal, setShowJournal] = useState(false);
 
   const handleContinue = () => {
     audioManager.playBlipSFX();
@@ -14,7 +17,13 @@ export function EndingScreen() {
     if (endingId && !current.includes(endingId)) {
       useGameStore.setState({ endingsUnlocked: [...current, endingId] });
     }
-    store.setStage('DISCLAIMER_POST_GAME');
+    setShowJournal(true);
+  };
+
+  const handlePlayAgain = () => {
+    audioManager.playBlipSFX();
+    store.resetGame();
+    store.startGame();
   };
 
   const handleReset = () => {
@@ -60,13 +69,18 @@ export function EndingScreen() {
 
         <div className="flex flex-col gap-2">
           <button onClick={handleContinue} className="pixel-btn pixel-btn-gold w-full font-[VT323] text-lg">
-            DOC TIEP NHẬT KÝ
+            SỔ TAY SỐ PHẬN
+          </button>
+          <button onClick={handlePlayAgain} className="pixel-btn pixel-btn-green w-full font-[VT323] text-lg">
+            CHƠI LẠI TỪ ĐẦU
           </button>
           <button onClick={handleReset} className="pixel-btn pixel-btn-gray w-full font-[VT323] text-lg">
             VỀ MÀN HÌNH CHÍNH
           </button>
         </div>
       </div>
+      
+      {showJournal && <DestinyJournalModal onClose={() => setShowJournal(false)} />}
     </div>
   );
 }
