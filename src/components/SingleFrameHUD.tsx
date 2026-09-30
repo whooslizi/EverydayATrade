@@ -251,7 +251,7 @@ export function SingleFrameHUD() {
                 }}
                 className="w-full mt-2 bg-[#991b1b] text-white py-1 font-['VT323'] text-lg border-2 border-[#450a0a] animate-pulse"
               >
-                BÁN CHÓ DŨNG - NHẬN 1.500.000đ
+                BÁN CHÓ DŨNG - NHẬN 363.636đ
               </button>
             )}
           </div>
