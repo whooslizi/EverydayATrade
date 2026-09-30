@@ -30,7 +30,7 @@ export function TitleScreen() {
       {/* Background with CSS fallback if image missing */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: 'url(/background_1.png)', imageRendering: 'pixelated' }}
+        style={{ backgroundImage: 'url(/backgrounds/background_1.png)', imageRendering: 'pixelated' }}
       />
       
       {/* Title */}
