@@ -17,6 +17,10 @@ export function SingleFrameHUD() {
     { id: 0, itemId: null, progress: 0, state: 'idle', timer: 0 },
     { id: 1, itemId: null, progress: 0, state: 'idle', timer: 0 }
   ]);
+  const [shiftTime, setShiftTime] = useState(60);
+  const [shiftActive, setShiftActive] = useState(false);
+  const [playerReply, setPlayerReply] = useState<string | null>(null);
+  
   const [customer, setCustomer] = useState<{active: boolean, patience: number, order: string | null, state: 'waiting'|'happy'|'angry'|'replying'}>({
     active: false, patience: 12000, order: null, state: 'waiting'
   });
@@ -53,6 +57,19 @@ export function SingleFrameHUD() {
         }
         return slot;
       }));
+
+      // Update Shift
+      if (shiftActive) {
+        setShiftTime(t => {
+          const newT = t - dt / 1000;
+          if (newT <= 0) {
+            setShiftActive(false);
+            setTimeout(() => store.setStage('NIGHT_SETTLEMENT'), 1000);
+            return 0;
+          }
+          return newT;
+        });
+      }
 
       // Update Customer
       setCustomer(cust => {
@@ -146,7 +163,7 @@ export function SingleFrameHUD() {
   const renderHUD = () => (
     <div className="h-[46px] bg-[#1a0e08] border-b-4 border-[#3f2010] flex items-center justify-between px-2 shrink-0 shadow-md relative z-10">
       <div className="font-[VT323] text-[#facc15] text-[18px] flex flex-col leading-tight drop-shadow-[2px_2px_0px_#000]">
-        <span>Ngày {store.day}/{store.maxDays}</span>
+        <span>Ngày {store.day}/{store.maxDays} | Ca: {Math.ceil(shiftTime)}s</span>
         <span className="text-[12px] text-[#fef3c7]">★★★★★</span>
       </div>
       <div className="flex flex-col items-center justify-center">
@@ -271,12 +288,21 @@ export function SingleFrameHUD() {
 
   const handleReply = (choiceIdx: number) => {
     audioManager.playBlipSFX();
-    setCustomer({ active: false, patience: 12000, order: null, state: 'waiting' });
+    
     if (choiceIdx === 0) {
+      setPlayerReply("Ông Đào nhà tôi bảo: 'Làm ăn phải lấy chữ Tâm làm đầu'. Bác dùng thử xem có đáng đồng tiền không.");
       store.addMobAnger(-10);
     } else if (choiceIdx === 1) {
+      setPlayerReply("Chê đắt thì vác bát ra ngã tư mà nuốt bụi cho no! Không ăn thì đi chỗ khác!");
       store.addMobAnger(5);
+    } else {
+      setPlayerReply("Xóa game rồi nhưng em cài cho anh tool cày clone, vào vote 1 sao cho bõ tức nhé!");
     }
+    
+    setTimeout(() => {
+      setPlayerReply(null);
+      setCustomer({ active: false, patience: 12000, order: null, state: 'waiting' });
+    }, 2500);
   };
 
   const renderDialogue = () => {
@@ -284,7 +310,10 @@ export function SingleFrameHUD() {
     let text = "Mở cửa hàng đón khách nào!";
     let portrait = "hero";
 
-    if (customer.active) {
+    if (playerReply) {
+      speaker = "Chủ Quán";
+      text = playerReply;
+    } else if (customer.active) {
       speaker = "Khách Hàng";
       portrait = "customer";
       if (customer.state === 'waiting') {
@@ -307,7 +336,7 @@ export function SingleFrameHUD() {
             <h3 className="text-[#d97706] font-bold text-[16px] font-[VT323] uppercase leading-none drop-shadow-[1px_1px_0px_#fef3c7]">{speaker}</h3>
             <p className="text-[#1c1917] text-[13px] font-[Share_Tech_Mono] leading-tight mt-1 mb-1">{text}</p>
             
-            {customer.state === 'replying' && (
+            {customer.state === 'replying' && !playerReply && (
               <div className="flex flex-col gap-1 mt-auto">
                 <button onClick={() => handleReply(0)} className="text-left bg-[#15803d] text-white px-2 py-0.5 font-[Share_Tech_Mono] text-[11px] border border-[#14532d] shadow-sm hover:bg-[#166534]">[1] Nhã nhặn & Lời Ông Đào</button>
                 <button onClick={() => handleReply(1)} className="text-left bg-[#991b1b] text-white px-2 py-0.5 font-[Share_Tech_Mono] text-[11px] border border-[#450a0a] shadow-sm hover:bg-[#b91c1c]">[2] Bật lại gắt gỏng</button>

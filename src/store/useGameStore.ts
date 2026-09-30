@@ -54,8 +54,14 @@ export const useGameStore = create<GameState>()(
       setPricing: (p) => set({ selectedPricing: p }),
       setTrack: (t) => set({ currentTrack: t }),
       acceptDisclaimer: () => set({ stage: 'TITLE' }),
-      resetGame: () => set({ ...initialState, isSoundOn: get().isSoundOn, stage: 'TITLE', endingsUnlocked: get().endingsUnlocked }),
-      startGame: () => set({ stage: 'INTRO_DIALOGUE', dialogueIndex: 0 }),
+      resetGame: () => set({ stage: 'TITLE' }), // Keep money and progress
+      startGame: () => {
+        if (get().endingsUnlocked.length > 0 || get().day > 1) {
+          set({ stage: 'MORNING_PHASE' });
+        } else {
+          set({ stage: 'INTRO_DIALOGUE', dialogueIndex: 0 });
+        }
+      },
       advanceDialogue: () => {
         set((state) => {
           if (state.dialogueIndex >= 11) {
