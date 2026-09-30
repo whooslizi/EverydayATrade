@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useGameStore } from './store/useGameStore';
 import { audioManager } from './audio/AudioManager';
 import { PreGameDisclaimerModal } from './components/PreGameDisclaimerModal';
@@ -17,18 +17,19 @@ import { MemorialScreen } from './components/MemorialScreen';
 import { WastedModal } from './components/WastedModal';
 
 export default function App() {
-  const stage = useGameStore((s: any) => s.stage);
-  const isSoundOn = useGameStore((s: any) => s.isSoundOn);
+  const store = useGameStore((s: any) => s);
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState(
+    localStorage.getItem('disclaimer_accepted') === 'true'
+  );
 
   useEffect(() => {
-    if (stage !== 'DISCLAIMER' && isSoundOn) {
+    if (disclaimerAccepted && store.isSoundOn) {
       audioManager.init();
     }
-  }, [stage, isSoundOn]);
+  }, [disclaimerAccepted, store.isSoundOn]);
 
   const renderStage = () => {
-    switch (stage) {
-      case 'DISCLAIMER': return <PreGameDisclaimerModal />;
+    switch (store.stage) {
       case 'TITLE': return <TitleScreen />;
       case 'INTRO_DIALOGUE': return <IntroDialogue />;
       case 'MORNING_PHASE': return <MorningPhase />;
@@ -47,9 +48,13 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0c0704] flex items-center justify-center font-sans">
-      <div className="max-w-[440px] w-full h-[100dvh] max-h-[920px] aspect-[9/16] relative overflow-hidden shadow-2xl border-x-4 border-y-0 border-[#3f2010] bg-[#1a0e08]">
-        {renderStage()}
+    <div className="fixed inset-0 w-full h-[100dvh] bg-[#0c0704] flex items-center justify-center overflow-hidden select-none font-['VT323']">
+      <div className="relative h-full aspect-[9/16] max-w-[500px] w-full bg-[#1a0e08] border-x-4 border-[#3f2010] shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col justify-between overflow-hidden">
+        {!disclaimerAccepted ? (
+          <PreGameDisclaimerModal onAccept={() => setDisclaimerAccepted(true)} />
+        ) : (
+          renderStage()
+        )}
       </div>
     </div>
   );
