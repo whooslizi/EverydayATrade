@@ -2,6 +2,11 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { GameState, Job, PricingTier, JailChoice } from '../types';
 
+const REQUIRED_ENDINGS = 7;
+const SOLD_DOG_ENDING_ID = 'ENDING_7_SOLD_DOG';
+
+const clampPercent = (value: number): number => Math.max(0, Math.min(100, value));
+
 const initialState: Omit<GameState, 'acceptDisclaimer' | 'resetGame' | 'startGame' | 'advanceDialogue' | 'selectJob' | 'buyIngredients' | 'startCraft' | 'finishCraft' | 'sellBatch' | 'buyFood' | 'depleteEnergy' | 'payDebt' | 'addCash' | 'removeCash' | 'addSuspicion' | 'addMobAnger' | 'triggerArrest' | 'setJailChoice' | 'resolveJail' | 'endDay' | 'attendWedding' | 'receiveNguyenGift' | 'triggerEnding' | 'setMiniGame' | 'addMiniGameScore' | 'toggleSound' | 'addLog' | 'setNightVoiceShown' | 'markBelowCostDay' | 'setDogKidnapped' | 'ransomDog' | 'setStage' | 'setPricing' | 'setTrack' | 'sellDog' | 'buyDogBack'> = {
   stage: 'TITLE',
   isSoundOn: true,
@@ -50,7 +55,14 @@ export const useGameStore = create<GameState>()(
   persist(
     (set, get) => ({
       ...initialState,
-      setStage: (s) => set({ stage: s }),
+      setStage: (s) => {
+        // The memorial is the true ending: only reachable once every ending is unlocked.
+        if (s === 'MEMORIAL' && get().endingsUnlocked.length < REQUIRED_ENDINGS) {
+          set({ stage: 'TITLE' });
+          return;
+        }
+        set({ stage: s });
+      },
       setPricing: (p) => set({ selectedPricing: p }),
       setTrack: (t) => set({ currentTrack: t }),
       acceptDisclaimer: () => set({ stage: 'TITLE' }),
@@ -81,17 +93,37 @@ export const useGameStore = create<GameState>()(
           revenueTodayGross: 0,
         });
       },
+      // qty > 0 buys, qty < 0 refunds unused raw stock at the same unit price.
       buyIngredients: (itemId, qty, costPer) => {
         const { cash, inventory, log } = get();
-        const totalCost = costPer * qty;
-        if (cash < totalCost) return;
-        set({
-          cash: cash - totalCost,
-          inventory: inventory.map((inv) =>
-            inv.itemId === itemId ? { ...inv, rawQty: inv.rawQty + qty } : inv
-          ),
-          log: [...log, `Mua nguyen lieu: -${totalCost.toLocaleString('vi-VN')}d`],
-        });
+        const current = inventory.find((inv) => inv.itemId === itemId);
+        if (!current) return;
+
+        if (qty > 0) {
+          const totalCost = costPer * qty;
+          if (cash < totalCost) return;
+          set({
+            cash: cash - totalCost,
+            inventory: inventory.map((inv) =>
+              inv.itemId === itemId ? { ...inv, rawQty: inv.rawQty + qty } : inv
+            ),
+            log: [...log, `Mua nguyen lieu: -${totalCost.toLocaleString('vi-VN')}d`],
+          });
+          return;
+        }
+
+        if (qty < 0) {
+          const units = Math.min(-qty, current.rawQty);
+          if (units <= 0) return;
+          const refund = costPer * units;
+          set({
+            cash: cash + refund,
+            inventory: inventory.map((inv) =>
+              inv.itemId === itemId ? { ...inv, rawQty: inv.rawQty - units } : inv
+            ),
+            log: [...log, `Hoan nguyen lieu: +${refund.toLocaleString('vi-VN')}d`],
+          });
+        }
       },
       startCraft: (itemId) => {
         const { inventory } = get();
@@ -147,8 +179,8 @@ export const useGameStore = create<GameState>()(
       },
       addCash: (amount) => set({ cash: get().cash + amount }),
       removeCash: (amount) => set({ cash: Math.max(0, get().cash - amount) }),
-      addSuspicion: (amount) => set({ taxSuspicion: Math.min(100, get().taxSuspicion + amount) }),
-      addMobAnger: (amount) => set({ mobAnger: Math.min(100, get().mobAnger + amount) }),
+      addSuspicion: (amount) => set({ taxSuspicion: clampPercent(get().taxSuspicion + amount) }),
+      addMobAnger: (amount) => set({ mobAnger: clampPercent(get().mobAnger + amount) }),
       triggerArrest: () => set({ timesArrested: get().timesArrested + 1, stage: 'JAIL_CELL', jailNightsRemaining: 1, jailChoice: null, log: [...get().log, 'Bi bat!'] }),
       setJailChoice: (choice) => set({ jailChoice: choice }),
       resolveJail: () => {
@@ -183,7 +215,15 @@ export const useGameStore = create<GameState>()(
       },
       attendWedding: (giftAmount) => set({ weddingAttended: true, cash: Math.max(0, get().cash - giftAmount), log: [...get().log, `Mung cuoi: -${giftAmount}d`] }),
       receiveNguyenGift: () => set({ nguyenGiftReceived: true, cash: get().cash + 300000, log: [...get().log, 'Nguyen gui tang: +300k'] }),
-      triggerEnding: (endingId) => set({ stage: 'ENDING', endingId }),
+      // Every ending reached is recorded once; this is what feeds the memorial lock.
+      triggerEnding: (endingId) =>
+        set((state) => ({
+          stage: 'ENDING',
+          endingId,
+          endingsUnlocked: state.endingsUnlocked.includes(endingId)
+            ? state.endingsUnlocked
+            : [...state.endingsUnlocked, endingId],
+        })),
       setMiniGame: (active, t = 100) => set({ miniGameActive: active, miniGameTarget: t, miniGameScore: 0 }),
       addMiniGameScore: (pts) => set({ miniGameScore: get().miniGameScore + pts }),
       toggleSound: () => set({ isSoundOn: !get().isSoundOn }),
@@ -191,7 +231,17 @@ export const useGameStore = create<GameState>()(
       setNightVoiceShown: (shown) => set({ nightVoiceShown: shown }),
       markBelowCostDay: () => set({ belowCostDays: get().belowCostDays + 1 }),
       setDogKidnapped: (k) => set({ dog: { ...get().dog, isKidnapped: k } }),
-      sellDog: () => { set({ cash: get().cash + 363636, soldDog: true, stage: 'WASTED', endingId: 'ENDING_7_SOLD_DOG', log: [...get().log, "Ban cho Dung: +363,636d"] }); },
+      sellDog: () =>
+        set((state) => ({
+          cash: state.cash + 363636,
+          soldDog: true,
+          stage: 'WASTED',
+          endingId: SOLD_DOG_ENDING_ID,
+          endingsUnlocked: state.endingsUnlocked.includes(SOLD_DOG_ENDING_ID)
+            ? state.endingsUnlocked
+            : [...state.endingsUnlocked, SOLD_DOG_ENDING_ID],
+          log: [...state.log, 'Ban cho Dung: +363,636d'],
+        })),
       buyDogBack: () => { set({ cash: get().cash - 1000000, soldDog: false, log: [...get().log, "Chuoc lai Dung: -1,000,000d"] }); },
       ransomDog: () => {
         if (get().cash >= 30000) set({ cash: get().cash - 30000, dog: { ...get().dog, isKidnapped: false, loyalty: Math.max(0, get().dog.loyalty - 10) } });

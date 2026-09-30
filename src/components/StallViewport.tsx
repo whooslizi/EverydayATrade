@@ -15,7 +15,7 @@ interface Props {
 export function StallViewport({ cookingSlots, customer, onDeliver, items, phoneRinging, onPhoneClick }: Props) {
   const store = useGameStore((s: any) => s);
   return (
-    <div className="flex-1 relative bg-gradient-to-b from-[#1e1b4b] to-[#b45309] overflow-visible">
+    <div className="flex-1 relative  overflow-visible">
       {/* Background Elements */}
       <div className="absolute top-4 left-0 w-full h-1 bg-black/20 transform -skew-y-3" />
       
