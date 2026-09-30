@@ -185,7 +185,7 @@ export const useGameStore = create<GameState>()(
       setNightVoiceShown: (shown) => set({ nightVoiceShown: shown }),
       markBelowCostDay: () => set({ belowCostDays: get().belowCostDays + 1 }),
       setDogKidnapped: (k) => set({ dog: { ...get().dog, isKidnapped: k } }),
-      sellDog: () => { set({ cash: get().cash + 363636, soldDog: true, log: [...get().log, "Ban cho Dung: +363,636d"] }); },
+      sellDog: () => { set({ cash: get().cash + 363636, soldDog: true, stage: 'WASTED', endingId: 'ENDING_7_SOLD_DOG', log: [...get().log, "Ban cho Dung: +363,636d"] }); },
       ransomDog: () => {
         if (get().cash >= 30000) set({ cash: get().cash - 30000, dog: { ...get().dog, isKidnapped: false, loyalty: Math.max(0, get().dog.loyalty - 10) } });
       },

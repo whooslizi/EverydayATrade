@@ -337,8 +337,8 @@ export const ENDINGS: Record<EndingId, EndingData> = {
     title: 'Kết cục 7: Vong Ân Bội Nghĩa',
     subtitle: 'Bán bạn cầu vinh',
     story: [
-      'Nửa đêm, đám giang hồ chợ đen ập đến phá nát quầy hàng.',
-      'Không còn Dũng báo động sớm, bạn bị đánh gục và cướp sạch mọi thứ.',
+      'Ngay giữa ban ngày, hội bảo vệ động vật ập đến đánh bạn hội đồng túi bụi.',
+      'Bán chó Dũng chưa kịp tiêu tiền, bạn đã phải nhập viện với thương tích đầy mình.',
       '"Người không còn giữ được cái nghĩa, thì vỉa hè này cũng chẳng có chỗ dung thân."'
     ],
     mood: 'tragic'
