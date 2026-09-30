@@ -33,7 +33,7 @@ export function DisclaimerScreen() {
         >
           THÔNG BÁO MIỄN TRỪ TRÁCH NHIỆM & ĐÍNH CHÍNH
         </h1>
-        <div className="flex-1 min-h-0 overflow-y-auto mb-4 w-full space-y-3 font-['Share_Tech_Mono'] text-[15px] leading-relaxed text-[#e8dcdc] drop-shadow-[2px_2px_0px_#000]">
+        <div className="flex-1 min-h-0 overflow-y-auto mb-4 w-full space-y-3 font-['Space_Mono'] text-[15px] leading-relaxed text-[#e8dcdc] drop-shadow-[2px_2px_0px_#000]">
           <p>
             Trò chơi 'Mỗi Ngày Một Nghề' là sản phẩm hư cấu hoàn toàn, phục vụ mục đích giải trí và trải nghiệm mô phỏng
             sinh tồn hè phố.
@@ -52,7 +52,7 @@ export function DisclaimerScreen() {
             <div className="font-['VT323'] text-[22px] leading-none text-[#facc15] mb-3 drop-shadow-[2px_2px_0px_#000]">
               LỜI NGỎ TỪ NHÓM PHÁT TRIỂN
             </div>
-            <div className="text-[15px] leading-relaxed text-[#fef3c7] space-y-3 font-['Share_Tech_Mono']">
+            <div className="text-[15px] leading-relaxed text-[#fef3c7] space-y-3 font-['Space_Mono']">
               <p>
                 Trước hết, tụi mình xin gửi lời cảm ơn chân thành nhất vì bạn đã dành thời gian trải nghiệm tựa game này! Hy vọng bạn đã có những giây phút sinh tồn hè phố thật thú vị và đáng nhớ.
               </p>
@@ -64,6 +64,8 @@ export function DisclaimerScreen() {
               </p>
               <div className="border-t border-[#4a2424] pt-3 mt-4 text-center italic text-[#ff6b6b]">
                 A grand game made in loving memory of the author's grandfather.
+                <br />
+                Credits: @whooslizi
               </div>
             </div>
           </div>

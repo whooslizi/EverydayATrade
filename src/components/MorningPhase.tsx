@@ -35,7 +35,7 @@ export function MorningPhase() {
         {/* Player food */}
         <div className="pixel-panel p-3">
           <h3 className="font-[VT323] text-lg text-[#3e2723] mb-2 uppercase">Báo Cái Bang</h3>
-          <table className="w-full font-[Share_Tech_Mono] text-sm text-[#3e2723]">
+          <table className="w-full font-[Roboto_Mono] text-sm text-[#3e2723]">
             <tbody>
               <tr><td>Tiền mặt:</td><td className="text-right font-bold">{formatVND(store.cash)}</td></tr>
               <tr><td>Nợ còn:</td><td className="text-right text-[#d32f2f]">{formatVND(store.debt)}</td></tr>
@@ -49,7 +49,7 @@ export function MorningPhase() {
         {/* Dog status */}
         <div className="pixel-panel p-3">
           <h3 className="font-[VT323] text-lg text-[#3e2723] mb-2 uppercase">Dũng</h3>
-          <table className="w-full font-[Share_Tech_Mono] text-sm text-[#3e2723] mb-3">
+          <table className="w-full font-[Roboto_Mono] text-sm text-[#3e2723] mb-3">
             <tbody>
               <tr><td>Độ no Dũng:</td><td className="text-right">{store.dog.hunger}%</td></tr>
               <tr><td>Trung thành:</td><td className="text-right">{store.dog.loyalty}%</td></tr>
@@ -79,7 +79,7 @@ export function MorningPhase() {
                 key={item.id}
                 onClick={() => handleFeed(item)}
                 disabled={store.cash < item.cost}
-                className="pixel-btn pixel-btn-gold w-full text-left font-[Share_Tech_Mono] text-sm flex justify-between"
+                className="pixel-btn pixel-btn-gold w-full text-left font-[Roboto_Mono] text-sm flex justify-between"
               >
                 <span>{item.name} {item.forDog ? '(cho Dũng)' : ''}</span>
                 <span>{formatVND(item.cost)}</span>

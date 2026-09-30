@@ -19,8 +19,8 @@ export function JobSelect() {
             className="pixel-panel p-3 text-left w-full hover:border-[#fbc02d] transition-colors cursor-pointer"
           >
             <h3 className="font-[VT323] text-xl text-[#3e2723] uppercase">{job.name}</h3>
-            <p className="font-[Share_Tech_Mono] text-sm text-[#78716c] mt-1">{job.description}</p>
-            <p className="font-[Share_Tech_Mono] text-xs text-[#78350f] italic mt-1">{job.flavorText}</p>
+            <p className="font-[Roboto_Mono] text-sm text-[#78716c] mt-1">{job.description}</p>
+            <p className="font-[Roboto_Mono] text-xs text-[#78350f] italic mt-1">{job.flavorText}</p>
           </button>
         ))}
       </div>

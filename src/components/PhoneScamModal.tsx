@@ -37,7 +37,7 @@ export function PhoneScamModal({ onClose }: { onClose: () => void }) {
               <div className="w-[64px] h-[64px] bg-[#1c1917] border-2 border-[#78350f] flex items-center justify-center text-red-500 font-bold text-3xl">?</div>
               <div>
                 <h3 className="text-[#d97706] font-bold text-xl font-[VT323] uppercase">Số Lạ</h3>
-                <p className="font-[Share_Tech_Mono] text-[15px] leading-tight text-[#1c1917]">
+                <p className="font-[Roboto_Mono] text-[15px] leading-tight text-[#1c1917]">
                   "Tôi là Đại úy Tuấn, thụ lý hồ sơ rửa tiền liên quan đến tài khoản của anh! Yêu cầu chuyển ngay 5.000.000đ để chứng minh trong sạch, nếu không sẽ niêm phong sạp hàng!"
                 </p>
               </div>
@@ -57,7 +57,7 @@ export function PhoneScamModal({ onClose }: { onClose: () => void }) {
         )}
         
         {step === 1 && (
-          <div className="text-center font-[Share_Tech_Mono]">
+          <div className="text-center font-[Roboto_Mono]">
             <h2 className="text-[#991b1b] font-[VT323] text-3xl mb-2">BẠN ĐÃ BỊ LỪA!</h2>
             <p className="mb-4">Mất sạch tiền tích lũy vào tay kẻ gian.</p>
             <button onClick={onClose} className="bg-[#78350f] text-white px-4 py-2 font-[VT323] text-xl w-full border-2 border-[#3f2010]">ĐÓNG</button>
@@ -65,7 +65,7 @@ export function PhoneScamModal({ onClose }: { onClose: () => void }) {
         )}
 
         {step === 2 && (
-          <div className="text-center font-[Share_Tech_Mono]">
+          <div className="text-center font-[Roboto_Mono]">
             <h2 className="text-[#15803d] font-[VT323] text-3xl mb-2">BẢN LĨNH!</h2>
             <p className="mb-4">"Lừa ai chứ đừng lừa thằng vừa phá sản này!"<br/>Khách xung quanh vỗ tay, thưởng bạn 50.000đ.</p>
             <button onClick={onClose} className="bg-[#78350f] text-white px-4 py-2 font-[VT323] text-xl w-full border-2 border-[#3f2010]">ĐÓNG</button>
@@ -73,7 +73,7 @@ export function PhoneScamModal({ onClose }: { onClose: () => void }) {
         )}
 
         {step === 3 && (
-          <div className="text-center font-[Share_Tech_Mono]">
+          <div className="text-center font-[Roboto_Mono]">
             <h2 className="text-[#d97706] font-[VT323] text-3xl mb-2">ĐẠI NHÂY!</h2>
             <p className="mb-4">Kẻ lừa đảo tức điên dập máy trước.<br/>(Đã ghi vào sổ tay số phận)</p>
             <button onClick={onClose} className="bg-[#78350f] text-white px-4 py-2 font-[VT323] text-xl w-full border-2 border-[#3f2010]">ĐÓNG</button>

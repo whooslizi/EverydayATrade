@@ -16,7 +16,7 @@ export function PreGameDisclaimerModal({ onAccept }: { onAccept: () => void }) {
   if (denied) {
     return (
       <div className="absolute inset-0 bg-[#0c0704] flex flex-col items-center justify-center p-4 z-50">
-        <div className="bg-[#fef3c7] border-4 border-[#78350f] p-6 shadow-[0_10px_0_#451a03] font-['Share_Tech_Mono'] text-[#1c1917] max-w-[360px] text-center w-full">
+        <div className="bg-[#fef3c7] border-4 border-[#78350f] p-6 shadow-[0_10px_0_#451a03] font-['Space_Mono'] text-[#1c1917] max-w-[360px] text-center w-full">
           <h2 className="font-['VT323'] text-[26px] leading-tight text-[#991b1b] mb-4 drop-shadow-[1px_1px_0px_rgba(120,53,15,0.35)]">
             TRUY CẬP BỊ TỪ CHỐI
           </h2>
@@ -34,7 +34,7 @@ export function PreGameDisclaimerModal({ onAccept }: { onAccept: () => void }) {
 
   return (
     <div className="absolute inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-      <div className="bg-[#fef3c7] border-4 border-[#78350f] p-5 shadow-[0_10px_0_#451a03] font-['Share_Tech_Mono'] text-[#1c1917] max-w-[400px] w-full max-h-[94%] overflow-y-auto">
+      <div className="bg-[#fef3c7] border-4 border-[#78350f] p-5 shadow-[0_10px_0_#451a03] font-['Space_Mono'] text-[#1c1917] max-w-[400px] w-full max-h-[94%] overflow-y-auto">
         <h1 className="font-['VT323'] text-[26px] text-[#78350f] text-center mb-4 leading-tight uppercase drop-shadow-[1px_1px_0px_rgba(120,53,15,0.35)]">
           THÔNG BÁO MIỄN TRỪ TRÁCH NHIỆM & ĐÍNH CHÍNH
         </h1>
@@ -60,7 +60,7 @@ export function PreGameDisclaimerModal({ onAccept }: { onAccept: () => void }) {
           <div className="font-['VT323'] text-[22px] leading-none text-[#facc15] mb-3 drop-shadow-[2px_2px_0px_#000]">
             LỜI NGỎ TỪ NHÓM PHÁT TRIỂN
           </div>
-          <div className="text-[15px] leading-relaxed text-[#fef3c7] space-y-3 font-['Share_Tech_Mono']">
+          <div className="text-[15px] leading-relaxed text-[#fef3c7] space-y-3 font-['Space_Mono']">
             <p>
               Chào bạn! Trò chơi bạn đang trải nghiệm là một phần trong dự án nghiên cứu của nhóm chúng mình. Bức ảnh banner ngoài màn hình chính là tác phẩm của AI, và trong quá trình chơi, bạn sẽ bắt gặp các bức tranh pixel do nhóm tự code bằng Python Art.
             </p>

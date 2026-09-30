@@ -59,11 +59,11 @@ export function EndingScreen() {
         >
           {ending.title}
         </h1>
-        <p className="font-[Share_Tech_Mono] text-sm text-center text-[#78716c] mb-4 italic">{ending.subtitle}</p>
+        <p className="font-[Roboto_Mono] text-sm text-center text-[#78716c] mb-4 italic">{ending.subtitle}</p>
 
         <div className="space-y-3 mb-6">
           {ending.story.map((line, i) => (
-            <p key={i} className="font-[Share_Tech_Mono] text-sm text-[#f4ecd8] leading-relaxed">{line}</p>
+            <p key={i} className="font-[Roboto_Mono] text-sm text-[#f4ecd8] leading-relaxed">{line}</p>
           ))}
         </div>
 

@@ -34,8 +34,8 @@ export function TomEventModal({ onClose }: { onClose: () => void }) {
               </div>
               <div>
                 <h3 className="text-[#d97706] font-bold text-xl font-[VT323] uppercase">Anh Tôm</h3>
-                <p className="font-[Share_Tech_Mono] text-[15px] leading-tight text-[#1c1917]">
-                  "Đấy, trước tao nói có sai đâu, học cái trường này cho lắm rồi rốt cuộc ra vỉa hè làm ba cái lặt vặt à? Nhìn tao đây này, đi tắt đón đầu, tuồn hàng lậu bán giá cắt cổ, một vốn mười lời! Cày cuốc lương thiện như mày thì kiếp nào mới khá?"
+                <p className="font-[Roboto_Mono] text-[15px] leading-tight text-[#1c1917]">
+                  "Đấy, trước tao nói có sai đâu, học cái trường này cơ về bán đệm cho mẹ à? Nhìn tao đây này, đi tắt đón đầu, tuồn hàng lậu bán giá cắt cổ, một vốn mười lời! Cày cuốc lương thiện như mày thì kiếp nào mới khá?"
                 </p>
               </div>
             </div>
@@ -51,7 +51,7 @@ export function TomEventModal({ onClose }: { onClose: () => void }) {
         )}
         
         {step === 1 && (
-          <div className="text-center font-[Share_Tech_Mono]">
+          <div className="text-center font-[Roboto_Mono]">
             <h2 className="text-[#991b1b] font-[VT323] text-3xl mb-2">CHÓ NGOAN!</h2>
             <p className="mb-4">Dũng phi ra gầm gừ, đớp thẳng vào ống quần hàng hiệu của Tôm. Hắn hoảng hốt bỏ chạy té khói để lại tiếng chửi rủa!<br/>(Độ trung thành của Dũng tăng lên!)</p>
             <button onClick={onClose} className="bg-[#78350f] text-white px-4 py-2 font-[VT323] text-xl w-full border-2 border-[#3f2010] hover:bg-[#92400e]">ĐÓNG</button>
@@ -59,7 +59,7 @@ export function TomEventModal({ onClose }: { onClose: () => void }) {
         )}
 
         {step === 2 && (
-          <div className="text-center font-[Share_Tech_Mono]">
+          <div className="text-center font-[Roboto_Mono]">
             <h2 className="text-[#ca8a04] font-[VT323] text-3xl mb-2">KỆ KẺ TIỂU NHÂN</h2>
             <p className="mb-4">Bạn im lặng dọn hàng. Dũng nằm vẫy đuôi nhìn bạn. Dù sao thì, lao động chân chính không bao giờ phải cúi đầu trước những kẻ lừa đảo.</p>
             <button onClick={onClose} className="bg-[#78350f] text-white px-4 py-2 font-[VT323] text-xl w-full border-2 border-[#3f2010] hover:bg-[#92400e]">ĐÓNG</button>

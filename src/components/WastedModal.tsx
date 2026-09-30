@@ -47,11 +47,11 @@ export function WastedModal() {
       {phase === 'news' && (
         <div className="bg-white p-4 max-w-[340px] shadow-2xl rotate-2 grayscale sepia flex flex-col items-center animate-slide-up border border-gray-400">
           <h1 className="font-[VT323] text-4xl text-black border-b-4 border-black w-full text-center mb-2 font-bold tracking-tighter">BÁO AN NINH</h1>
-          <h2 className="font-[Share_Tech_Mono] text-xl font-bold text-black text-center uppercase leading-tight mb-3">Thanh niên bán hàng rong phố Thanh Xuân bị hội đồng dã man!</h2>
+          <h2 className="font-[Roboto_Mono] text-xl font-bold text-black text-center uppercase leading-tight mb-3">Thanh niên bán hàng rong phố Thanh Xuân bị hội đồng dã man!</h2>
           <div className="w-full h-32 bg-gray-300 mb-3 flex items-center justify-center border border-gray-500">
              <span className="text-gray-500 font-['VT323']">[Ảnh hiện trường]</span>
           </div>
-          <p className="font-[Share_Tech_Mono] text-[13px] text-justify text-black">
+          <p className="font-[Roboto_Mono] text-[13px] text-justify text-black">
             Vào trưa nay, một nam thanh niên bán hàng trên vỉa hè phố Thanh Xuân đã bị một nhóm người tự xưng là "Hội bảo vệ động vật" lao vào hành hung túi bụi bằng ghế nhựa và điếu cày. Theo người dân, nạn nhân vừa thực hiện giao dịch bán đi chú chó cỏ trung thành của mình với giá 363.636đ. Hiện nạn nhân đang cấp cứu trong tình trạng đa chấn thương.
           </p>
         </div>
@@ -70,14 +70,14 @@ export function WastedModal() {
           <h2 className="font-[VT323] text-3xl text-[#78350f] drop-shadow-[2px_2px_0_#fff]">
             MỞ KHÓA MẢNH KÝ ỨC
           </h2>
-          <p className="font-[Share_Tech_Mono] text-[#78350f] font-bold mt-1 text-[15px]">(PROLOGUE UNLOCKED)</p>
+          <p className="font-[Roboto_Mono] text-[#78350f] font-bold mt-1 text-[15px]">(PROLOGUE UNLOCKED)</p>
         </div>
       )}
 
       {phase === 'options' && (
         <div className="bg-[#fef3c7] border-4 border-[#78350f] p-5 w-full max-w-[320px] shadow-2xl animate-slide-up flex flex-col gap-3">
           {store.endingId && ENDINGS[store.endingId as keyof typeof ENDINGS]?.story.map((s, i) => (
-            <p key={i} className="font-[Share_Tech_Mono] text-[15px] text-[#1c1917] italic text-center mb-2">
+            <p key={i} className="font-[Roboto_Mono] text-[15px] text-[#1c1917] italic text-center mb-2">
               {s}
             </p>
           ))}

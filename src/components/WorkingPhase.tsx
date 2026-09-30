@@ -137,7 +137,7 @@ export function WorkingPhase() {
                       <span>{item.name}</span>
                       <span className="text-[#78350f]">Vốn: {formatVND(item.ingredientCost)}</span>
                     </div>
-                    <div className="flex gap-2 font-[Share_Tech_Mono] text-sm text-[#78716c] my-1">
+                    <div className="flex gap-2 font-[Roboto_Mono] text-sm text-[#78716c] my-1">
                       <span>NL: {rawQty}</span>
                       <span>TP: {craftedQty}</span>
                     </div>
@@ -173,7 +173,7 @@ export function WorkingPhase() {
                   }`}
                 >
                   <h3 className="font-[VT323] text-xl text-[#3e2723]">{p.label}</h3>
-                  <p className="font-[Share_Tech_Mono] text-sm text-[#78716c]">
+                  <p className="font-[Roboto_Mono] text-sm text-[#78716c]">
                     Lãi x{p.marginMultiplier} | Nghi ngờ +{p.suspicionIncrease}% | Giận +{p.angerIncrease}%
                   </p>
                 </button>
@@ -183,7 +183,7 @@ export function WorkingPhase() {
 
           {activeTab === 'SO_NO' && (
             <div className="pixel-panel p-3">
-              <table className="w-full font-[Share_Tech_Mono] text-sm text-[#3e2723]">
+              <table className="w-full font-[Roboto_Mono] text-sm text-[#3e2723]">
                 <tbody>
                   <tr><td>Nợ hiện tại:</td><td className="text-right font-bold text-[#d32f2f]">{formatVND(store.debt)}</td></tr>
                   <tr><td>Lãi/ngày:</td><td className="text-right">-{formatVND(store.dailyInterest)}</td></tr>
@@ -196,7 +196,7 @@ export function WorkingPhase() {
           )}
 
           {activeTab === 'NHAT_KY' && (
-            <div className="pixel-panel p-3 font-[Share_Tech_Mono] text-sm text-[#3e2723] space-y-1">
+            <div className="pixel-panel p-3 font-[Roboto_Mono] text-sm text-[#3e2723] space-y-1">
               {store.log.length === 0 && <p className="text-[#78716c] italic">Chưa có ghi chép.</p>}
               {store.log.slice(-15).map((entry, i) => (
                 <p key={i}>{entry}</p>

@@ -61,7 +61,7 @@ export function NightSettlement() {
           <>
             <div className="pixel-panel p-3">
               <h3 className="font-[VT323] text-lg text-[#3e2723] uppercase mb-2">KẾT QUẢ HÔM NAY</h3>
-              <table className="w-full font-[Share_Tech_Mono] text-sm text-[#3e2723]">
+              <table className="w-full font-[Roboto_Mono] text-sm text-[#3e2723]">
                 <tbody>
                   <tr><td>Doanh thu:</td><td className="text-right text-[#15803d]">{formatVND(store.revenueTodayGross)}</td></tr>
                   <tr><td>Bán được:</td><td className="text-right">{store.soldToday} món</td></tr>
@@ -81,7 +81,7 @@ export function NightSettlement() {
           <>
             <div className="pixel-panel p-3">
               <h3 className="font-[VT323] text-lg text-[#fbc02d] uppercase mb-2">{npcDialogue.name}</h3>
-              <p className="font-[Share_Tech_Mono] text-sm text-[#3e2723] italic leading-relaxed">"{npcDialogue.text}"</p>
+              <p className="font-[Roboto_Mono] text-sm text-[#3e2723] italic leading-relaxed">"{npcDialogue.text}"</p>
             </div>
             <button onClick={triggerVoice} className="pixel-btn pixel-btn-gray w-full font-[VT323] text-lg">
               TIẾP TỤC
@@ -93,7 +93,7 @@ export function NightSettlement() {
           <>
             <div className="pixel-panel-dark p-4 border-2 border-[#78471c]">
               <h3 className="font-[VT323] text-lg text-[#fbc02d] uppercase mb-2">Giọng nói Ông Đào</h3>
-              <p className="font-[Share_Tech_Mono] text-base text-[#f4ecd8] italic leading-relaxed">"{voice}"</p>
+              <p className="font-[Roboto_Mono] text-base text-[#f4ecd8] italic leading-relaxed">"{voice}"</p>
             </div>
           </>
         )}

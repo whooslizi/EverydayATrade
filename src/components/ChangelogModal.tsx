@@ -6,7 +6,7 @@ export function ChangelogModal({ onClose }: { onClose: () => void }) {
       <div className="bg-[#fef3c7] border-4 border-[#78350f] p-4 w-full max-w-[340px] shadow-2xl animate-slide-up flex flex-col gap-3">
         <h2 className="font-['VT323'] text-3xl text-[#991b1b] text-center border-b-2 border-[#78350f] pb-2">NHẬT KÝ CẬP NHẬT</h2>
         
-        <div className="font-['Share_Tech_Mono'] text-sm text-[#1c1917] flex flex-col gap-2 max-h-[40vh] overflow-y-auto">
+        <div className="font-['Space_Mono'] text-sm text-[#1c1917] flex flex-col gap-2 max-h-[40vh] overflow-y-auto">
           <div>
             <span className="font-bold text-[#15803d]">[v1.1] Tính Năng Mới</span>
             <ul className="list-disc pl-5 mt-1 space-y-1">
@@ -19,7 +19,7 @@ export function ChangelogModal({ onClose }: { onClose: () => void }) {
           </div>
         </div>
 
-        <p className="font-['Share_Tech_Mono'] text-xs text-[#991b1b] italic text-center">
+        <p className="font-['Space_Mono'] text-xs text-[#991b1b] italic text-center">
           Nếu chưa thấy tính năng mới, hãy tải lại trang!
         </p>
 

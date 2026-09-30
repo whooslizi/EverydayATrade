@@ -71,7 +71,7 @@ export function TitleScreen() {
       {/* Reset Confirmation Modal */}
       {showResetConfirm && (
         <div className="absolute inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-          <div className="bg-[#fef3c7] border-4 border-[#78350f] p-5 shadow-2xl font-[Share_Tech_Mono] text-[#1c1917] max-w-[320px] w-full text-center">
+          <div className="bg-[#fef3c7] border-4 border-[#78350f] p-5 shadow-2xl font-[Roboto_Mono] text-[#1c1917] max-w-[320px] w-full text-center">
             <h2 className="font-[VT323] text-2xl text-[#991b1b] mb-4">CẢNH BÁO XÓA DỮ LIỆU</h2>
             <p className="mb-6">Bạn có chắc muốn xóa toàn bộ tiến trình và chơi lại từ đầu?</p>
             <div className="flex gap-3">

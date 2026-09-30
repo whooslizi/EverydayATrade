@@ -65,7 +65,7 @@ export function DialogueModal({ speakerId, speakerName, text, onComplete, choice
       <div className="flex-1 min-w-0 flex flex-col h-full">
         <h3 className="text-[#d97706] font-bold text-xl font-[VT323] uppercase tracking-wide leading-none mb-1">{speakerName}</h3>
         <div className="flex-1 overflow-y-auto pr-1">
-          <p className="text-[#1c1917] text-[15px] font-[Share_Tech_Mono] leading-tight min-h-[40px] whitespace-pre-wrap">{displayed}</p>
+          <p className="text-[#1c1917] text-[15px] font-[Roboto_Mono] leading-tight min-h-[40px] whitespace-pre-wrap">{displayed}</p>
           
           {isDone && choices && choices.length > 0 && (
             <div className="mt-2 flex flex-col gap-1.5">
@@ -74,7 +74,7 @@ export function DialogueModal({ speakerId, speakerName, text, onComplete, choice
                   key={idx} 
                   disabled={c.disabled}
                   onClick={(e) => { e.stopPropagation(); c.action(); }} 
-                  className="bg-[#e6d5a7] hover:bg-[#d4c395] text-[#1c1917] font-[Share_Tech_Mono] text-left px-2 py-1 border border-[#78350f] text-[15px] disabled:opacity-50"
+                  className="bg-[#e6d5a7] hover:bg-[#d4c395] text-[#1c1917] font-[Roboto_Mono] text-left px-2 py-1 border border-[#78350f] text-[15px] disabled:opacity-50"
                 >
                   {c.label}
                 </button>
@@ -84,7 +84,7 @@ export function DialogueModal({ speakerId, speakerName, text, onComplete, choice
         </div>
         
         {isDone && (!choices || choices.length === 0) && (
-          <div className="text-right text-[#991b1b] text-[15px] font-[Share_Tech_Mono] animate-pulse mt-1 shrink-0">
+          <div className="text-right text-[#991b1b] text-[15px] font-[Roboto_Mono] animate-pulse mt-1 shrink-0">
             [ Nhấn Click ]
           </div>
         )}

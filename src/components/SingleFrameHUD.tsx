@@ -31,7 +31,7 @@ const MAX_FRAME_DT_MS = 100;
 /* Text treatments. Light text on dark panels gets the black arcade shadow,
    dark text on the cream panels gets a soft embossed shadow. */
 const FONT_DISPLAY = "font-['VT323']";
-const FONT_BODY = "font-['Share_Tech_Mono']";
+const FONT_BODY = "font-['Space_Mono']";
 const SHADOW_ON_DARK = 'drop-shadow-[2px_2px_0px_#000]';
 const SHADOW_ON_LIGHT = 'drop-shadow-[1px_1px_0px_rgba(120,53,15,0.35)]';
 

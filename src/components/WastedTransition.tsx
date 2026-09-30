@@ -41,7 +41,7 @@ export function WastedTransition() {
               <p className="font-[VT323] text-lg text-[#3e2723] uppercase">
                 MỞ KHÓA MẢNH KÝ ỨC
               </p>
-              <p className="font-[Share_Tech_Mono] text-sm text-[#78350f] mt-1">
+              <p className="font-[Roboto_Mono] text-sm text-[#78350f] mt-1">
                 Vết Sẹo Vỉa Hè
               </p>
             </div>

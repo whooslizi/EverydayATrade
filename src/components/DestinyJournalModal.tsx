@@ -44,7 +44,7 @@ export function DestinyJournalModal({ onClose }: { onClose: () => void }) {
           SỔ TAY SỐ PHẬN
         </h2>
         
-        <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-3 font-[Share_Tech_Mono] text-[#fef3c7] custom-scrollbar">
+        <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-3 font-[Roboto_Mono] text-[#fef3c7] custom-scrollbar">
           {endingList.map(end => {
             const unlocked = endingsUnlocked.includes(end.id);
             const endingData = ENDINGS[end.id as EndingId];
