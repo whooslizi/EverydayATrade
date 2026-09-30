@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useGameStore } from '../store/useGameStore';
 import { audioManager } from '../audio/AudioManager';
-import { NPCS, NIGHT_VOICES, checkEndingConditions } from '../data/gameData';
+import { NPCS, NIGHT_VOICES, shouldTriggerEnding } from '../data/gameData';
 
 function formatVND(n: number): string {
   return n.toLocaleString('vi-VN') + 'd';
@@ -31,7 +31,7 @@ export function NightSettlement() {
   };
 
   const handleEndDay = () => {
-    const endingId = checkEndingConditions(store);
+    const endingId = shouldTriggerEnding(store);
     if (endingId) {
       const current = store.endingsUnlocked || [];
       if (!current.includes(endingId)) {

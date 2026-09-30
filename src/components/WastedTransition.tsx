@@ -24,7 +24,7 @@ export function WastedTransition() {
 
   return (
     <div className={`absolute inset-0 z-[60] flex items-center justify-center ${phase === 'shake' ? 'animate-shake' : ''}`}
-      style={{ filter: phase !== 'idle' ? 'grayscale(80%) contrast(120%)' : 'none' }}
+      style={{ filter: (phase as string) !== 'idle' ? 'grayscale(80%) contrast(120%)' : 'none' }}
     >
       <div className="absolute inset-0 bg-black/60" />
 

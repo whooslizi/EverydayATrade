@@ -1,33 +1,23 @@
-import useGameStore from '../store/useGameStore';
 
-export default function MemorialScreen() {
+import { useGameStore } from '../store/useGameStore';
+
+export function MemorialScreen() {
   const setStage = useGameStore((s) => s.setStage);
-
   return (
-    <div className="w-full h-full flex items-center justify-center bg-[#0c0a09] p-4">
-      <div className="pixel-panel border-4 border-[#78471c] max-w-lg w-full text-center">
-        <pre className="font-[VT323] text-[#fbc02d] text-sm leading-tight mb-6 overflow-x-auto">
-{`========== HOÀN THÀNH TRÒ CHƠI ==========`}
+    <div className="absolute inset-0 bg-[#120e0e] text-[#fdf6e2] p-6 flex flex-col items-center justify-center font-sans animate-fade-in-up select-none">
+      <div className="max-w-[400px] w-full border-4 border-[#3e3030] bg-[#1a1414] rounded-2xl p-6 shadow-2xl relative">
+        <pre className="text-[12px] md:text-sm font-mono text-center text-[#ff6b6b] mb-6 leading-relaxed whitespace-pre-wrap">
+========== HOÀN THÀNH TRÒ CHƠI ==========
         </pre>
-
-        <div className="space-y-2 mb-6">
-          <p className="font-[Share_Tech_Mono] text-sm text-[#e0d6c2]">
-            Kich Ban &amp; Lap Trinh: Ban
-          </p>
-          <p className="font-[Share_Tech_Mono] text-sm text-[#e0d6c2]">
-            Kien Truc Am Thanh &amp; Pixel Art: Thuc hien bang tron ven tam huyet
-          </p>
+        <div className="text-center space-y-3 font-medium text-[#e8dcdc] mb-8">
+          <p>Kịch Bản & Lập Trình: Bạn</p>
+          <p>Kiến Trúc Âm Thanh & Pixel Art: Thực hiện bằng trọn vẹn tâm huyết</p>
         </div>
-
-        <p className="font-[Share_Tech_Mono] text-sm text-[#d32f2f] italic mb-8">
+        <div className="text-center text-[#ff6b6b] font-bold text-lg italic mt-8 mb-6">
           Kính tặng và tưởng nhớ Ông nội yêu quý
-        </p>
-
-        <button
-          className="pixel-btn-gray"
-          onClick={() => setStage('TITLE')}
-        >
-          TRO VỀ MÀN HÌNH CHÍNH
+        </div>
+        <button onClick={() => setStage('TITLE')} className="w-full bg-[#4a3939] text-[#fdf6e2] py-3 rounded-xl font-bold border-2 border-[#3e3030] hover:bg-[#5a4646]">
+          TRỞ VỀ MÀN HÌNH CHÍNH
         </button>
       </div>
     </div>

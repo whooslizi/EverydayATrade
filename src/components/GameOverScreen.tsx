@@ -1,47 +1,24 @@
-import useGameStore from '../store/useGameStore';
 
-export default function GameOverScreen() {
-  const setStage = useGameStore((s) => s.setStage);
-  const resetGame = useGameStore((s) => s.resetGame);
-  const gameLog = useGameStore((s) => s.gameLog);
+import { useGameStore } from '../store/useGameStore';
+import { audioManager } from '../audio/AudioManager';
+import { useEffect } from 'react';
 
-  const recentEntries = gameLog.slice(-3);
+export function GameOverScreen() {
+  const store = useGameStore();
+
+  useEffect(() => {
+    if (store.isSoundOn) audioManager.playErrorSFX();
+  }, []);
 
   return (
-    <div className="w-full h-full flex items-center justify-center bg-[#0c0a09] p-4">
-      <div className="pixel-panel-dark max-w-lg w-full animate-slide-up">
-        <h1 className="font-[VT323] text-4xl text-[#d32f2f] text-center mb-4">
-          KẾT THÚC
-        </h1>
-
-        {recentEntries.length > 0 && (
-          <div className="mb-6 space-y-1">
-            {recentEntries.map((entry, i) => (
-              <p
-                key={i}
-                className="font-[Share_Tech_Mono] text-xs text-[#a09080] leading-relaxed"
-              >
-                {entry}
-              </p>
-            ))}
-          </div>
-        )}
-
-        <div className="flex flex-col gap-3">
-          <button
-            className="pixel-btn-gold w-full"
-            onClick={() => setStage('DISCLAIMER_POST_GAME')}
-          >
-            DOC TIEP NHẬT KÝ
-          </button>
-          <button
-            className="pixel-btn-gray w-full"
-            onClick={() => resetGame()}
-          >
-            VỀ MÀN HÌNH CHÍNH
-          </button>
-        </div>
-      </div>
+    <div className="absolute inset-0 flex flex-col items-center justify-center p-4 bg-[#1a0a0a]">
+      <h2 className="font-pixel text-red-400 text-lg tracking-wider mb-1">KẾT THÚC</h2>
+      <button onClick={() => store.setStage('DISCLAIMER_POST_GAME')} className="pixel-btn-gold text-sm px-6 py-2.5 w-full tracking-wide">
+        ĐỌC TIẾP NHẬT KÝ
+      </button>
+      <button onClick={() => store.resetGame()} className="pixel-btn-red text-sm px-6 py-2.5 w-full tracking-wide mt-2">
+        VỀ MÀN HÌNH CHÍNH
+      </button>
     </div>
   );
 }
