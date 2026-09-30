@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useGameStore } from '../store/useGameStore';
 import { audioManager } from '../audio/AudioManager';
+import { ENDINGS } from '../data/gameData';
 
 export function WastedModal() {
   const store = useGameStore((s: any) => s);
@@ -36,6 +37,11 @@ export function WastedModal() {
 
       {phase === 'options' && (
         <div className="bg-[#fef3c7] border-4 border-[#78350f] p-5 w-full max-w-[320px] shadow-2xl animate-slide-up flex flex-col gap-3">
+          {store.endingId && ENDINGS[store.endingId as keyof typeof ENDINGS]?.story.map((s, i) => (
+            <p key={i} className="font-[Share_Tech_Mono] text-[15px] text-[#1c1917] italic text-center mb-2">
+              {s}
+            </p>
+          ))}
           <h2 className="font-[VT323] text-3xl text-center text-[#991b1b] mb-2 border-b-2 border-[#78350f] pb-2">KẾT CỤC</h2>
           <button 
             onClick={() => store.setStage('DISCLAIMER_POST_GAME')} 

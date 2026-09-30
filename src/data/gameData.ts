@@ -339,7 +339,7 @@ export const ENDINGS: Record<EndingId, EndingData> = {
     story: [
       'Ngay giữa ban ngày, hội bảo vệ động vật ập đến đánh bạn hội đồng túi bụi.',
       'Bán chó Dũng chưa kịp tiêu tiền, bạn đã phải nhập viện với thương tích đầy mình.',
-      '"Người không còn giữ được cái nghĩa, thì vỉa hè này cũng chẳng có chỗ dung thân."'
+      'Nhớ đời nhé, đừng bao giờ đụng vào chó của các chị em yêu động vật!'
     ],
     mood: 'tragic'
   },
