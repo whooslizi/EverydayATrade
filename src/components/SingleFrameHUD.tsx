@@ -84,10 +84,19 @@ export function SingleFrameHUD() {
           const newPatience = cust.patience - dt;
           if (newPatience <= 0) {
             store.addMobAnger(10);
-            return { ...cust, patience: 0, state: 'angry' };
+            return { ...cust, patience: 0, state: 'angry', scenarioIdx: 0 };
           }
           return { ...cust, patience: newPatience };
         }
+        
+        // Auto-spawn logic
+        if (shiftActiveRef.current && !cust.active && shiftTimeRef.current > 2 && !playerReplyRef.current) {
+          if (Math.random() < 0.015) { // about 1 spawn per 1-2 seconds at 60fps
+            const randomItem = items[Math.floor(Math.random() * items.length)]?.id;
+            return { active: true, patience: 15000, order: randomItem, state: 'waiting', scenarioIdx: 0 };
+          }
+        }
+        
         return cust;
       });
 
