@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { GameState, Job, PricingTier, JailChoice } from '../types';
 
-const initialState: Omit<GameState, 'acceptDisclaimer' | 'resetGame' | 'startGame' | 'advanceDialogue' | 'selectJob' | 'buyIngredients' | 'startCraft' | 'finishCraft' | 'sellBatch' | 'buyFood' | 'depleteEnergy' | 'payDebt' | 'addCash' | 'removeCash' | 'addSuspicion' | 'addMobAnger' | 'triggerArrest' | 'setJailChoice' | 'resolveJail' | 'endDay' | 'attendWedding' | 'receiveNguyenGift' | 'triggerEnding' | 'setMiniGame' | 'addMiniGameScore' | 'toggleSound' | 'addLog' | 'setNightVoiceShown' | 'markBelowCostDay' | 'setDogKidnapped' | 'ransomDog' | 'setStage' | 'setPricing' | 'setTrack'> = {
+const initialState: Omit<GameState, 'acceptDisclaimer' | 'resetGame' | 'startGame' | 'advanceDialogue' | 'selectJob' | 'buyIngredients' | 'startCraft' | 'finishCraft' | 'sellBatch' | 'buyFood' | 'depleteEnergy' | 'payDebt' | 'addCash' | 'removeCash' | 'addSuspicion' | 'addMobAnger' | 'triggerArrest' | 'setJailChoice' | 'resolveJail' | 'endDay' | 'attendWedding' | 'receiveNguyenGift' | 'triggerEnding' | 'setMiniGame' | 'addMiniGameScore' | 'toggleSound' | 'addLog' | 'setNightVoiceShown' | 'markBelowCostDay' | 'setDogKidnapped' | 'ransomDog' | 'setStage' | 'setPricing' | 'setTrack' | 'sellDog'> = {
   stage: 'TITLE',
   isSoundOn: true,
   currentTrack: 'TRACK_1',
