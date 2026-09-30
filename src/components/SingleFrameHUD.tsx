@@ -17,7 +17,7 @@ export function SingleFrameHUD() {
     { id: 0, itemId: null, progress: 0, state: 'idle', timer: 0 },
     { id: 1, itemId: null, progress: 0, state: 'idle', timer: 0 }
   ]);
-  const [customer, setCustomer] = useState<{active: boolean, patience: number, order: string | null, state: 'waiting'|'happy'|'angry'}>({
+  const [customer, setCustomer] = useState<{active: boolean, patience: number, order: string | null, state: 'waiting'|'happy'|'angry'|'replying'}>({
     active: false, patience: 12000, order: null, state: 'waiting'
   });
   
@@ -125,10 +125,8 @@ export function SingleFrameHUD() {
       const rev = (itemDef?.basePrice || 0) * currentPricing.marginMultiplier;
       store.sellBatch(1, rev);
       store.addMobAnger(currentPricing.angerIncrease);
-      setCustomer(c => ({ ...c, state: 'happy' }));
-      setTimeout(() => {
-        setCustomer({ active: false, patience: 12000, order: null, state: 'waiting' });
-      }, 1000);
+      // Wait for reply before hiding
+      setCustomer(c => ({ ...c, state: 'replying' }));
     } else {
       audioManager.playErrorSFX();
     }
@@ -258,6 +256,16 @@ export function SingleFrameHUD() {
     </div>
   );
 
+  const handleReply = (choiceIdx: number) => {
+    audioManager.playBlipSFX();
+    setCustomer({ active: false, patience: 12000, order: null, state: 'waiting' });
+    if (choiceIdx === 0) {
+      store.addMobAnger(-10);
+    } else if (choiceIdx === 1) {
+      store.addMobAnger(5);
+    }
+  };
+
   const renderDialogue = () => {
     let speaker = "Nhật Ký";
     let text = "Mở cửa hàng đón khách nào!";
@@ -269,22 +277,30 @@ export function SingleFrameHUD() {
       if (customer.state === 'waiting') {
         const itemName = items.find((i: JobItem) => i.id === customer.order)?.name;
         text = `"Cho tôi một ${itemName || 'suất'} nhé, lẹ lên!"`;
-      } else if (customer.state === 'happy') {
-        text = currentPricing.tier === 'CHAT_CHEM' ? '"Trời đất, đắt thế này ai nuốt nổi?!"' : '"Món này ngon quá bác nhỉ!"';
+      } else if (customer.state === 'replying' || customer.state === 'happy') {
+        text = currentPricing.tier === 'CHAT_CHEM' ? '"Ối giời ôi, bát phở đắt thế?! Bò này nuôi bằng sữa tươi à?!"' : '"Biết tin gì chưa bác chủ? Con bé Hà bán quạt sắp cưới anh IT rồi!"';
       } else {
         text = '"Làm ăn lề mề quá, tôi đi quán khác!"';
       }
     }
 
     return (
-      <div className="h-[18%] bg-[#1a0e08] p-2 flex items-center justify-center shrink-0 border-t-4 border-[#3f2010] relative z-10">
-        <div className="bg-[#fef3c7] border-4 border-[#78350f] p-2 flex gap-3 items-center w-full h-full shadow-inner">
-          <div className="w-[48px] h-[48px] bg-[#d97706] border-2 border-[#78350f] flex-shrink-0 flex items-center justify-center">
+      <div className="h-[22%] bg-[#1a0e08] p-2 flex flex-col items-center justify-center shrink-0 border-t-4 border-[#3f2010] relative z-10">
+        <div className="bg-[#fef3c7] border-4 border-[#78350f] p-2 flex gap-3 items-start w-full h-full shadow-inner">
+          <div className="w-[48px] h-[48px] bg-[#d97706] border-2 border-[#78350f] flex-shrink-0 flex items-center justify-center mt-1">
             <span className="font-[VT323] text-2xl text-[#fef3c7] uppercase">{portrait.charAt(0)}</span>
           </div>
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 flex flex-col h-full">
             <h3 className="text-[#d97706] font-bold text-[16px] font-[VT323] uppercase leading-none drop-shadow-[1px_1px_0px_#fef3c7]">{speaker}</h3>
-            <p className="text-[#1c1917] text-[13px] font-[Share_Tech_Mono] leading-tight mt-1">{text}</p>
+            <p className="text-[#1c1917] text-[13px] font-[Share_Tech_Mono] leading-tight mt-1 mb-1">{text}</p>
+            
+            {customer.state === 'replying' && (
+              <div className="flex flex-col gap-1 mt-auto">
+                <button onClick={() => handleReply(0)} className="text-left bg-[#15803d] text-white px-2 py-0.5 font-[Share_Tech_Mono] text-[11px] border border-[#14532d] shadow-sm hover:bg-[#166534]">[1] Nhã nhặn & Lời Ông Đào</button>
+                <button onClick={() => handleReply(1)} className="text-left bg-[#991b1b] text-white px-2 py-0.5 font-[Share_Tech_Mono] text-[11px] border border-[#450a0a] shadow-sm hover:bg-[#b91c1c]">[2] Bật lại gắt gỏng</button>
+                <button onClick={() => handleReply(2)} className="text-left bg-[#ca8a04] text-white px-2 py-0.5 font-[Share_Tech_Mono] text-[11px] border border-[#713f12] shadow-sm hover:bg-[#eab308]">[3] Lươn lẹo hề hước</button>
+              </div>
+            )}
           </div>
         </div>
       </div>
