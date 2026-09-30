@@ -16,7 +16,7 @@ interface Props {
   choices?: Choice[];
 }
 
-export function DialogueModal({ speakerName, text, onComplete, choices }: Props) {
+export function DialogueModal({ speakerId, speakerName, text, onComplete, choices }: Props) {
   const [displayed, setDisplayed] = useState('');
   const [isDone, setIsDone] = useState(false);
 
@@ -38,18 +38,41 @@ export function DialogueModal({ speakerName, text, onComplete, choices }: Props)
   }, [text]);
 
   return (
-    <div className="absolute inset-x-4 bottom-8 pixel-panel shadow-2xl flex flex-col z-50 animate-slide-up" onClick={() => { if(!choices) onComplete?.(); }}>
-      <h3 className="text-[#fcc419] font-black text-lg mb-2 uppercase">{speakerName}</h3>
-      <p className="text-[#e8dcdc] text-base leading-relaxed min-h-[60px]">{displayed}</p>
-      {isDone && choices && (
-        <div className="mt-4 flex flex-col gap-2">
-          {choices.map((c, idx) => (
-            <button key={idx} onClick={(e) => { e.stopPropagation(); c.action(); }} className="pixel-btn-gray text-left">
-              {c.label}
-            </button>
-          ))}
+    <div className="bg-[#fef3c7] border-4 border-[#78350f] p-3 flex gap-3 items-start shadow-inner w-full h-full relative" onClick={() => { if(!choices || choices.length===0) onComplete?.(); }}>
+      {/* 64x64 Portrait */}
+      <div className="w-[64px] h-[64px] bg-[#d97706] border-2 border-[#78350f] flex-shrink-0 flex items-center justify-center overflow-hidden">
+        <div className="text-[#fef3c7] font-[VT323] text-2xl text-center leading-none">
+          {speakerId ? speakerId.charAt(0).toUpperCase() : '?'}
         </div>
-      )}
+      </div>
+      
+      <div className="flex-1 min-w-0 flex flex-col h-full">
+        <h3 className="text-[#d97706] font-bold text-xl font-[VT323] uppercase tracking-wide leading-none mb-1">{speakerName}</h3>
+        <div className="flex-1 overflow-y-auto pr-1">
+          <p className="text-[#1c1917] text-[15px] font-[Share_Tech_Mono] leading-tight min-h-[40px] whitespace-pre-wrap">{displayed}</p>
+          
+          {isDone && choices && choices.length > 0 && (
+            <div className="mt-2 flex flex-col gap-1.5">
+              {choices.map((c, idx) => (
+                <button 
+                  key={idx} 
+                  disabled={c.disabled}
+                  onClick={(e) => { e.stopPropagation(); c.action(); }} 
+                  className="bg-[#e6d5a7] hover:bg-[#d4c395] text-[#1c1917] font-[Share_Tech_Mono] text-left px-2 py-1 border border-[#78350f] text-[15px] disabled:opacity-50"
+                >
+                  {c.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        
+        {isDone && (!choices || choices.length === 0) && (
+          <div className="text-right text-[#991b1b] text-[15px] font-[Share_Tech_Mono] animate-pulse mt-1 shrink-0">
+            [ Nhấn Click ]
+          </div>
+        )}
+      </div>
     </div>
   );
 }
